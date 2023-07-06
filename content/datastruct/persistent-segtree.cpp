@@ -1,11 +1,11 @@
 /**
  * Author: Yuhao Yao
  * Date: 22-10-23
- * Description: Persistent Segment Tree of range $[0, N - 1]$. Point apply and thus no lazy propogation.
- *  Always define a global $apply$ function to tell segment tree how you apply modification. 
+ * Description: Persistent Segment Tree of range $[0, N]$. Point apply and thus no lazy propogation.
+ *  Always define a global $apply$ function to tell segment tree how you apply modification.
  *  Combine is set as + operation. If you use your own struct, then please define constructor and + operation.
  *  In constructor, $q$ is the number of $pointApply$ you will use.
- * Usage: Point Add and Range Sum.
+ *  Usage: Point Add and Range Sum. Range $k$-th.
  *  void apply(int \&a, int b) { a += b; } // global
  *  ...
  *  PersistSegtree<int> pseg(10, 1); // len = 10 and 1 update.
@@ -15,66 +15,82 @@
  * Time: O(\log N) per operation.
  * Status: tested on https://codeforces.com/contest/1479/problem/D, https://www.luogu.com.cn/problem/P7361, https://www.luogu.com.cn/problem/P4094.
  */
+
+void apply(int &a, int b) { a += b; }
+
 template<class Info>
-struct PersistSegtree {
-	struct node { Info info; int ls, rs; }; /// start-hash
-	int n;
-	vector<node> t;
-	// node 0 is left as virtual empty node.
-	PersistSegtree(int n, int q): n(n), t(1) {
-		assert(n > 0);
-		t.reserve(q * (__lg(n) + 2) + 1);
-	}
+struct persistSegTree {
+#define mid ((l + r) >> 1)
+    struct node {
+        Info info;
+        int ls{}, rs{};
+    };
+    std::vector<node> t;
+    int n;
 
-	// pointApply returns the id of new root.
-	template<class... T>
-	int pointApply(int rt, int pos, const T&... val) {
-		auto dfs = [&](auto &dfs, int &i, int l, int r) {
-			t.push_back(t[i]);
-			i = sz(t) - 1;
+    persistSegTree(int n, int q) : n(n), t(1) {
+        assert(n >= 0);
+        t.reserve(q * (std::__lg(n + 1) + 2) + 10);
+    }
 
-			if (l == r) {
-				::apply(t[i].info, val...);
-				return;
-			}
-			int mid = (l + r) >> 1;
-			if (pos <= mid) dfs(dfs, t[i].ls, l, mid);
-			else dfs(dfs, t[i].rs, mid + 1, r);
-			t[i].info = t[t[i].ls].info + t[t[i].rs].info;
-		};
-		dfs(dfs, rt, 0, n - 1);
-		return rt;
-	}
+    void up(int x) {
+        int ls = t[x].ls;
+        int rs = t[x].rs;
+        t[x].info = t[ls].info + t[rs].info;
+    }
 
-	Info rangeAsk(int rt, int ql, int qr) {
-		Info res{};
-		auto dfs = [&](auto &dfs, int i, int l, int r) {
-			if (i == 0 || qr < l || r < ql) return;
-			if (ql <= l && r <= qr) {
-				res = res + t[i].info;
-				return;
-			}
-			int mid = (l + r) >> 1;
-			dfs(dfs, t[i].ls, l, mid);
-			dfs(dfs, t[i].rs, mid + 1, r);
-		};
-		dfs(dfs, rt, 0, n - 1);
-		return res;
-	} /// end-hash
+    template<class... T>
+    int update(int rt, int pos, const T &... val) {
+        std::function<void(int &, int, int)> dfs = [&](int &id, int l, int r) {
+            t.push_back(t[id]);
+            id = (int) t.size() - 1;
+            if (l == r) {
+                ::apply(t[id].info, val...);
+                return;
+            }
+            if (pos <= mid) dfs(t[id].ls, l, mid);
+            else dfs(t[id].rs, mid + 1, r);
+            up(id);
+        };
+        dfs(rt, 0, n);
+        return rt;
+    }
 
-	// lower_bound on prefix sums of difference between two versions.
-	int lower_bound(int rt_l, int rt_r, Info val) { /// start-hash
-		Info sum{};
-		auto dfs = [&](auto &dfs, int x ,int y, int l, int r) {
-			if (l == r) return sum + t[y].info - t[x].info >= val ? l : l + 1;
-			int mid = (l + r) >> 1;
-			Info s = t[t[y].ls].info - t[t[x].ls].info;
-			if (sum + s >= val) return dfs(dfs, t[x].ls, t[y].ls, l, mid);
-			else {
-				sum = sum + s;
-				return dfs(dfs, t[x].rx, t[y].rs, mid + 1, r);
-			}
-		};
-		return dfs(dfs, rt_l, rt_r, 0, n - 1);
-	} /// end-hash
+    //on a single version
+    Info rangeAsk(int rt, int ql, int qr) {
+        Info res{};
+        std::function<void(int, int, int)> dfs = [&](int id, int l, int r) {
+            if (id == 0 || qr < l || r < ql) return;
+            if (ql <= l && r <= qr) {
+                res = res + t[id].info;
+                return;
+            }
+            dfs(t[id].ls, l, mid);
+            dfs(t[id].rs, mid + 1, r);
+        };
+        dfs(rt, 0, n);
+        return res;
+    }
+
+    // lower_bound on prefix sums of difference between two versions.
+    int lower_bound(int rt_l, int rt_r, Info k) {
+        Info sum{};
+        std::function<int(int, int, int, int)> dfs = [&](int x, int y, int l, int r) {
+            if (l == r) {
+                return sum + t[y].info - t[x].info >= k ? l : l + 1;
+            }
+            int lx = t[x].ls, rx = t[x].rs;
+            int ly = t[y].ls, ry = t[y].rs;
+            Info s = t[ly].info - t[lx].info;
+            if (sum + s >= k) {
+                return dfs(lx, ly, l, mid);
+            } else {
+                sum = sum + s;
+                return dfs(rx, ry, mid + 1, r);
+            }
+        };
+        return dfs(rt_l, rt_r, 0, n);
+    }
+
+#undef mid
 };

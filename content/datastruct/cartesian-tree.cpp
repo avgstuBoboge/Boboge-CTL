@@ -6,17 +6,17 @@
  * Status: Tested on https://qoj.ac/contest/695/problem/1857, https://codeforces.com/gym/103371/problem/M, https://codeforces.com/contest/1718/problem/D.
  */
 
-template<class T>
-auto CartesianTree(const vector<T> &as, int gr = 0) {
-	int n = sz(as);
-	vi ls(n, -1), rs(n, -1), sta;
-	rep(i, 0, n - 1) {
-		while (sz(sta) && ((as[i] < as[sta.back()]) ^ gr)) {
-			ls[i] = sta.back();
-			sta.pop_back();
-		}
-		if (sz(sta)) rs[sta.back()] = i;
-		sta.push_back(i);
-	}
-	return make_tuple(sta[0], ls, rs);
-}
+ template<class T>
+ auto CartesianTree(const std::vector<T> &as, int gr = 0) {
+     int n = (int) as.size();
+     std::vector<int> ls(n, -1), rs(n, -1), stk;
+     for (int i = 0; i < n; ++i) {
+         while (!stk.empty() && ((as[i] < as[stk.back()]) ^ gr)) {
+             ls[i] = stk.back();
+             stk.pop_back();
+         }
+         if (!stk.empty()) rs[stk.back()] = i;
+         stk.push_back(i);
+     }
+     return make_tuple(stk[0], ls, rs);
+ }

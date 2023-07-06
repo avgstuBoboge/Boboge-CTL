@@ -1,13 +1,28 @@
-#include "bits/stdc++.h"
-#define rep(i, a, n) for (auto i = a; i <= (n); ++i)
-#define revrep(i, a, n) for (auto i = n; i >= (a); --i)
-#define all(a) a.begin(), a.end()
-#define sz(a) (int)(a).size()
-using namespace std;
+#include <bits/stdc++.h>
+
+#define dbg(x...) \
+    do { \
+        std::cout << #x << " -> "; \
+        err(x); \
+    } while (0)
+
+void err() {
+    std::cout << std::endl;
+}
+
+template<class T, class... Ts>
+void err(T arg, Ts &... args) {
+    std::cout << arg << ' ';
+    err(args...);
+}
+
 using ll = long long;
-using pii = pair<int, int>;
-using vi = vector<int>;
+using ld = long double;
+using ull = unsigned long long;
+using i128 = __int128;
 
 int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
+	std::ios::sync_with_stdio(false);
+	std::cin.tie(nullptr);
+	return 0;
 }

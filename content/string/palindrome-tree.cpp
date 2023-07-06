@@ -9,38 +9,42 @@
  */
 
 struct PalindromeTree {
-	struct node {
-		map<int, int> nxt;
-		int fail, len;
-		int cnt;
-		node(int fail, int len): fail(fail), len(len) {
-			cnt = 0;
-		}
-	};
-	vector<node> t;
+    struct node {
+        std::map<int, int> nxt;
+        int fail, len;
+        int cnt;
 
-	template<class T>
-	PalindromeTree(const T &s) {
-		int n = sz(s);
-		t.emplace_back(-1, -1); // Odd root -> state 0.
-		t.emplace_back(0, 0); // Even root -> state 1.
+        node(int fail, int len) : fail(fail), len(len) {
+            cnt = 0;
+        }
+    };
 
-		int now = 0;
-		auto ins = [&](int pos) {
-			auto get = [&](int i) {
-				while (pos == t[i].len || s[pos - 1 - t[i].len] != s[pos]) i = t[i].fail;
-				return i;
-			};
-			int c = s[pos];
-			now = get(now);
-			if (t[now].nxt.count(c) == 0) {
-				int q = now == 0 ? 1 : t[get(t[now].fail)].nxt[c];
-				t.emplace_back(q, t[now].len + 2);
-				t[now].nxt[c] = sz(t) - 1;
-			}
-			now = t[now].nxt[c];
-			t[now].cnt++;
-		};
-		rep(i, 0, n - 1) ins(i);
-	}
-};
+    std::vector<node> t;
+
+    template<class T>
+    PalindromeTree(const T &s) {
+        int n = s.size();
+        t.emplace_back(-1, -1); // Odd root -> state 0.
+        t.emplace_back(0, 0); // Even root -> state 1.
+
+        int now = 0;
+        auto ins = [&](int pos) {
+            auto get = [&](int i) {
+                while (pos == t[i].len || s[pos - 1 - t[i].len] != s[pos]) i = t[i].fail;
+                return i;
+            };
+            int c = s[pos];
+            now = get(now);
+            if (t[now].nxt.count(c) == 0) {
+                int q = now == 0 ? 1 : t[get(t[now].fail)].nxt[c];
+                t.emplace_back(q, t[now].len + 2);
+                t[now].nxt[c] = (int) t.size() - 1;
+            }
+            now = t[now].nxt[c];
+            t[now].cnt++;
+        };
+        for (int i = 0; i < n; ++i) {
+            ins(i);
+        }
+    }
+}

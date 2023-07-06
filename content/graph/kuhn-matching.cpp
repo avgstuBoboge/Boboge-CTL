@@ -5,25 +5,26 @@
  * Time: O((|L| + |R|) |E|).
  * Status: tested on https://www.luogu.com.cn/problem/P2764, https://www.luogu.com.cn/problem/P3386.
 **/
-vi Kuhn(int n, int m, const vector<pii> &es) {
-	vector<vi> g(n);
-	for (auto [x, y]: es) g[x].push_back(y);
-	vi rm(m, -1);
-	rep(i, 0, n - 1) {
-		vi vis(m);
-		auto dfs = [&](auto &dfs, int x) -> int {
-			for (auto y: g[x]) if (vis[y] == 0) {
-				vis[y] = 1;
-				if (rm[y] == -1 || dfs(dfs, rm[y])) {
-					rm[y] = x;
-					return 1;
-				}
-			}
-			return 0;
-		};
-		dfs(dfs, i);
-	}
-	vi lm(n, -1);
-	rep(i, 0, m - 1) if (rm[i] != -1) lm[rm[i]] = i;
-	return lm;
+std::vector<int> Kuhn(int n, int m, const vector <pii> &es) {
+    std::vector<std::vector<int>> g(n);
+    for (auto [x, y]: es) g[x].push_back(y);
+    std::vector<int> rm(m, -1);
+    for (int i = 0; i < n; ++i) {
+        std::vector<int> vis(m);
+        auto dfs = [&](auto &dfs, int x) -> int {
+            for (auto y: g[x])
+                if (vis[y] == 0) {
+                    vis[y] = 1;
+                    if (rm[y] == -1 || dfs(dfs, rm[y])) {
+                        rm[y] = x;
+                        return 1;
+                    }
+                }
+            return 0;
+        };
+        dfs(dfs, i);
+    }
+    std::vector<int> lm(n, -1);
+    for (int i = 0; i < m; ++i) if (rm[i] != -1) lm[rm[i]] = i;
+    return lm;
 }

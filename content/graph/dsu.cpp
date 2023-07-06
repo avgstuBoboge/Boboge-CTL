@@ -1,25 +1,30 @@
 /**
- * Author: Yuhao Yao
- * Date: 22-10-24
+ * Author: Boboge
+ * Date: 23-02-03
  * Description: Disjoint set union. $merge(x, y)$ merges components which $x$ and $y$ are in respectively and returns $1$ if $x$ and $y$ are in different components.
  * Time: amortized O(\alpha(M, N)) where $M$ is the number of operations. Almost constant in competitive programming.
  */
 
 struct DSU {
-	vi fa, siz;
+    std::vector<int> f;
 
-	DSU(int n): fa(n), siz(n, 1) { iota(all(fa), 0); }
+    DSU(int n) : f(n + 1, -1) {};
 
-	int getcomp(int x) { 
-		return fa[x] == x ? x : fa[x] = getcomp(fa[x]);
-	}
+    int find(int x) {
+        return f[x] < 0 ? x : f[x] = find(f[x]);
+    }
 
-	bool merge(int x, int y) {
-		int fx = getcomp(x), fy = getcomp(y);
-		if (fx == fy) return 0;
-		if (siz[fx] < siz[fy]) swap(fx, fy);
-		fa[fy] = fx;
-		siz[fx] += siz[fy];
-		return 1;
-	}
+    bool merge(int x, int y) {
+        x = find(x);
+        y = find(y);
+        if (x == y) return false;
+        if (f[x] > f[y]) std::swap(x, y);
+        f[x] += f[y];
+        f[y] = x;
+        return true;
+    }
+
+    int siz(int x) {
+        return -f[find(x)];
+    }
 };

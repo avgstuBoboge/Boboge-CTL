@@ -1,6 +1,6 @@
 /**
  * Author: Yuhao Yao
- * Date: 22-10-24
+ * Date: 23-03-29
  * Description: Number Theoretic Transform. 
  *  class $T$ should have static function $getMod()$ to provide the $mod$. We usually just use $modnum$ as the template parameter.
  *  To keep the code short we just set the primitive root as $3$. However, it might be wrong when $mod \ne 998244353$. Here are some commonly used $mod$s and the corresponding primitive root.\\
@@ -16,54 +16,68 @@
  * Time: O(N \log N).
  * Status: tested on https://ac.nowcoder.com/acm/contest/33186/H, https://judge.yosupo.jp/problem/kth_term_of_linearly_recurrent_sequence.
  */
-template<class T>
+template<class mint = Z>
 struct FFT {
-	const T g; // primitive root.
-	vi r;
-	int n2;
+    static void dft(std::vector<mint> &as, int is_inv) { // is_inv == 1 -> idft.
+        static int mod = mint::getMod();
+        static mint root = 0;
+        if (root == 0) {
+            root = 2;
+            while (root.pow((mod - 1) / 2) == 1)
+                root += 1; // it is not necessarily a primitive root but lowbit(mod - 1) divides its order.
+        }
 
-	FFT(T _g = 3): g(_g) {}
+        int n = as.size();
+        assert(__builtin_popcount(n) == 1);
+        static std::vector<int> r;
+        if (r.size() != n) {
+            r.resize(n);
+            for (int i = 1; i < n; ++i) {
+                r[i] = (r[i >> 1] >> 1) | ((i & 1) << (__builtin_ctz(n) - 1));
+            }
+        }
 
-	void dft(vector<T> &a, int is_inv) { // is_inv == 1 -> idft.
-		rep(i, 1, n2 - 1) if (r[i] > i) swap(a[i], a[r[i]]);
-		for(int step = 1; step < n2; step <<= 1) {
-			vector<T> w(step);
-			T zeta = g.pow((T::getMod() - 1) / (step << 1));
-			if (is_inv) zeta = 1 / zeta;
+        for (int i = 1; i < n; ++i) if (r[i] > i) std::swap(as[i], as[r[i]]);
+        for (int step = 1; step < n; step <<= 1) {
+            mint zeta = root.pow((mod - 1) / (step << 1));
+            if (is_inv) zeta = mint{1} / zeta;
+            std::vector<mint> ws(step);
+            ws[0] = 1;
+            for (int i = 1; i < step; ++i) ws[i] = ws[i - 1] * zeta;
+            for (int i = 0; i < n; i += step << 1) {
+                for (int j = 0; j < step; ++j) {
+                    auto x = as[i + j], y = as[i + j + step] * ws[j];
+                    as[i + j] = x + y;
+                    as[i + j + step] = x - y;
+                }
+            }
+        }
 
-			w[0] = 1;
-			rep(i, 1, step - 1) w[i] = w[i - 1] * zeta;
-			for (int i = 0; i < n2; i += step << 1) {
-				rep(j, 0, step - 1) {
-					T tmp = w[j] * a[i + j + step];
-					a[i + j + step] = a[i + j] - tmp;
-					a[i + j] += tmp;
-				}
-			}
-		}
+        if (is_inv == 1) {
+            auto inv = mint{1} / n;
+            for (auto &x: as) x *= inv;
+        }
+    }
 
-		if (is_inv == 1) {
-			T inv = T{1} / n2;
-			rep(i, 0, n2 - 1) a[i] *= inv;
-		}
-	}
-	
-	void pre(int n) { // set n2, r; also used in polynomial inverse.
-		int len = 0;
-		for (n2 = 1; n2 < n; n2 <<= 1) len++;
-		r.resize(n2);
-		rep(i, 1, n2 - 1) r[i] = (r[i >> 1] >> 1) | ((i & 1) << (len - 1));
-	}
-
-	vector<T> conv(vector<T> a, vector<T> b) {
-		int n = sz(a) + sz(b) - 1;
-		pre(n);
-		a.resize(n2, 0);
-		b.resize(n2, 0);
-		dft(a, 0); dft(b, 0);
-		rep(i, 0, n2 - 1) a[i] *= b[i];
-		dft(a, 1);
-		a.resize(n);
-		return a;
-	}
+    static std::vector<mint> conv(const std::vector<mint> &as, const std::vector<mint> &bs) {
+        if (std::min(as.size(), bs.size()) <= 128) {
+            std::vector<ll> cs(as.size() + bs.size() - 1);
+            for (int i = 0; i < as.size(); ++i)
+                for (int j = 0; j < bs.size(); ++j)
+                    cs[i + j] += (int) (as[i] * bs[j]);
+            return {cs.begin(), cs.end()};
+        } else {
+            int n = as.size() + bs.size() - 1, n2 = 1 << std::__lg(n * 2 - 1);
+            auto xs = as, ys = bs;
+            xs.resize(n2, 0);
+            ys.resize(n2, 0);
+            dft(xs, 0);
+            if (as == bs) ys = xs;
+            else dft(ys, 0);
+            for (int i = 0; i < n2; ++i) xs[i] *= ys[i];
+            dft(xs, 1);
+            xs.resize(n);
+            return xs;
+        }
+    }
 };

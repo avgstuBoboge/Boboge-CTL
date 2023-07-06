@@ -7,16 +7,16 @@
  */
 template<class T>
 T Euclidean(ll a, ll b, ll c, ll n) {
-	T res = 0;
-	if (a >= c || b >= c) {
-		res += T{a / c} * n * (n + 1) / 2;
-		res += T{b / c} * (n + 1);
-		a %= c;
-		b %= c;
-	}
-	if (a != 0) {
-		ll m = ((__int128)a * n + b) / c;
-		res += T{m} * n - Euclidean<T>(c, c - b - 1, a, m - 1);
-	}
-	return res;
+    T res = 0;
+    if (a >= c || b >= c) {
+        res += T{a / c} * n * (n + 1) / 2;
+        res += T{b / c} * (n + 1);
+        a %= c;
+        b %= c;
+    }
+    if (a != 0) {
+        ll m = ((i128) a * n + b) / c;
+        res += T{m} * n - Euclidean<T>(c, c - b - 1, a, m - 1);
+    }
+    return res;
 }

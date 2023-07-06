@@ -15,57 +15,58 @@
  */
 
 struct UndoDSU {
-	using Z = int; // choose some proper type (Z) for global variable glob.
-	struct T {
-		int siz;
-		// add things you want to maintain here.
-		T(int ind = 0): siz(1) {
-			// initialize what you add here.
-		}
-	};
+    using Z = int; // choose some proper type (Z) for global variable glob.
+    struct T {
+        int siz;
 
-	Z glob;
+        // add things you want to maintain here.
+        T(int ind = 0) : siz(1) {
+            // initialize what you add here.
+        }
+    };
+
+    Z glob;
 private:
-	void join(T &a, const T& b) {
-		a.siz += b.siz;
-		// maintain the things you added to struct T.
-		// also remember to maintain glob here.
-	}
+    void join(T &a, const T &b) {
+        a.siz += b.siz;
+        // maintain the things you added to struct T.
+        // also remember to maintain glob here.
+    }
 
-	vi fa;
-	vector<T> ts;
-	vector<tuple<int, int, T, Z>> sta;
+    std::vector<int> fa;
+    std::vector<T> ts;
+    std::vector<std::tuple<int, int, T, Z>> sta;
 public:
-	UndoDSU(int n): fa(n), ts(n) {
-		iota(all(fa), 0);
-		iota(all(ts), 0);
-		// remember initializing glob here.
-	}
+    UndoDSU(int n) : fa(n), ts(n) {
+        std::iota(fa.begin(), fa.end(), 0);
+        std::iota(ts.begin(), ts.end(), 0);
+        // remember initializing glob here.
+    }
 
-	int getcomp(int x) {
-		while (x != fa[x]) x = fa[x];
-		return x;
-	}
+    int getcomp(int x) {
+        while (x != fa[x]) x = fa[x];
+        return x;
+    }
 
-	bool merge(int x, int y) {
-		int fx = getcomp(x), fy = getcomp(y);
-		if (fx == fy) return 0;
-		if (ts[fx].siz < ts[fy].siz) swap(fx, fy);
-		sta.emplace_back(fx, fy, ts[fx], glob);
-		fa[fy] = fx;
-		join(ts[fx], ts[fy]);
-		return 1;
-	}
+    bool merge(int x, int y) {
+        int fx = getcomp(x), fy = getcomp(y);
+        if (fx == fy) return 0;
+        if (ts[fx].siz < ts[fy].siz) std::swap(fx, fy);
+        sta.emplace_back(fx, fy, ts[fx], glob);
+        fa[fy] = fx;
+        join(ts[fx], ts[fy]);
+        return 1;
+    }
 
-	int top() { return sz(sta); }
+    int top() { return sta.size(); }
 
-	void undo(int top) {
-		while (sz(sta) > top) {
-			auto &[x, y, dat, g] = sta.back();
-			fa[y] = y;
-			ts[x] = dat;
-			glob = g;
-			sta.pop_back();
-		}
-	}
+    void undo(int top) {
+        while (sta.size() > top) {
+            auto &[x, y, dat, g] = sta.back();
+            fa[y] = y;
+            ts[x] = dat;
+            glob = g;
+            sta.pop_back();
+        }
+    }
 };

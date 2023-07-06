@@ -7,13 +7,13 @@
  * Status: tested on https://codeforces.com/gym/102056/problem/C.
 */
 template<class T>
-T CRT(const vector<T> &as, const vector<T> &ms) {
-	T M = 1, res = 0;
-	for (auto x: ms) M *= x;
-	rep(i, 0, sz(as) - 1) {
-		T m = ms[i], Mi = M / m;
-		auto [x, y] = exgcd(Mi, m);
-		res = (res + as[i] % m * Mi * x) % M;
-	}
-	return (res + M) % M;
+T CRT(const std::vector<T> &as, const std::vector<T> &ms) {
+    T M = 1, res = 0;
+    for (auto x: ms) M *= x;
+    for (int i = 0; i < as.size(); ++i) {
+        T m = ms[i], Mi = M / m;
+        auto [x, y] = exgcd(Mi, m);
+        res = (res + as[i] % m * Mi * x) % M;
+    }
+    return (res + M) % M;
 }

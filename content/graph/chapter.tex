@@ -1,10 +1,12 @@
 \chapter{Graph algorithms}
 \section{Flows}
 \kactlimport{dinic.cpp}
-\kactlimport{costflow-successive-shortest-path.cpp}
+\kactlimport{min-cost-max-flow.cpp}
+% \kactlimport{min-cost-max-flow-dij.cpp} % It's worse that nweek's version
+% \kactlimport{costflow-successive-shortest-path.cpp}
 
 \section{Matchings}
-\kactlimport{kuhn-matching.cpp}
+% \kactlimport{kuhn-matching.cpp} % can't this be replaced by hopcroft?
 \kactlimport{hopcroft.cpp}
 \kactlimport{blossom.cpp}
 \kactlimport{hungarian.cpp}
@@ -13,16 +15,18 @@
 \kactlimport{binary-lifting.cpp}
 \kactlimport{heavy-light-decomposition.cpp}
 \kactlimport{centroid-decomposition.cpp}
+\kactlimport{tree-hash.cpp}
+\kactlimport{tree-hash-map.cpp}
 
 \section{Connectivity}
-\kactlimport{dsu.cpp}
+% \kactlimport{dsu.cpp}
 \kactlimport{undo-dsu.cpp}
 \kactlimport{cut-and-bridge.cpp}
 \kactlimport{vertex-bcc.cpp}
 \kactlimport{edge-bcc.cpp}
 \kactlimport{tarjan.cpp}
 \kactlimport{2sat.cpp}
-\kactlimport{link-cut.cpp}
+% \kactlimport{link-cut.cpp} % not learned
 
 \section{Paths}
 \kactlimport{euler-tour-nonrec.cpp}

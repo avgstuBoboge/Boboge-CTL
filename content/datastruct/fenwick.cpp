@@ -1,46 +1,34 @@
 /**
- * Author: Antti Roeyskoe
- * Date: 22-06-15
+ * Author: Boboge
+ * Date: 23-02-01
  * License: MIT
- * Source: self
- * Description: Fenwick tree with built in binary search. Can be used as a indexed set.
+ * Description: Fenwick tree with built in binary search. Can be used as a indexed set. 
+ * Fenwick<int> t(n), index $\in$ [0, n]
  * Time: O(\log N).
  * Usage: ??
- * Status: not tested
+ * Status: tested
  */
 
-class Fenwick {
-	private:
-		vector<ll> val;
-	public:
-		Fenwick(int n) : val(n+1, 0) {}
+template<typename T>
+struct Fenwick {
+    int n;
+    std::vector<T> t;
 
-		// Adds v to index i
-		void add(int i, ll v) {
-			for (++i; i < val.size(); i += i & -i) {
-				val[i] += v;
-			}
-		}
+    Fenwick(int n) : n(n + 1), t(n + 2) {};
 
-		// Calculates prefix sum up to index i
-		ll get(int i) {
-			ll res = 0;
-			for (++i; i > 0; i -= i & -i) {
-				res += val[i];
-			}
-			return res;
-		}
-		ll get(int a, int b) { return get(b) - get(a-1); }
+    void update(int x, T v) {
+        x++;
+        for (; x <= n; x += x & -x) t[x] += v;    
+    }
 
-		// Assuming prefix sums are non-decreasing, finds last i s.t. get(i) <= v
-		int search(ll v) {
-			int res = 0;
-			for (int h = 1<<30; h; h >>= 1) {
-				if ((res | h) < val.size() && val[res | h] <= v) {
-					res |= h;
-					v -= val[res];
-				}
-			}
-			return res - 1;
-		}
+    T query(int x) {
+        x++;
+        T ret{};
+        for (; x; x -= x & -x) ret += t[x];
+        return ret;
+    }
+
+    T query(int l, int r) {
+        return query(r) - query(l - 1);
+    }
 };

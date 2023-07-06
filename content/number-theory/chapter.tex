@@ -7,14 +7,29 @@
 \kactlimport{primitive-root-condition.cpp}
 
 \section{Primality}
+\kactlimport{bit-gcd.cpp}
+\kactlimport{get-phi.cpp}
 \kactlimport{factorization.cpp}
 \kactlimport{sieve.cpp}
-
+\subsection{ex-Euler Theorem}
+\begin{small}
+$$
+a^b=
+\left\{  
+             \begin{array}{lr}  
+             a^{b\ mod\ \varphi(p)},              & gcd(a,p) = 1\\ 
+             a^b,                                 & gcd(a,p) \neq 1, b < \varphi(p)\\
+             a^{(b\ mod\ \varphi(p))+\varphi(p)}, & gcd(a,p) \neq 1, b \ge \varphi(p)
+             \end{array}  
+\right.
+$$
+\end{small}
 \section{Divisibility}
 \kactlimport{euclidean.cpp}
 \kactlimport{exgcd.cpp}
 \kactlimport{chinese.cpp}
+\kactlimport{chinese-common.cpp}
 \kactlimport{chinese-common.py}
 
-\section{Others}
-\kactlimport{continued-fraction.cpp}
+% \section{Others}
+% \kactlimport{continued-fraction.cpp}

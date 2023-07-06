@@ -17,76 +17,82 @@
  */
 template<class Info>
 struct SegTree2D {
-	struct iNode { Info info; int ls, rs; };
-	struct oNode { int id; int ls, rs; };
-	
-	int oL, oR, iL, iR;
-	// change to array to accelerate, since allocating takes time. (saves ~ 200ms when allocating 1e7)
-	vector<iNode> it;
-	vector<oNode> ot;
+    struct iNode {
+        Info info;
+        int ls, rs;
+    };
+    struct oNode {
+        int id;
+        int ls, rs;
+    };
 
-	// node 0 is left as virtual empty node.
-	SegTree2D(int oL, int oR, int iL, int iR, int q): oL(oL), oR(oR), iL(iL), iR(iR), it(1), ot(1) {
-		it.reserve(q * (__lg(oR - oL + 1) + 2) * (__lg(iR - iL + 1) + 2) + 1);
-		ot.reserve(q * (__lg(oR - oL + 1) + 2) + 1);
-	}
+    int oL, oR, iL, iR;
+    // change to array to accelerate, since allocating takes time. (saves ~ 200ms when allocating 1e7)
+    std::vector<iNode> it;
+    std::vector<oNode> ot;
 
-	// return new root id.
-	template<class... T>
-	int pointApply(int rt, int op, int ip, const T&... val) {
-		auto idfs = [&](auto &dfs, int &i, int l, int r) {
-			if (!i) {
-				it.push_back({});
-				i = sz(it) - 1;
-			}
-			if (l == r) {
-				::apply(it[i].info, val...);
-				return;
-			}
-			int mid = (l + r) >> 1;
-			auto &[info, ls, rs] = it[i];
-			if (ip <= mid) dfs(dfs, ls, l, mid);
-			else dfs(dfs, rs, mid + 1, r);
-			info = it[ls].info + it[rs].info;
-		};
-		auto odfs = [&](auto &dfs, int &i, int l, int r) {
-			if (!i) {
-				ot.push_back({});
-				i = sz(ot) - 1;
-			}
-			idfs(idfs, ot[i].id, iL, iR);
-			if (l == r) return;
-			int mid = (l + r) >> 1;
-			if (op <= mid) dfs(dfs, ot[i].ls, l, mid);
-			else dfs(dfs, ot[i].rs, mid + 1, r);
-		};
-		odfs(odfs, rt, oL, oR);
-		return rt;
-	}
+    // node 0 is left as virtual empty node.
+    SegTree2D(int oL, int oR, int iL, int iR, int q) : oL(oL), oR(oR), iL(iL), iR(iR), it(1), ot(1) {
+        it.reserve(q * (std::__lg(oR - oL + 1) + 2) * (std::__lg(iR - iL + 1) + 2) + 1);
+        ot.reserve(q * (std::__lg(oR - oL + 1) + 2) + 1);
+    }
 
-	Info rangeAsk(int rt, int qol, int qor, int qil, int qir) {
-		Info res{};
-		auto idfs = [&](auto &dfs, int i, int l, int r) {
-			if (!i || qir < l || r < qil) return;
-			if (qil <= l && r <= qir) {
-				res = res + it[i].info;
-				return;
-			}
-			int mid = (l + r) >> 1;
-			dfs(dfs, it[i].ls, l, mid);
-			dfs(dfs, it[i].rs, mid + 1, r);
-		};
-		auto odfs = [&](auto &dfs, int i, int l, int r) {
-			if (!i || qor < l || r < qol) return;
-			if (qol <= l && r <= qor) {
-				idfs(idfs, ot[i].id, iL, iR);
-				return;
-			}
-			int mid = (l + r) >> 1;
-			dfs(dfs, ot[i].ls, l, mid);
-			dfs(dfs, ot[i].rs, mid + 1, r);
-		};
-		odfs(odfs, rt, oL, oR);
-		return res;
-	}
+    // return new root id.
+    template<class... T>
+    int pointApply(int rt, int op, int ip, const T &... val) {
+        auto idfs = [&](auto &dfs, int &i, int l, int r) {
+            if (!i) {
+                it.push_back({});
+                i = sz(it) - 1;
+            }
+            if (l == r) {
+                ::apply(it[i].info, val...);
+                return;
+            }
+            int mid = (l + r) >> 1;
+            auto &[info, ls, rs] = it[i];
+            if (ip <= mid) dfs(dfs, ls, l, mid);
+            else dfs(dfs, rs, mid + 1, r);
+            info = it[ls].info + it[rs].info;
+        };
+        auto odfs = [&](auto &dfs, int &i, int l, int r) {
+            if (!i) {
+                ot.push_back({});
+                i = sz(ot) - 1;
+            }
+            idfs(idfs, ot[i].id, iL, iR);
+            if (l == r) return;
+            int mid = (l + r) >> 1;
+            if (op <= mid) dfs(dfs, ot[i].ls, l, mid);
+            else dfs(dfs, ot[i].rs, mid + 1, r);
+        };
+        odfs(odfs, rt, oL, oR);
+        return rt;
+    }
+
+    Info rangeAsk(int rt, int qol, int qor, int qil, int qir) {
+        Info res{};
+        auto idfs = [&](auto &dfs, int i, int l, int r) {
+            if (!i || qir < l || r < qil) return;
+            if (qil <= l && r <= qir) {
+                res = res + it[i].info;
+                return;
+            }
+            int mid = (l + r) >> 1;
+            dfs(dfs, it[i].ls, l, mid);
+            dfs(dfs, it[i].rs, mid + 1, r);
+        };
+        auto odfs = [&](auto &dfs, int i, int l, int r) {
+            if (!i || qor < l || r < qol) return;
+            if (qol <= l && r <= qor) {
+                idfs(idfs, ot[i].id, iL, iR);
+                return;
+            }
+            int mid = (l + r) >> 1;
+            dfs(dfs, ot[i].ls, l, mid);
+            dfs(dfs, ot[i].rs, mid + 1, r);
+        };
+        odfs(odfs, rt, oL, oR);
+        return res;
+    }
 };
