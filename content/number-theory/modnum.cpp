@@ -1,6 +1,6 @@
 /**
  * Author: Boboge adapted from jiangly
- * Date: 23-05-28
+ * Date: 23-09-07
  * Description: Modular integer with $mod \le 2^{30} - 1$. Note that there are several advantages to use this code:
    1. You do not need to keep writing $\%\, mod$;
    2. It is good to use this struct when doing Gaussian Elimination / Fast Walsh-Hadamard Transform;
@@ -25,20 +25,30 @@ template<int P>
 struct MInt {
     int x;
 
-    static int getMod() {
-        return P;
-    }
-
     constexpr MInt() : x{} {}
 
-    constexpr MInt(ll x) : x{norm(x % P)} {}
+    constexpr MInt(i64 x) : x{norm(x % getMod())} {}
+
+    static int Mod;
+
+    constexpr static int getMod() {
+        if (P > 0) {
+            return P;
+        } else {
+            return Mod;
+        }
+    }
+
+    constexpr static void setMod(int Mod_) {
+        Mod = Mod_;
+    }
 
     constexpr int norm(int x) const {
         if (x < 0) {
-            x += P;
+            x += getMod();
         }
-        if (x >= P) {
-            x -= P;
+        if (x >= getMod()) {
+            x -= getMod();
         }
         return x;
     }
@@ -53,35 +63,31 @@ struct MInt {
 
     constexpr MInt operator-() const {
         MInt res;
-        res.x = norm(P - x);
+        res.x = norm(getMod() - x);
         return res;
-    }
-
-    constexpr MInt pow(int y) const {
-        return power(*this, y);
     }
 
     constexpr MInt inv() const {
         assert(x != 0);
-        return power(*this, P - 2);
+        return power(*this, getMod() - 2);
     }
 
-    constexpr MInt &operator*=(MInt rhs) {
-        x = 1LL * x * rhs.x % P;
+    constexpr MInt &operator*=(MInt rhs) &{
+        x = 1LL * x * rhs.x % getMod();
         return *this;
     }
 
-    constexpr MInt &operator+=(MInt rhs) {
+    constexpr MInt &operator+=(MInt rhs) &{
         x = norm(x + rhs.x);
         return *this;
     }
 
-    constexpr MInt &operator-=(MInt rhs) {
+    constexpr MInt &operator-=(MInt rhs) &{
         x = norm(x - rhs.x);
         return *this;
     }
 
-    constexpr MInt &operator/=(MInt rhs) {
+    constexpr MInt &operator/=(MInt rhs) &{
         return *this *= rhs.inv();
     }
 
@@ -110,7 +116,7 @@ struct MInt {
     }
 
     friend constexpr std::istream &operator>>(std::istream &is, MInt &a) {
-        ll v;
+        i64 v;
         is >> v;
         a = MInt(v);
         return is;
@@ -129,5 +135,7 @@ struct MInt {
     }
 };
 
-constexpr int P = 998244353;
-using Z = MInt<P>;
+template<>
+int MInt<0>::Mod = 998244353;
+
+using Z = MInt<0>;
