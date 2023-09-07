@@ -47,4 +47,4 @@ struct PalindromeTree {
             ins(i);
         }
     }
-}
+};
