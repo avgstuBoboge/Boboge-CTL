@@ -27,7 +27,7 @@ struct MInt {
 
     constexpr MInt() : x{} {}
 
-    constexpr MInt(i64 x) : x{norm(x % getMod())} {}
+    constexpr MInt(ll x) : x{norm(x % getMod())} {}
 
     static int Mod;
 
@@ -116,7 +116,7 @@ struct MInt {
     }
 
     friend constexpr std::istream &operator>>(std::istream &is, MInt &a) {
-        i64 v;
+        ll v;
         is >> v;
         a = MInt(v);
         return is;
