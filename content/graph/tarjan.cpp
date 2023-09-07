@@ -29,5 +29,5 @@ auto tarjan(const std::vector<std::vector<int>> &g) {
         }
     };
     for (int i = 0; i < n; ++i) if (dfn[i] == -1) dfs(dfs, i);
-    return make_tuple(scc, id);
+    return std::make_tuple(scc, id);
 }
