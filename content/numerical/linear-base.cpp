@@ -1,6 +1,6 @@
 /**
  * Author: Boboge adapted from Yuhao Yao.
- * Date: 23-02-11
+ * Date: 23-12-03
  * Description: Maximum weighted of Linear Base of vector space $\mathbb{Z}_2^{d}$.
  *  $T$ is the type of vectors and $Z$ is the type of weights.
  *  $w[i]$ is the non-negative weight of a[i]. Keep $w[]$ zero to use unweighted Linear Base.
@@ -43,11 +43,11 @@ struct LB {
     } /// end-hash
 
     // Compute the union of two bases.
-    friend LB operator+(LB a, const LB &b) { /// start-hash
-        for (auto x: b) {
-            if (x != 0) a.insert(x);
+    friend LB operator+(LB l, const LB &r) { /// start-hash
+        for (int i = d - 1; i >=0; --i) {
+            l.insert(r[i], r.w[i]);
         }
-        return a;
+        return l;
     } /// end-hash
 
     // Returns the k-th smallest number spanned by vectors of weight at least $val$. k starts from 0.
