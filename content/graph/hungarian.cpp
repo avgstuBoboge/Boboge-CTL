@@ -7,7 +7,7 @@
  * Time: O(|L|^2 |R|).
  * Status: Seems to be fast enough. Tested on https://www.luogu.com.cn/problem/P6577, https://codeforces.com/gym/101635/problem/G, https://codeforces.com/gym/101194/problem/J.
  */
-template<class T = ll, T INF = numeric_limits<T>::max()>
+template<class T = i64, T INF = numeric_limits<T>::max()>
 vector<pair<int, int>> Hungarian(const vector<vector<T>> &ws) {
     int L = ws.size(), R = L == 0 ? 0 : ws[0].size();
     vector<T> lp(L), rp(R); // left & right potential

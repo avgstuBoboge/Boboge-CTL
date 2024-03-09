@@ -8,22 +8,22 @@
  */
 struct MCMF {
     struct Edge {
-        ll nxt, to;
-        ll cap, cost;
+        i64 nxt, to;
+        i64 cap, cost;
     };
     vector<Edge> edges;
-    vector<ll> head, fa, fe, dual, mark, cyc;
-    ll ti{}, sum{};
+    vector<i64> head, fa, fe, dual, mark, cyc;
+    i64 ti{}, sum{};
 
-    MCMF(ll n) : head(n, 0), fa(n), fe(n), dual(n), mark(n), cyc(n + 1) {
+    MCMF(i64 n) : head(n, 0), fa(n), fe(n), dual(n), mark(n), cyc(n + 1) {
         edges.push_back({0, 0, 0, 0});
         edges.push_back({0, 0, 0, 0});
     }
 
-    ll addEdge(ll u, ll v, ll cap, ll cost) {
+    i64 addEdge(i64 u, i64 v, i64 cap, i64 cost) {
         sum += abs(cost);
         assert(edges.size() % 2 == 0);
-        ll e = edges.size();
+        i64 e = edges.size();
         edges.push_back({head[u], v, cap, cost});
         head[u] = e;
         edges.push_back({head[v], u, 0, -cost});
@@ -31,10 +31,10 @@ struct MCMF {
         return e;
     }
 
-    void initTree(ll x) {
+    void initTree(i64 x) {
         mark[x] = 1;
-        for (ll i = head[x]; i; i = edges[i].nxt) {
-            ll v = edges[i].to;
+        for (i64 i = head[x]; i; i = edges[i].nxt) {
+            i64 v = edges[i].to;
             if (!mark[v] and edges[i].cap) {
                 fa[v] = x, fe[v] = i;
                 initTree(v);
@@ -42,33 +42,33 @@ struct MCMF {
         }
     }
 
-    ll phi(ll x) {
+    i64 phi(i64 x) {
         if (mark[x] == ti) return dual[x];
         return mark[x] = ti, dual[x] = phi(fa[x]) - edges[fe[x]].cost;
     }
 
-    void pushFlow(ll e, ll &cost) {
-        ll pen = edges[e ^ 1].to, lca = edges[e].to;
+    void pushFlow(i64 e, i64 &cost) {
+        i64 pen = edges[e ^ 1].to, lca = edges[e].to;
         ti++;
         while (pen) mark[pen] = ti, pen = fa[pen];
         while (mark[lca] != ti) mark[lca] = ti, lca = fa[lca];
-        ll e2 = 0, path = 2, clen = 0;
-        ll f = edges[e].cap;
-        for (ll i = edges[e ^ 1].to; i != lca; i = fa[i]) {
+        i64 e2 = 0, path = 2, clen = 0;
+        i64 f = edges[e].cap;
+        for (i64 i = edges[e ^ 1].to; i != lca; i = fa[i]) {
             cyc[++clen] = fe[i];
             if (edges[fe[i]].cap < f) f = edges[fe[e2 = i] ^ (path = 0)].cap;
         }
-        for (ll i = edges[e].to; i != lca; i = fa[i]) {
+        for (i64 i = edges[e].to; i != lca; i = fa[i]) {
             cyc[++clen] = fe[i] ^ 1;
             if (edges[fe[i] ^ 1].cap <= f) f = edges[fe[e2 = i] ^ (path = 1)].cap;
         }
         cyc[++clen] = e;
-        for (ll i = 1; i <= clen; ++i) {
+        for (i64 i = 1; i <= clen; ++i) {
             edges[cyc[i]].cap -= f, edges[cyc[i] ^ 1].cap += f;
             cost += edges[cyc[i]].cost * f;
         }
         if (path == 2) return;
-        ll laste = e ^ path, last = edges[laste].to, cur = edges[laste ^ 1].to;
+        i64 laste = e ^ path, last = edges[laste].to, cur = edges[laste ^ 1].to;
         while (last != e2) {
             mark[cur]--;
             laste ^= 1;
@@ -78,18 +78,18 @@ struct MCMF {
         }
     }
 
-    pair<ll, ll> compute(ll s, ll t) {
-        ll tot = sum;
-        ll ed = addEdge(t, s, 1e18, -tot);
-        ll cost = 0;
+    pair<i64, i64> compute(i64 s, i64 t) {
+        i64 tot = sum;
+        i64 ed = addEdge(t, s, 1e18, -tot);
+        i64 cost = 0;
         initTree(0);
         mark[0] = ti = 2;
         fa[0] = cost = 0;
-        ll ncnt = (ll) edges.size() - 1;
-        for (ll i = 2, pre = ncnt; i != pre; i = i == ncnt ? 2 : i + 1) {
+        i64 ncnt = (i64) edges.size() - 1;
+        for (i64 i = 2, pre = ncnt; i != pre; i = i == ncnt ? 2 : i + 1) {
             if (edges[i].cap && edges[i].cost < phi(edges[i ^ 1].to) - phi(edges[i].to)) pushFlow(pre = i, cost);
         }
-        ll flow = edges[ed ^ 1].cap;
+        i64 flow = edges[ed ^ 1].cap;
         cost += tot * flow;
         return {cost, flow};
     }

@@ -8,14 +8,14 @@
 mt19937_64 rnd(chrono::steady_clock::now().time_since_epoch().count());
 
 struct treeHash {
-    using ull = unsigned long long;
-    ull bas = rnd();
+    using u64 = unsigned long long;
+    u64 bas = rnd();
 
-    ull H(ull x) {
+    u64 H(ull x) {
         return x * x * x * 114514 + 19260817;
     }
 
-    ull F(ull x) {
+    u64 F(ull x) {
         return H(x & ((1ll << 32) - 1)) + H(x >> 32);
     }
 

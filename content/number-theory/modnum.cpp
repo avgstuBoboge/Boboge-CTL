@@ -27,7 +27,7 @@ struct mint {
 
     constexpr mint() : x{} {}
 
-    constexpr mint(ll x) : x{norm(x % getMod())} {}
+    constexpr mint(i64 x) : x{norm(x % getMod())} {}
 
     static int Mod;
 

@@ -6,10 +6,10 @@
  * Time: O(p) for preprosessing and O(\log_p n) for one query.
  * Status: tested on https://www.luogu.com.cn/problem/P3807.
  */
- Z binom(ll n, ll m) {
+ Z binom(i64 n, i64 m) {
      Z ret = 1;
      while (n || m) {
-         ll a = n % mod, b = m % mod;
+         i64 a = n % mod, b = m % mod;
          if (a < b) return 0;
          ret *= fact.fac[a] * fact.inv[b] * fact.inv[a - b];
          n /= mod;

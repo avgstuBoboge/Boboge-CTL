@@ -57,7 +57,7 @@ struct FFT {
 
     static vector<mint> conv(const vector<mint> &as, const vector<mint> &bs) {
         if (min(as.size(), bs.size()) <= 128) {
-            vector<ll> cs(as.size() + bs.size() - 1);
+            vector<i64> cs(as.size() + bs.size() - 1);
             for (int i = 0; i < as.size(); ++i)
                 for (int j = 0; j < bs.size(); ++j)
                     cs[i + j] += (int) (as[i] * bs[j]);

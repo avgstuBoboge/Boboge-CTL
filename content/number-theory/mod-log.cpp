@@ -8,7 +8,7 @@
 pair<bool, int> ModLog(Z a, Z b) {
     int p = mod;
     int sqr = sqrt(p) + 0.5;
-    while (1ll * sqr * sqr < p) sqr++;
+    while (1LL * sqr * sqr < p) sqr++;
     Z c = 1;
     vector<pair<Z, int>> vec;
     for (int i = 1; i <= sqr; ++i) {

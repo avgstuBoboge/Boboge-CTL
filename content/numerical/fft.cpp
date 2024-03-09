@@ -78,9 +78,9 @@ struct FFT {
             vector<cp> tmp(n2);
             for (int i = 0; i < n2; ++i) tmp[i] = a[i] * b[i];
             dft(tmp, 1);
-            for (int i = 0; i < n; ++i) res[i] = (res[i] + (ll) (tmp[i].real() + 0.5) % mod * w) % mod;
+            for (int i = 0; i < n; ++i) res[i] = (res[i] + (i64) (tmp[i].real() + 0.5) % mod * w) % mod;
         };
-        work(a, c, 1ll * M * M % mod, mod);
+        work(a, c, 1LL * M * M % mod, mod);
         work(b, d, 1, mod);
         work(a, d, M, mod);
         work(b, c, M, mod);

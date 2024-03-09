@@ -23,22 +23,22 @@ namespace Factorization {
         }
     }
 
-    inline ll mul(ll a, ll b, ll c) { /// start-hash
+    inline i64 mul(i64 a, i64 b, i64 c) { /// start-hash
         return (i128) a * b % c;
     }
 
-    ll mPow(ll a, ll k, ll mod) {
-        ll res = 1;
+    i64 mPow(i64 a, i64 k, i64 mod) {
+        i64 res = 1;
         for (; k; k >>= 1, a = mul(a, a, mod)) if (k & 1) res = mul(res, a, mod);
         return res;
     }
 
-    bool miller(ll n) {
-        auto test = [&](ll n, int a) {
+    bool miller(i64 n) {
+        auto test = [&](i64 n, int a) {
             if (n == a) return true;
             if (n % 2 == 0) return false;
-            ll d = (n - 1) >> ctz(n - 1);
-            ll r = mPow(a, d, n);
+            i64 d = (n - 1) >> ctz(n - 1);
+            i64 r = mPow(a, d, n);
             while (d < n - 1 && r != 1 && r != n - 1) {
                 d <<= 1;
                 r = mul(r, r, n);
@@ -51,19 +51,19 @@ namespace Factorization {
         return 1;
     } /// end-hash
 
-    mt19937 rng(114514); /// start-hash
-    ll myrand(ll a, ll b) { return uniform_int_distribution<ll>(a, b)(rng); }
+    mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+    i64 myrand(i64 a, i64 b) { return uniform_int_distribution<i64>(a, b)(rng); }
 
-    ll pollard(ll n) { // return some nontrivial factor of n.
+    i64 pollard(i64 n) { // return some nontrivial factor of n.
         if (miller(n)) return n;
         if (n % 2 == 0) return 2;
-        ll st = 0;
-        auto f = [&](ll x) { return (__int128_t(x) * x + st) % n; };
+        i64 st = 0;
+        auto f = [&](i64 x) { return (__int128_t(x) * x + st) % n; };
         while (true) {
             st++;
-            ll x = st, y = f(x);
+            i64 x = st, y = f(x);
             while (true) {
-                ll p = gcd((y - x + n), n);
+                i64 p = gcd((y - x + n), n);
                 if (p == 0 || p == n) break;
                 if (p != 1) return p;
                 x = f(x);
@@ -72,13 +72,13 @@ namespace Factorization {
         }
     }
 
-    vector<ll> factorize(ll n) {
-        vector<ll> res;
-        auto dfs = [&](auto &dfs, ll x) {
+    vector<i64> factorize(i64 n) {
+        vector<i64> res;
+        auto dfs = [&](auto &dfs, i64 x) {
             if (x == 1) return;
             if (miller(x)) res.push_back(x);
             else {
-                ll d = pollard(x);
+                i64 d = pollard(x);
                 dfs(dfs, d);
                 dfs(dfs, x / d);
             }

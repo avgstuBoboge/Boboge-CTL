@@ -5,12 +5,12 @@
  * Time: O(\log n).
  * Status: tested on https://www.luogu.com.cn/problem/P6091.
  */
-bool hasPrimitiveRoot(ll n) {
+bool hasPrimitiveRoot(i64 n) {
     assert(n > 1);
     if (n % 4 == 0) return n == 4;
     if (n % 2 == 0) n /= 2;
-    vector<ll> ps;
-    for (ll i = 2; i * i <= n; i++) {
+    vector<i64> ps;
+    for (i64 i = 2; i * i <= n; i++) {
         if (n % i == 0) {
             ps.push_back(i);
             while (n % i == 0) n /= i;

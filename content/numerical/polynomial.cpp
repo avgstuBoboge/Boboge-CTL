@@ -120,7 +120,7 @@ struct Poly : vector<T> {
         poly fk = (k * f.ln()).exp();
         fk *= power(co, k);
         int rem_siz = this->size();
-        if (1ll * d * k >= rem_siz) return Poly(rem_siz, 0);
+        if (1LL * d * k >= rem_siz) return Poly(rem_siz, 0);
         reverse(fk.begin(), fk.end());
         for (int i = 0; i < d * k; ++i) fk.emplace_back(0);
         reverse(fk.begin(), fk.end());

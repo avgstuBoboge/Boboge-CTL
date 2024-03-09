@@ -21,7 +21,7 @@ struct LinearSieve {
                 mu[i] = -1;
             }
             for (auto p: ps) {
-                ll v = 1ll * i * p;
+                i64 v = 1LL * i * p;
                 if (v > n) break;
                 mark[v] = p;
                 if (i % p == 0) {

@@ -35,13 +35,13 @@ struct segTree {
 
     struct Info {
         int mx, sec, mx_cnt;
-        ll sum;
+        i64 sum;
         int his, len, dir; //0-ls 1-rs 2-eq the direction of pushdown add_mx, his_mx
         void applyTag(Tag &k) {
             his = max(his, mx + k.his_mx);
             mx += k.add_mx;
             sec += k.add_sec;
-            sum += 1ll * k.add_mx * mx_cnt + 1ll * k.add_sec * (len - mx_cnt);
+            sum += 1LL * k.add_mx * mx_cnt + 1LL * k.add_sec * (len - mx_cnt);
         }
 
         friend Info operator+(Info x, Info y) {

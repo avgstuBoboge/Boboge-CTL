@@ -14,7 +14,7 @@ int rand() { return uniform_int_distribution<int>()(rng); }
 struct Treap {
     const int pri;
     Treap *l = nullptr, *r = nullptr;
-    ll val, sum;
+    i64 val, sum;
     int siz = 1, flip = 0;
 
     void update() {
@@ -31,7 +31,7 @@ struct Treap {
         }
     }
 
-    Treap(ll v) : val(v), sum(v), pri(rand()) {}
+    Treap(i64 v) : val(v), sum(v), pri(rand()) {}
 
     ~Treap() {
         delete l;
@@ -40,7 +40,7 @@ struct Treap {
 
     static int getSiz(Treap *x) { return x ? x->siz : 0; }
 
-    static ll getSum(Treap *x) { return x ? x->sum : 0; }
+    static i64 getSum(Treap *x) { return x ? x->sum : 0; }
 
     static void reverse(Treap *x) { if (x) x->flip ^= 1; }
 

@@ -6,7 +6,7 @@
  * Status: tested on https://ac.nowcoder.com/acm/contest/148/H, https://qoj.ac/problem/3004.
  */
 template<class T>
-T Euclidean(ll a, ll b, ll c, ll n) {
+T Euclidean(i64 a, i64 b, i64 c, i64 n) {
     T res = 0;
     if (a >= c || b >= c) {
         res += T{a / c} * n * (n + 1) / 2;
@@ -15,7 +15,7 @@ T Euclidean(ll a, ll b, ll c, ll n) {
         b %= c;
     }
     if (a != 0) {
-        ll m = ((i128) a * n + b) / c;
+        i64 m = ((i128) a * n + b) / c;
         res += T{m} * n - Euclidean<T>(c, c - b - 1, a, m - 1);
     }
     return res;
