@@ -9,7 +9,7 @@ bool hasPrimitiveRoot(ll n) {
     assert(n > 1);
     if (n % 4 == 0) return n == 4;
     if (n % 2 == 0) n /= 2;
-    std::vector<ll> ps;
+    vector<ll> ps;
     for (ll i = 2; i * i <= n; i++) {
         if (n % i == 0) {
             ps.push_back(i);

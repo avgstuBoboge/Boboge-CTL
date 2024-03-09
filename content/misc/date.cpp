@@ -4,7 +4,7 @@
  * Description: In case you meet date calculation problems
  * Status: ??
  */
-std::string dayOfWeek[] = {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
+string dayOfWeek[] = {"Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
 
 int DateToInt(int m, int d, int y) {
     return  1461 * (y + 4800 + (m - 14) / 12) / 4 +
@@ -27,6 +27,6 @@ void IntToDate(int jd, int &m, int &d, int &y) {
     y = 100 * (n - 49) + i + x;
 }
 
-std::string IntToDay(int jd) {
+string IntToDay(int jd) {
     return dayOfWeek[jd % 7];
 }

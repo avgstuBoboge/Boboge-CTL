@@ -7,7 +7,7 @@
  * Status: tested on https://codeforces.com/gym/102056/problem/C.
 */
 template<class T>
-T CRT(const std::vector<T> &as, const std::vector<T> &ms) {
+T CRT(const vector<T> &as, const vector<T> &ms) {
     T M = 1, res = 0;
     for (auto x: ms) M *= x;
     for (int i = 0; i < as.size(); ++i) {

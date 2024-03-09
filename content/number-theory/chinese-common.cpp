@@ -8,7 +8,7 @@
  * Status: tested on https://www.luogu.com.cn/problem/P4777.
 */
 template<class T>
-std::pair<T, T> merge(T a1, T m1, T a2, T m2) {
+pair<T, T> merge(T a1, T m1, T a2, T m2) {
     if (m1 == -1 || m2 == -1) return {-1, -1};
     auto [y1, y2] = exgcd(m1, m2);
     T g = m1 * y1 + m2 * y2;
@@ -21,7 +21,7 @@ std::pair<T, T> merge(T a1, T m1, T a2, T m2) {
 }
 
 template<class T>
-std::pair<T, T> exCRT(const std::vector<T> &as, const std::vector<T> &ms) {
+pair<T, T> exCRT(const vector<T> &as, const vector<T> &ms) {
     T a = 0, m = 1;
     for (int i = 0; i < as.size(); ++i) {
         T a2 = as[i], m2 = ms[i];

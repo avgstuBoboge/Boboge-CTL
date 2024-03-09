@@ -10,7 +10,7 @@
 
 struct PalindromeTree {
     struct node {
-        std::map<int, int> nxt;
+        map<int, int> nxt;
         int fail, len;
         int cnt;
 
@@ -19,7 +19,7 @@ struct PalindromeTree {
         }
     };
 
-    std::vector<node> t;
+    vector<node> t;
 
     template<class T>
     PalindromeTree(const T &s) {

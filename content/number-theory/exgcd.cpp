@@ -6,7 +6,7 @@
  * Status: tested on https://ac.nowcoder.com/acm/contest/5667/J, https://ac.nowcoder.com/acm/contest/5668/F, https://codeforces.com/gym/101206/problem/F, https://codeforces.com/contest/772/problem/C.
  */
 template<class T>
-std::pair<T, T> exgcd(T a, T b) {
+pair<T, T> exgcd(T a, T b) {
     if (b == 0) return {1, 0};
     auto [x, y] = exgcd(b, a % b);
     return {y, x - a / b * y};

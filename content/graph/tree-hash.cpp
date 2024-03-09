@@ -5,7 +5,7 @@
  * Time: O(N).
  * Status: tested on https://uoj.ac/problem/763
  */
-std::mt19937_64 rnd(std::chrono::steady_clock::now().time_since_epoch().count());
+mt19937_64 rnd(chrono::steady_clock::now().time_since_epoch().count());
 
 struct treeHash {
     using ull = unsigned long long;
@@ -19,9 +19,9 @@ struct treeHash {
         return H(x & ((1ll << 32) - 1)) + H(x >> 32);
     }
 
-    std::vector<ull> h;
+    vector<ull> h;
 
-    treeHash(std::vector<std::vector<int>> &adj, int rt = 0) : h(adj.size()) {
+    treeHash(vector<vector<int>> &adj, int rt = 0) : h(adj.size()) {
         auto dfs = [&](auto dfs, int u, int fa) -> void {
             h[u] = bas;
             for (int v: adj[u]) {

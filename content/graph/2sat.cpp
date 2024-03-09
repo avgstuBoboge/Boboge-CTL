@@ -8,8 +8,8 @@
  */
 struct TwoSat {
     int n;
-    std::vector<std::vector<int>> e;
-    std::vector<int> ans;
+    vector<vector<int>> e;
+    vector<int> ans;
 
     TwoSat(int n) : n(n), e(n * 2), ans(n) {}
 
@@ -19,16 +19,16 @@ struct TwoSat {
     }
 
     bool satisfiable() {
-        std::vector<int> id(n * 2, -1), dfn(n * 2, -1), low(n * 2, -1), sta;
+        vector<int> id(n * 2, -1), dfn(n * 2, -1), low(n * 2, -1), sta;
         int cnt = 0, scc = 0;
-        std::function<void(int)> dfs = [&](int now) {
+        function<void(int)> dfs = [&](int now) {
             dfn[now] = low[now] = cnt++;
             sta.push_back(now);
             for (auto v: e[now]) {
                 if (dfn[v] == -1) {
                     dfs(v);
-                    low[now] = std::min(low[now], low[v]);
-                } else if (id[v] == -1) low[now] = std::min(low[now], dfn[v]);
+                    low[now] = min(low[now], low[v]);
+                } else if (id[v] == -1) low[now] = min(low[now], dfn[v]);
             }
             if (low[now] == dfn[now]) {
                 while (sta.back() != now) {
@@ -50,5 +50,5 @@ struct TwoSat {
         return true;
     }
 
-    std::vector<int> getAss() { return ans; }
+    vector<int> getAss() { return ans; }
 };

@@ -9,17 +9,17 @@
  * Time: O(N \log N).
  * Status: tested on https://official.contest.yandex.com/mw2020prefinals/contest/18053/problems/H/, https://judge.yosupo.jp/problem/convolution_mod_1000000007.
  */
-const T pi = std::acos(-1);
+const T pi = acos(-1);
 template<class T>
 struct FFT {
-    using cp = std::complex<T>; /// start-hash
-    std::vector<int> r;
+    using cp = complex<T>; /// start-hash
+    vector<int> r;
     int n2;
 
-    void dft(std::vector<cp> &a, int is_inv) { // is_inv == 1 -> idft.
-        for (int i = 1; i < n2; ++i)if (r[i] > i) std::swap(a[i], a[r[i]]);
+    void dft(vector<cp> &a, int is_inv) { // is_inv == 1 -> idft.
+        for (int i = 1; i < n2; ++i)if (r[i] > i) swap(a[i], a[r[i]]);
         for (int step = 1; step < n2; step <<= 1) {
-            std::vector<cp> w(step);
+            vector<cp> w(step);
             for (int j = 0; j < step; ++j) { // this has higher precision, compared to using the power of zeta.
                 T theta = pi * j / step;
                 if (is_inv) theta = -theta;
@@ -46,36 +46,36 @@ struct FFT {
     }
 
     template<class Z>
-    std::vector<Z> conv(const std::vector<Z> &A, const std::vector<Z> &B) {
+    vector<Z> conv(const vector<Z> &A, const vector<Z> &B) {
         int n = A.size() + B.size() - 1;
         pre(n);
-        std::vector<cp> a(n2, 0), b(n2, 0);;
+        vector<cp> a(n2, 0), b(n2, 0);;
         for (int i = 0; i < A.size(); ++i) a[i] = A[i];
         for (int i = 0; i < B.size(); ++i) b[i] = B[i];
         dft(a, 0);
         dft(b, 0);
         for (int i = 0; i < n2; ++i) a[i] *= b[i];
         dft(a, 1);
-        std::vector<Z> res(n);
+        vector<Z> res(n);
         T eps = T{0.5} * (static_cast<Z>(1e-9) == 0);
         for (int i = 0; i < n; ++i) res[i] = a[i].real() + eps;
         return res;
     } /// end-hash
 
-    std::vector<int> conv(const std::vector<int> &A, const std::vector<int> &B, int mod) { /// start-hash
-        int M = std::sqrt(mod) + 0.5;
+    vector<int> conv(const vector<int> &A, const vector<int> &B, int mod) { /// start-hash
+        int M = sqrt(mod) + 0.5;
         int n = A.size() + B.size() - 1;
         pre(n);
-        std::vector<cp> a(n2, 0), b(n2, 0), c(n2, 0), d(n2, 0);
+        vector<cp> a(n2, 0), b(n2, 0), c(n2, 0), d(n2, 0);
         for (int i = 0; i < A.size(); ++i) a[i] = A[i] / M, b[i] = A[i] % M;
         for (int i = 0; i < B.size(); ++i) c[i] = B[i] / M, d[i] = B[i] % M;
         dft(a, 0);
         dft(b, 0);
         dft(c, 0);
         dft(d, 0);
-        std::vector<int> res(n);
-        auto work = [&](std::vector<cp> &a, std::vector<cp> &b, int w, int mod) {
-            std::vector<cp> tmp(n2);
+        vector<int> res(n);
+        auto work = [&](vector<cp> &a, vector<cp> &b, int w, int mod) {
+            vector<cp> tmp(n2);
             for (int i = 0; i < n2; ++i) tmp[i] = a[i] * b[i];
             dft(tmp, 1);
             for (int i = 0; i < n; ++i) res[i] = (res[i] + (ll) (tmp[i].real() + 0.5) % mod * w) % mod;

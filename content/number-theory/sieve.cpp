@@ -6,8 +6,8 @@
  * Status: tested on https://official.contest.yandex.com/opencupXXII/contest/37831/problems/B/.
  */
 struct LinearSieve {
-    std::vector<int> ps, mark;
-    std::vector<int> d, facnum, phi, mu;
+    vector<int> ps, mark;
+    vector<int> d, facnum, phi, mu;
 	
     LinearSieve(int n) : mark(n + 1), d(n + 1), facnum(n + 1), phi(n + 1), mu(n + 1) {
         facnum[1] = phi[1] = mu[1] = 1;

@@ -7,10 +7,10 @@
  */
 struct CentroidDecomposition {
     int n;
-    std::vector<std::vector<std::pair<int, int>>> ancs;
+    vector<vector<pair<int, int>>> ancs;
 
-    CentroidDecomposition(std::vector<std::vector<int>> &g) : n(g.size()), ancs(n) {
-        std::vector<int> siz(n), vis(n);
+    CentroidDecomposition(vector<vector<int>> &g) : n(g.size()), ancs(n) {
+        vector<int> siz(n), vis(n);
         auto solve = [&](auto &solve, int st, int tot) -> void {
             int mn = 0x3f3f3f3f, cent = -1;
             auto getcent = [&](auto &dfs, int now, int fa) -> void {
@@ -20,10 +20,10 @@ struct CentroidDecomposition {
                     if (v != fa && vis[v] == 0) {
                         dfs(dfs, v, now);
                         siz[now] += siz[v];
-                        mx = std::max(mx, siz[v]);
+                        mx = max(mx, siz[v]);
                     }
                 }
-                mx = std::max(mx, tot - siz[now]);
+                mx = max(mx, tot - siz[now]);
                 if (mn > mx) mn = mx, cent = now;
             };
             getcent(getcent, st, -1);

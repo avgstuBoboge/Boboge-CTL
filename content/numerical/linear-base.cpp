@@ -7,10 +7,10 @@
  * Time: O(d \cdot \frac{d}{w}) for $insert$; O(d^2 \cdot \frac{d}{w}) for union; O(d \cdot \frac{d}{w}) for $kth()$.
  * Status: tested on https://codeforces.com/contest/1100/problem/F, https://ac.nowcoder.com/acm/contest/11194/E, https://codeforces.com/gym/102156/problem/D, https://ac.nowcoder.com/acm/contest/884/B.
  */
-template<int d, class T = std::bitset<d>, class Z = int>
+template<int d, class T = bitset<d>, class Z = int>
 struct LB {
-    std::vector<T> a; /// start-hash
-    std::vector<Z> w;
+    vector<T> a; /// start-hash
+    vector<Z> w;
 
     T &operator[](int i) const { return (T &) a[i]; }
 
@@ -25,8 +25,8 @@ struct LB {
                     w[i] = val;
                     return 1;
                 } else if (val > w[i]) {
-                    std::swap(a[i], x);
-                    std::swap(w[i], val);
+                    swap(a[i], x);
+                    swap(w[i], val);
                 }
                 x ^= a[i];
             }

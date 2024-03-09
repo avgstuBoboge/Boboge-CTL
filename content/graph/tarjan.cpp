@@ -4,9 +4,9 @@
  * Description: Tarjan algorithm for directed graph $G = (V, E)$. 
  * Status: tested on http://ejudge.opencup.org/~ejudge/team.cgi?contest_id=2745 problem J. https://www.luogu.com.cn/problem/P3387
  */
-auto tarjan(const std::vector<std::vector<int>> &g) {
+auto tarjan(const vector<vector<int>> &g) {
     int n = (int) g.size();
-    std::vector<int> id(n, -1), dfn(n, -1), low(n, -1), sta;
+    vector<int> id(n, -1), dfn(n, -1), low(n, -1), sta;
     int cnt = 0, scc = 0;
 
     auto dfs = [&](auto &dfs, int now) -> void {
@@ -15,8 +15,8 @@ auto tarjan(const std::vector<std::vector<int>> &g) {
         for (auto v: g[now]) {
             if (dfn[v] == -1) {
                 dfs(dfs, v);
-                low[now] = std::min(low[now], low[v]);
-            } else if (id[v] == -1) low[now] = std::min(low[now], dfn[v]);
+                low[now] = min(low[now], low[v]);
+            } else if (id[v] == -1) low[now] = min(low[now], dfn[v]);
         }
         if (low[now] == dfn[now]) {
             while (1) {
@@ -29,5 +29,5 @@ auto tarjan(const std::vector<std::vector<int>> &g) {
         }
     };
     for (int i = 0; i < n; ++i) if (dfn[i] == -1) dfs(dfs, i);
-    return std::make_tuple(scc, id);
+    return make_tuple(scc, id);
 }

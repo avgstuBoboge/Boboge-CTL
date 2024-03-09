@@ -7,7 +7,7 @@
  * Time: O(\log^2 p) worst case, often O(\log p).
  * Status: tested on https://www.luogu.com.cn/problem/P5491, https://judge.yosupo.jp/problem/sqrt_mod.
  */
-std::pair<bool, Z> ModSqrt(Z a) {
+pair<bool, Z> ModSqrt(Z a) {
     int p = mod; //make mod not const if you need to change
     if (p == 2) return {true, a};
     if (a.pow((p - 1) / 2) == p - 1) return {false, 0};

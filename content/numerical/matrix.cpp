@@ -19,16 +19,16 @@
 template<class T>
 struct Matrix {
     using Mat = Matrix; /// start-hash
-    using Vec = std::vector<T>;
+    using Vec = vector<T>;
 
-    std::vector<Vec> a;
+    vector<Vec> a;
 
     Matrix(int n, int m) {
         assert(n > 0 && m > 0);
         a.assign(n, Vec(m));
     }
 
-    Matrix(const std::vector<Vec> &a) : a(a) {
+    Matrix(const vector<Vec> &a) : a(a) {
         assert(!a.empty() && !a[0].empty());
     }
 
@@ -88,7 +88,7 @@ struct Matrix {
             int id = rk;
             while (id < n && ::isZero(a[id][c])) id++;
             if (id == n) continue;
-            if (id != rk) std::swap(a[id], a[rk]);
+            if (id != rk) swap(a[id], a[rk]);
             T tmp = a[rk][c];
             for (auto &x: a[rk]) x /= tmp;
             for (int i = 0; i < n; ++i) {
@@ -116,7 +116,7 @@ struct Matrix {
     } /// end-hash
 
     //return [true, solution] if there's any solution, if the solution is not unique, rk < n
-    friend std::pair<bool, Vec> SolveLinear(Mat A, const Vec &b) { /// start-hash
+    friend pair<bool, Vec> SolveLinear(Mat A, const Vec &b) { /// start-hash
         int n = A.a.size(), m = A[0].size();
         assert(b.size() == n);
         for (int i = 0; i < n; ++i) {

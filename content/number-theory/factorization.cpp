@@ -17,9 +17,9 @@ namespace Factorization {
         int ky = ctz(y);
         y >>= ky;
         for (;; y >>= ctz(y)) {
-            if (x > y) std::swap(x, y);
+            if (x > y) swap(x, y);
             y -= x;
-            if (!y) return x << std::min(kx, ky);
+            if (!y) return x << min(kx, ky);
         }
     }
 
@@ -51,8 +51,8 @@ namespace Factorization {
         return 1;
     } /// end-hash
 
-    std::mt19937 rng(114514); /// start-hash
-    ll myrand(ll a, ll b) { return std::uniform_int_distribution<ll>(a, b)(rng); }
+    mt19937 rng(114514); /// start-hash
+    ll myrand(ll a, ll b) { return uniform_int_distribution<ll>(a, b)(rng); }
 
     ll pollard(ll n) { // return some nontrivial factor of n.
         if (miller(n)) return n;
@@ -72,8 +72,8 @@ namespace Factorization {
         }
     }
 
-    std::vector<ll> factorize(ll n) {
-        std::vector<ll> res;
+    vector<ll> factorize(ll n) {
+        vector<ll> res;
         auto dfs = [&](auto &dfs, ll x) {
             if (x == 1) return;
             if (miller(x)) res.push_back(x);
@@ -84,7 +84,7 @@ namespace Factorization {
             }
         };
         dfs(dfs, n);
-		std::sort(res.begin(), res.end());
+		sort(res.begin(), res.end());
         return res;
     } /// end-hash
 }

@@ -12,7 +12,7 @@ template<class T>
 struct KMP {
     const T s; /// start-hash
     int n;
-    std::vector<int> fail;
+    vector<int> fail;
 
     KMP(const T &s) : s(s), n(s.size()), fail(n) {
         int j = 0;
@@ -23,9 +23,9 @@ struct KMP {
         }
     } ///end-hash
 
-    std::vector<int> match(const T &t) { /// start-hash
+    vector<int> match(const T &t) { /// start-hash
         int m = t.size(), j = 0;
-        std::vector<int> res(m);
+        vector<int> res(m);
         for (int i = 0; i < m; ++i) {
             while (j > 0 && (j == n || s[j] != t[i])) j = fail[j - 1];
             if (s[j] == t[i]) j++;

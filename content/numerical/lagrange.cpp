@@ -5,7 +5,7 @@
  * Time: O(N ^ 2 \log N) for normal, O(N \log N) for special one.
  * Status: tested on https://www.luogu.com.cn/problem/P4781.
  */
-Z lagrange(int n, int k, std::vector<Z> &x, std::vector<Z> &y) {
+Z lagrange(int n, int k, vector<Z> &x, vector<Z> &y) {
     Z ret = 0;
     for (int i = 0; i < n; ++i) {
         Z s1 = y[i];
@@ -21,12 +21,12 @@ Z lagrange(int n, int k, std::vector<Z> &x, std::vector<Z> &y) {
 }
 
 //$x_i = i$, we have $y_0 ... y_n$
-Z lagrange(int n, int m, std::vector<Z> &y) {
+Z lagrange(int n, int m, vector<Z> &y) {
     assert(y.size() > n);
     if (m <= n) return y[m];
     Z ret = 0;
     Z all = 1;
-    std::vector<Z> fac(n + 1);
+    vector<Z> fac(n + 1);
     for (int i = 0; i <= n; ++i) {
         fac[i] = (i == 0 ? 1 : fac[i - 1] * i);
         all *= m - i;

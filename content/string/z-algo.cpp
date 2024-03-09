@@ -11,13 +11,13 @@ template<class T>
 struct z_function {
     const T s; /// start-hash
     int n;
-    std::vector<int> z;
+    vector<int> z;
 
     z_function(const T &s) : s(s), n(s.size()), z(n) {
         z[0] = n;
         int l = 0, r = 0;
         for (int i = 1; i < n; ++i) {
-            z[i] = std::max(0, std::min(z[i - l], r - i));
+            z[i] = max(0, min(z[i - l], r - i));
             while (i + z[i] < n && s[z[i]] == s[i + z[i]]) z[i]++;
             if (i + z[i] > r) {
                 l = i;
@@ -26,12 +26,12 @@ struct z_function {
         }
     } /// end-hash
 
-    std::vector<int> cal(const T &t) { /// start-hash
+    vector<int> cal(const T &t) { /// start-hash
         int m = t.size();
-        std::vector<int> res(m);
+        vector<int> res(m);
         int l = 0, r = 0;
         for (int i = 0; i < m; ++i) {
-            res[i] = std::max(0, std::min(i - l < n ? z[i - l] : 0, r - i));
+            res[i] = max(0, min(i - l < n ? z[i - l] : 0, r - i));
             while (i + res[i] < m && s[res[i]] == t[i + res[i]]) res[i]++;
             if (i + res[i] > r) {
                 l = i;

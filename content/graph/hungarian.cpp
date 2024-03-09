@@ -7,23 +7,23 @@
  * Time: O(|L|^2 |R|).
  * Status: Seems to be fast enough. Tested on https://www.luogu.com.cn/problem/P6577, https://codeforces.com/gym/101635/problem/G, https://codeforces.com/gym/101194/problem/J.
  */
-template<class T = ll, T INF = std::numeric_limits<T>::max()>
-std::vector<std::pair<int, int>> Hungarian(const std::vector<std::vector<T>> &ws) {
+template<class T = ll, T INF = numeric_limits<T>::max()>
+vector<pair<int, int>> Hungarian(const vector<vector<T>> &ws) {
     int L = ws.size(), R = L == 0 ? 0 : ws[0].size();
-    std::vector<T> lp(L), rp(R); // left & right potential
-    std::vector<int> lm(L, -1), rm(R, -1); // left & right match
+    vector<T> lp(L), rp(R); // left & right potential
+    vector<int> lm(L, -1), rm(R, -1); // left & right match
     for (int i = 0; i < L; ++i)
         lp[i] = *min_element(ws[i].begin(), ws[i].end());
     auto step = [&](int src) {
-        std::vector<int> que{src}, pre(R, -1); // bfs que & back pointers
-        std::vector<T> sa(R, INF); // slack array; min slack from node in que
+        vector<int> que{src}, pre(R, -1); // bfs que & back pointers
+        vector<T> sa(R, INF); // slack array; min slack from node in que
         auto extend = [&](int j) {
             if (sa[j] == 0) {
                 if (rm[j] == -1) {
                     while (j != -1) { // Augment the path
                         int i = pre[j];
                         rm[j] = i;
-                        std::swap(lm[i], j);
+                        swap(lm[i], j);
                     }
                     return 1;
                 } else que.push_back(rm[j]);
@@ -44,7 +44,7 @@ std::vector<std::pair<int, int>> Hungarian(const std::vector<std::vector<T>> &ws
             if (ind == (int) que.size() - 1) { // Update potentials
                 T d = INF;
                 for (int j = 0; j < R; ++j)
-                    if (sa[j]) d = std::min(d, sa[j]);
+                    if (sa[j]) d = min(d, sa[j]);
                 bool found = false;
                 for (auto j: que) lp[j] += d;
                 for (int j = 0; j < R; ++j) {
@@ -58,7 +58,7 @@ std::vector<std::pair<int, int>> Hungarian(const std::vector<std::vector<T>> &ws
         }
     };
     for (int i = 0; i < L; ++i) step(i);
-    std::vector<std::pair<int, int>> res;
+    vector<pair<int, int>> res;
     for (int i = 0; i < L; ++i) res.emplace_back(i, lm[i]);
     return res;
 }

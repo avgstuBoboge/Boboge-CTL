@@ -18,8 +18,8 @@ struct segTree {
         int add_mx, add_sec, his_mx, his_sec;
 
         Tag &operator+=(const Tag &k) {
-            his_mx = std::max(his_mx, add_mx + k.his_mx);
-            his_sec = std::max(his_sec, add_sec + k.his_sec);
+            his_mx = max(his_mx, add_mx + k.his_mx);
+            his_sec = max(his_sec, add_sec + k.his_sec);
             add_mx += k.add_mx;
             add_sec += k.add_sec;
             return *this;
@@ -31,14 +31,14 @@ struct segTree {
         }
     };
 
-    std::vector<Tag> tag;
+    vector<Tag> tag;
 
     struct Info {
         int mx, sec, mx_cnt;
         ll sum;
         int his, len, dir; //0-ls 1-rs 2-eq the direction of pushdown add_mx, his_mx
         void applyTag(Tag &k) {
-            his = std::max(his, mx + k.his_mx);
+            his = max(his, mx + k.his_mx);
             mx += k.add_mx;
             sec += k.add_sec;
             sum += 1ll * k.add_mx * mx_cnt + 1ll * k.add_sec * (len - mx_cnt);
@@ -49,19 +49,19 @@ struct segTree {
             if (x.mx > y.mx) ret.dir = 0;
             else if (x.mx < y.mx) ret.dir = 1;
             else if (x.mx == y.mx) ret.dir = 2;
-            if (x.mx < y.mx) std::swap(x, y);
+            if (x.mx < y.mx) swap(x, y);
             ret.mx = x.mx;
             ret.mx_cnt = x.mx_cnt;
-            if (x.mx == y.mx) ret.mx_cnt += y.mx_cnt, ret.sec = std::max(x.sec, y.sec);
-            else ret.sec = std::max(x.sec, y.mx);
+            if (x.mx == y.mx) ret.mx_cnt += y.mx_cnt, ret.sec = max(x.sec, y.sec);
+            else ret.sec = max(x.sec, y.mx);
             ret.sum = x.sum + y.sum;
-            ret.his = std::max(x.his, y.his);
+            ret.his = max(x.his, y.his);
             ret.len = x.len + y.len;
             return ret;
         }
     };
 
-    std::vector<Info> info;
+    vector<Info> info;
 
     void pull(int x) {
         info[x] = info[x * 2] + info[x * 2 + 1];
@@ -81,7 +81,7 @@ struct segTree {
         tag[x] = {};
     }
 
-    void build(int i, int l, int r, const std::vector<int> &a) {
+    void build(int i, int l, int r, const vector<int> &a) {
         tag[i] = {};
         if (l == r) {
             info[i].mx = a[l], info[i].sec = -inf, info[i].mx_cnt = 1, info[i].his = a[l], info[i].sum = a[l], info[i].len = 1;
@@ -129,7 +129,7 @@ struct segTree {
 
     int n;
 
-    segTree(int n, std::vector<int> &a) : n(n), tag(n * 4 + 10), info(n * 4 + 10) {
+    segTree(int n, vector<int> &a) : n(n), tag(n * 4 + 10), info(n * 4 + 10) {
         build(1, 1, n, a);
     }
 

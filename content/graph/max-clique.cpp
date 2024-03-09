@@ -5,9 +5,9 @@
  * Status: tested on https://judge.yosupo.jp/problem/maximum_independent_set, https://codeforces.com/contest/1578/problem/K.
  */
 template<int L>
-std::vector<int> BronKerbosch(int n, const std::vector<std::pair<int, int>> &es) {
-    using bs = std::bitset<L>;
-    std::vector<bs> nbrs(n);
+vector<int> BronKerbosch(int n, const vector<pair<int, int>> &es) {
+    using bs = bitset<L>;
+    vector<bs> nbrs(n);
     for (auto [x, y]: es) {
         nbrs[x].set(y);
         nbrs[y].set(x);
@@ -25,8 +25,8 @@ std::vector<int> BronKerbosch(int n, const std::vector<std::pair<int, int>> &es)
             dfs(dfs, nR, P & nbrs[v], X & nbrs[v]);
         }
     };
-    dfs(dfs, bs{}, bs{std::string(n, '1')}, bs{});
-    std::vector<int> res;
+    dfs(dfs, bs{}, bs{string(n, '1')}, bs{});
+    vector<int> res;
     for (int i = 0; i < n; ++i) if (best[i]) res.push_back(i);
     return res;
 }

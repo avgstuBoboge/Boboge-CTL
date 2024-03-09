@@ -28,13 +28,13 @@ struct SegTree2D {
 
     int oL, oR, iL, iR;
     // change to array to accelerate, since allocating takes time. (saves ~ 200ms when allocating 1e7)
-    std::vector<iNode> it;
-    std::vector<oNode> ot;
+    vector<iNode> it;
+    vector<oNode> ot;
 
     // node 0 is left as virtual empty node.
     SegTree2D(int oL, int oR, int iL, int iR, int q) : oL(oL), oR(oR), iL(iL), iR(iR), it(1), ot(1) {
-        it.reserve(q * (std::__lg(oR - oL + 1) + 2) * (std::__lg(iR - iL + 1) + 2) + 1);
-        ot.reserve(q * (std::__lg(oR - oL + 1) + 2) + 1);
+        it.reserve(q * (__lg(oR - oL + 1) + 2) * (__lg(iR - iL + 1) + 2) + 1);
+        ot.reserve(q * (__lg(oR - oL + 1) + 2) + 1);
     }
 
     // return new root id.

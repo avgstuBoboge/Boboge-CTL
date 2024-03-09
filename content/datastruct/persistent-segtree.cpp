@@ -25,12 +25,12 @@ struct persistSegTree {
         Info info;
         int ls{}, rs{};
     };
-    std::vector<node> t;
+    vector<node> t;
     int n;
 
     persistSegTree(int n, int q) : n(n), t(1) {
         assert(n >= 0);
-        t.reserve(q * (std::__lg(n + 1) + 2) + 10);
+        t.reserve(q * (__lg(n + 1) + 2) + 10);
     }
 
     void up(int x) {
@@ -41,7 +41,7 @@ struct persistSegTree {
 
     template<class... T>
     int update(int rt, int pos, const T &... val) {
-        std::function<void(int &, int, int)> dfs = [&](int &id, int l, int r) {
+        function<void(int &, int, int)> dfs = [&](int &id, int l, int r) {
             t.push_back(t[id]);
             id = (int) t.size() - 1;
             if (l == r) {
@@ -59,7 +59,7 @@ struct persistSegTree {
     //on a single version
     Info rangeAsk(int rt, int ql, int qr) {
         Info res{};
-        std::function<void(int, int, int)> dfs = [&](int id, int l, int r) {
+        function<void(int, int, int)> dfs = [&](int id, int l, int r) {
             if (id == 0 || qr < l || r < ql) return;
             if (ql <= l && r <= qr) {
                 res = res + t[id].info;
@@ -75,7 +75,7 @@ struct persistSegTree {
     // lower_bound on prefix sums of difference between two versions.
     int lower_bound(int rt_l, int rt_r, Info k) {
         Info sum{};
-        std::function<int(int, int, int, int)> dfs = [&](int x, int y, int l, int r) {
+        function<int(int, int, int, int)> dfs = [&](int x, int y, int l, int r) {
             if (l == r) {
                 return sum + t[y].info - t[x].info >= k ? l : l + 1;
             }

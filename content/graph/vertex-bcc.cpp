@@ -13,18 +13,18 @@
  */
 struct VertexBCC {
     int n, bcc; /// start-hash
-    std::vector<int> id, top, fa;
-    std::vector<std::pair<int, int>> bf; // edges of the block-forest.
+    vector<int> id, top, fa;
+    vector<pair<int, int>> bf; // edges of the block-forest.
 
-    VertexBCC(int n, const std::vector<std::pair<int, int>> &es) : n(n), bcc(0), id(es.size()), top(n), fa(n, -1) {
-        std::vector<std::vector<int>> g(n);
+    VertexBCC(int n, const vector<pair<int, int>> &es) : n(n), bcc(0), id(es.size()), top(n), fa(n, -1) {
+        vector<vector<int>> g(n);
         for (int i = 0; i < es.size(); ++i) {
             auto [x, y] = es[i];
             g[x].push_back(i);
             g[y].push_back(i);
         }
         int cnt = 0;
-        std::vector<int> dfn(n, -1), low(n), mark(es.size()), vsta, esta;
+        vector<int> dfn(n, -1), low(n), mark(es.size()), vsta, esta;
         auto dfs = [&](auto dfs, int now) -> void {
             low[now] = dfn[now] = cnt++;
             vsta.push_back(now);
@@ -37,7 +37,7 @@ struct VertexBCC {
                     if (dfn[v] == -1) {
                         dfs(dfs, v);
                         fa[v] = now;
-                        low[now] = std::min(low[now], low[v]);
+                        low[now] = min(low[now], low[v]);
                         if (low[v] >= dfn[now]) {
                             bf.emplace_back(n + bcc, now);
                             while (1) {
@@ -56,7 +56,7 @@ struct VertexBCC {
                             bcc++;
                         }
                     } else {
-                        low[now] = std::min(low[now], dfn[v]);
+                        low[now] = min(low[now], dfn[v]);
                     }
                 }
         };
@@ -73,8 +73,8 @@ struct VertexBCC {
         else return top[x] == top[y];
     } /// end-hash
 
-    std::vector<std::vector<int>> getBlockForest() { /// start-hash
-        std::vector<std::vector<int>> g(n + bcc);
+    vector<vector<int>> getBlockForest() { /// start-hash
+        vector<vector<int>> g(n + bcc);
         for (auto [x, y]: bf) {
             g[x].push_back(y);
             g[y].push_back(x);

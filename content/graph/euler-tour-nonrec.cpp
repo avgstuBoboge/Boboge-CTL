@@ -8,19 +8,19 @@
  */
 struct EulerTour {
     int n;
-    std::vector<std::vector<int>> tours;
-    std::vector<int> ori;
+    vector<vector<int>> tours;
+    vector<int> ori;
 
-    EulerTour(int n, const std::vector<std::pair<int, int>> &es, int dir = 0) : n(n), ori(es.size()) {
-        std::vector<std::vector<int>> g(n);
+    EulerTour(int n, const vector<pair<int, int>> &es, int dir = 0) : n(n), ori(es.size()) {
+        vector<vector<int>> g(n);
         int m = es.size();
         for (int i = 0; i < m; ++i) {
             auto [x, y] = es[i];
             g[x].push_back(i);
             if (dir == 0) g[y].push_back(i);
         }
-        std::vector<int> path, cur(n);
-        std::vector<std::pair<int, int>> sta;
+        vector<int> path, cur(n);
+        vector<pair<int, int>> sta;
         auto solve = [&](int st) {
             sta.emplace_back(st, -1);
             while (!sta.empty()) {
@@ -47,13 +47,13 @@ struct EulerTour {
             path.clear();
             solve(i);
             if (!path.empty()) {
-                std::reverse(path.begin(), path.end());
+                reverse(path.begin(), path.end());
                 tours.push_back(path);
             }
         }
     }
 
-    std::vector<std::vector<int>> getTours() { return tours; }
+    vector<vector<int>> getTours() { return tours; }
 
-    std::vector<int> getOrient() { return ori; }
+    vector<int> getOrient() { return ori; }
 };

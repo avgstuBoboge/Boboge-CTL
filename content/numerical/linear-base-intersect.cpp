@@ -7,11 +7,11 @@
  * Status: tested at https://ac.nowcoder.com/acm/contest/884/B.
  */
 #include "linear-base.cpp"
-template<int d, class T = std::bitset<d * 2>>
+template<int d, class T = bitset<d * 2>>
 LB<d, T> intersect(LB<d, T> a, const LB<d, T> &b) {
     LB<d, T> res;
     for (int i = 0; i < d; ++i) if (a[i] != 0) a[i][d + i] = 1;
-    T msk(std::string(d, '1'));
+    T msk(string(d, '1'));
     for (int i = 0; i < d; ++i) {
         T x = a.ask_min(b[i]);
         if ((x & msk) != 0) {

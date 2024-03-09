@@ -14,7 +14,7 @@
 template<class T>
 struct SAM {
     struct node { /// start-hash
-        std::map<int, int> nxt; // change this if it is slow.
+        map<int, int> nxt; // change this if it is slow.
         int fa, len;
         int occ, pos; // # of occurrence (as prefix) & endpos.
         node(int fa = -1, int len = 0) : fa(fa), len(len) {
@@ -24,8 +24,8 @@ struct SAM {
 
     T s;
     int n;
-    std::vector<node> t;
-    std::vector<int> at; // at[i] = the state at which the i-th prefix of s is.
+    vector<node> t;
+    vector<int> at; // at[i] = the state at which the i-th prefix of s is.
 
     SAM(const T &s) : s(s), n(s.size()), at(n) {
         t.emplace_back();
@@ -66,18 +66,18 @@ struct SAM {
     } /// end-hash
 
     void calOccurrence() { /// start-hash
-        std::vector<int> sum(n + 1), que(t.size());
+        vector<int> sum(n + 1), que(t.size());
         for (auto &it: t) sum[it.len]++;
         for (int i = 1; i < n; ++i)
             sum[i] += sum[i - 1];
         for (int i = 0; i < t.size(); ++i)
             que[--sum[t[i].len]] = i;
-        std::reverse(que.begin(), que.end());
+        reverse(que.begin(), que.end());
         for (auto now: que) if (now != 0) t[t[now].fa].occ += t[now].occ;
     } /// end-hash
 
-    std::vector<std::vector<int>> ReversedPrefixTree() { /// start-hash
-        std::vector<std::vector<int>> g(t.size());
+    vector<vector<int>> ReversedPrefixTree() { /// start-hash
+        vector<vector<int>> g(t.size());
         for (int now = 1; now < t.size(); ++now)
             g[t[now].fa].push_back(now);
         for (int now = 0; now < t.size(); ++now) {

@@ -10,12 +10,12 @@
  */
 
 template<class T>
-std::vector<int> Manacher(const T &s) {
+vector<int> Manacher(const T &s) {
     int n = s.size(), j = 0;
-    std::vector<int> len(n * 2 - 1, 1);
+    vector<int> len(n * 2 - 1, 1);
     for (int i = 1; i < n * 2 - 1; ++i) {
         int p = i / 2, q = i - p, r = (j + 1) / 2 + len[j] - 1;
-        len[i] = r < q ? 0 : std::min(r - q + 1, len[j * 2 - i]);
+        len[i] = r < q ? 0 : min(r - q + 1, len[j * 2 - i]);
         while (p > len[i] - 1 && q + len[i] < n && s[p - len[i]] == s[q + len[i]]) len[i]++;
         if (q + len[i] - 1 > r) j = i;
     }

@@ -5,10 +5,10 @@
  * Time: O(|V| + |E|).
  * Status: tested on https://www.luogu.com.cn/problem/P8436
  */
-auto EdgeBCC(int n, const std::vector<std::pair<int, int>> &es) {
-    std::vector<int> dfn(n, -1), low(n), id(n), mark(es.size(), 0), sta;
+auto EdgeBCC(int n, const vector<pair<int, int>> &es) {
+    vector<int> dfn(n, -1), low(n), id(n), mark(es.size(), 0), sta;
     int cnt = 0, bcc = 0;
-    std::vector<std::vector<int>> g(n);
+    vector<vector<int>> g(n);
     for (int i = 0; i < es.size(); ++i) {
         auto [x, y] = es[i];
         g[x].push_back(i);
@@ -24,8 +24,8 @@ auto EdgeBCC(int n, const std::vector<std::pair<int, int>> &es) {
                 int v = now ^ x ^ y;
                 if (dfn[v] == -1) {
                     dfs(dfs, v);
-                    low[now] = std::min(low[now], low[v]);
-                } else low[now] = std::min(low[now], dfn[v]);
+                    low[now] = min(low[now], low[v]);
+                } else low[now] = min(low[now], dfn[v]);
             }
         if (low[now] == dfn[now]) {
             while (1) {

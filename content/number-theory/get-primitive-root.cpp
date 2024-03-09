@@ -8,7 +8,7 @@
  */
 ll getPrimitiveRoot(ll n) {
     auto getps = [](ll x) {
-        std::vector<ll> ps;
+        vector<ll> ps;
         for (ll i = 2; i * i <= x; i++) {
             if (x % i == 0) {
                 ps.push_back(i);
@@ -24,7 +24,7 @@ ll getPrimitiveRoot(ll n) {
     auto qs = getps(phi);
 
     auto check = [&](ll x) {
-        if (std::gcd(x, n) != 1) return 0;
+        if (gcd(x, n) != 1) return 0;
         for (auto p: qs) {
             ll k = phi / p, a = x, res = 1;
             for (; k; k >>= 1, a = (i128) a * a % n) {

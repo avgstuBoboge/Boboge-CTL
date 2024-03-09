@@ -7,9 +7,9 @@
  * Status: tested on https://www.luogu.com.cn/record/101544554
  */
 
-std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
-int rand() { return std::uniform_int_distribution<int>()(rng); }
+int rand() { return uniform_int_distribution<int>()(rng); }
 
 struct Treap {
     const int pri;
@@ -24,7 +24,7 @@ struct Treap {
 
     void push() {
         if (flip) {
-            std::swap(l, r);
+            swap(l, r);
             reverse(l);
             reverse(r);
             flip = 0;
@@ -55,17 +55,17 @@ struct Treap {
     }
 
     // Split the treap into a left and right part, the left of size "le_siz"
-    static std::pair<Treap *, Treap *> split(Treap *x, int le_siz) {
+    static pair<Treap *, Treap *> split(Treap *x, int le_siz) {
         if (!le_siz || !x) return {0, x};
         x->push();
         Treap *oth;
         int rem = le_siz - getSiz(x->l) - 1;
         if (rem < 0) {
-            std::tie(oth, x->l) = split(x->l, le_siz);
+            tie(oth, x->l) = split(x->l, le_siz);
             x->update();
             return {oth, x};
         } else {
-            std::tie(x->r, oth) = split(x->r, rem);
+            tie(x->r, oth) = split(x->r, rem);
             x->update();
             return {x, oth};
         }

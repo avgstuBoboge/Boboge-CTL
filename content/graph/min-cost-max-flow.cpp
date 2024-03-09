@@ -11,8 +11,8 @@ struct MCMF {
         ll nxt, to;
         ll cap, cost;
     };
-    std::vector<Edge> edges;
-    std::vector<ll> head, fa, fe, dual, mark, cyc;
+    vector<Edge> edges;
+    vector<ll> head, fa, fe, dual, mark, cyc;
     ll ti{}, sum{};
 
     MCMF(ll n) : head(n, 0), fa(n), fe(n), dual(n), mark(n), cyc(n + 1) {
@@ -21,7 +21,7 @@ struct MCMF {
     }
 
     ll addEdge(ll u, ll v, ll cap, ll cost) {
-        sum += std::abs(cost);
+        sum += abs(cost);
         assert(edges.size() % 2 == 0);
         ll e = edges.size();
         edges.push_back({head[u], v, cap, cost});
@@ -72,13 +72,13 @@ struct MCMF {
         while (last != e2) {
             mark[cur]--;
             laste ^= 1;
-            std::swap(laste, fe[cur]);
-            std::swap(last, fa[cur]);
-            std::swap(last, cur);
+            swap(laste, fe[cur]);
+            swap(last, fa[cur]);
+            swap(last, cur);
         }
     }
 
-    std::pair<ll, ll> compute(ll s, ll t) {
+    pair<ll, ll> compute(ll s, ll t) {
         ll tot = sum;
         ll ed = addEdge(t, s, 1e18, -tot);
         ll cost = 0;

@@ -7,9 +7,9 @@
  */
 
  template<class T>
- auto CartesianTree(const std::vector<T> &as, int gr = 0) {
+ auto CartesianTree(const vector<T> &as, int gr = 0) {
      int n = (int) as.size();
-     std::vector<int> ls(n, -1), rs(n, -1), stk;
+     vector<int> ls(n, -1), rs(n, -1), stk;
      for (int i = 0; i < n; ++i) {
          while (!stk.empty() && ((as[i] < as[stk.back()]) ^ gr)) {
              ls[i] = stk.back();

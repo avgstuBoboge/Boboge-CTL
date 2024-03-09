@@ -17,13 +17,13 @@ class segTree {
 #define rson rs, mid + 1, r
 
     int n;
-    std::vector<Info> info;
-    std::vector<Tag> tag;
+    vector<Info> info;
+    vector<Tag> tag;
 public:
-    segTree(const std::vector<Info> &init) : n(init.size()) {
+    segTree(const vector<Info> &init) : n(init.size()) {
         assert(n > 0);
-        info.resize(4 << std::__lg(n));
-        tag.resize(4 << std::__lg(n));
+        info.resize(4 << __lg(n));
+        tag.resize(4 << __lg(n));
         auto build = [&](auto dfs, int i, int l, int r) {
             if (l == r) {
                 info[i] = init[l];

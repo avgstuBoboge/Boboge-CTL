@@ -12,7 +12,7 @@
  */
 
 struct node {
-    std::array<int, 26> nxt;
+    array<int, 26> nxt;
     int fa, len; // keep fa = -1 and len = 0 initially.
     int occ; // should be assigned when building the trie.
     node() {
@@ -23,10 +23,10 @@ struct node {
 };
 
 struct GSAM {
-    std::vector<node> t;
+    vector<node> t;
 
-    GSAM(std::vector<node> &trie) {
-        std::swap(t, trie); //breaks the trie
+    GSAM(vector<node> &trie) {
+        swap(t, trie); //breaks the trie
         auto ins = [&](int now, int c) {
             int last = t[now].nxt[c];
             t[last].len = t[now].len + 1;
@@ -60,10 +60,10 @@ struct GSAM {
             }
         };
 
-        std::vector<int> que{0};
+        vector<int> que{0};
         for (int ind = 0; ind < que.size(); ++ind) {
             int now = que[ind];
-            std::vector<int> cs;
+            vector<int> cs;
             for (int c = 0; c < 26; ++c) {
                 int v = t[now].nxt[c];
                 if (v == -1) continue;

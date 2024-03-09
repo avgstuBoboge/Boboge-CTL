@@ -7,16 +7,16 @@
  *  getDirFlow() and getUndirFlow() are not tested yet.
  */
 
-template<class Cap = int, Cap Cap_MAX = std::numeric_limits<Cap>::max()>
+template<class Cap = int, Cap Cap_MAX = numeric_limits<Cap>::max()>
 struct Dinic {
     int n; /// start-hash
     struct E {
         int to;
         Cap a;
     }; // Endpoint & Admissible flow.
-    std::vector<E> es;
-    std::vector<std::vector<int>> g;
-    std::vector<int> dis; // Put it here to get the minimum cut easily.
+    vector<E> es;
+    vector<vector<int>> g;
+    vector<int> dis; // Put it here to get the minimum cut easily.
 
     Dinic(int n) : n(n), g(n) {}
 
@@ -31,7 +31,7 @@ struct Dinic {
         auto revbfs = [&]() {
             dis.assign(n, -1);
             dis[sink] = 0;
-            std::vector<int> que{sink};
+            vector<int> que{sink};
             for (int ind = 0; ind < que.size(); ++ind) {
                 int now = que[ind];
                 for (auto i: g[now]) {
@@ -45,7 +45,7 @@ struct Dinic {
             }
             return 0;
         };
-        std::vector<int> cur;
+        vector<int> cur;
         auto dfs = [&](auto &dfs, int now, Cap flow) {
             if (now == sink) return flow;
             Cap res = 0;
@@ -53,7 +53,7 @@ struct Dinic {
                 int i = g[now][ind];
                 auto [v, c] = es[i];
                 if (c > 0 && dis[v] == dis[now] - 1) {
-                    Cap x = dfs(dfs, v, std::min(flow - res, c));
+                    Cap x = dfs(dfs, v, min(flow - res, c));
                     res += x;
                     es[i].a -= x;
                     es[i ^ 1].a += x;
@@ -72,8 +72,8 @@ struct Dinic {
     } /// end-hash
 
     // Returns a min-cut containing the src.
-    std::vector<int> getMinCut() { /// start-hash
-        std::vector<int> res;
+    vector<int> getMinCut() { /// start-hash
+        vector<int> res;
         for (int i = 0; i < n; ++i)
             if (dis[i] == -1) res.push_back(i);
         return res;

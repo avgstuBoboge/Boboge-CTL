@@ -33,13 +33,13 @@ private:
         // also remember to maintain glob here.
     }
 
-    std::vector<int> fa;
-    std::vector<T> ts;
-    std::vector<std::tuple<int, int, T, Z>> sta;
+    vector<int> fa;
+    vector<T> ts;
+    vector<tuple<int, int, T, Z>> sta;
 public:
     UndoDSU(int n) : fa(n), ts(n) {
-        std::iota(fa.begin(), fa.end(), 0);
-        std::iota(ts.begin(), ts.end(), 0);
+        iota(fa.begin(), fa.end(), 0);
+        iota(ts.begin(), ts.end(), 0);
         // remember initializing glob here.
     }
 
@@ -51,7 +51,7 @@ public:
     bool merge(int x, int y) {
         int fx = getcomp(x), fy = getcomp(y);
         if (fx == fy) return 0;
-        if (ts[fx].siz < ts[fy].siz) std::swap(fx, fy);
+        if (ts[fx].siz < ts[fy].siz) swap(fx, fy);
         sta.emplace_back(fx, fy, ts[fx], glob);
         fa[fy] = fx;
         join(ts[fx], ts[fy]);

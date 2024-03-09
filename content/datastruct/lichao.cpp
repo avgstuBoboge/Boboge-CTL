@@ -33,15 +33,15 @@ struct LiChao {
 #define lson ls, l, mid
 #define rson rs, mid + 1, r
 
-    std::vector<int> t;
-    std::vector<Line> lines;
+    vector<int> t;
+    vector<Line> lines;
     int n;
 
     LiChao(int n) : n(n), t(n * 4 + 10), lines{{0, -inf}} {}
 
     void apply(int u, int i, int l, int r) {
         int &v = t[i];
-        if (cmp(lines[u].eval(mid), lines[v].eval(mid)) == 1) std::swap(u, v);
+        if (cmp(lines[u].eval(mid), lines[v].eval(mid)) == 1) swap(u, v);
         int bl = cmp(lines[u].eval(l), lines[v].eval(l));
         int br = cmp(lines[u].eval(r), lines[v].eval(r));
         if (bl == 1 || (bl == 0 && u < v)) {
@@ -67,9 +67,9 @@ struct LiChao {
         dfs(dfs, 1, 0, n - 1);
     }
 
-    std::pair<T, int> query(int x) {
+    pair<T, int> query(int x) {
         auto dfs = [&](auto &dfs, int i, int l, int r) {
-            auto res = std::make_pair(lines[t[i]].eval(x), t[i]);
+            auto res = make_pair(lines[t[i]].eval(x), t[i]);
             if (l == r) {
                 return res;
             }

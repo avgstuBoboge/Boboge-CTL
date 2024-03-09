@@ -6,7 +6,7 @@
  * Time: O(|s|) preprocessing, O(1) query.
  * Status: tested on https://www.luogu.com.cn/problem/P3370.
  */
-using pii = std::pair<int, int>;
+using pii = pair<int, int>;
 
 constexpr pii mod = {1000000007, 1000050131};
 constexpr pii base = {73, 131};
@@ -25,9 +25,9 @@ pii operator-(const pii &a, const pii &b) {
 
 struct StringHash {
     int n;
-    std::vector<pii> hs, pw;
+    vector<pii> hs, pw;
 
-    StringHash(const std::string &s) : n(s.size()), hs(n + 1), pw(n + 1) {
+    StringHash(const string &s) : n(s.size()), hs(n + 1), pw(n + 1) {
         pw[0] = {1, 1};
         for (int i = 1; i <= n; ++i) pw[i] = pw[i - 1] * base;
         for (int i = 0; i < n; ++i) hs[i + 1] = hs[i] * base + pii(s[i], s[i]);

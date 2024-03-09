@@ -8,11 +8,11 @@
  *  exp() tested on https://www.luogu.com.cn/problem/P4726, https://judge.yosupo.jp/problem/exp_of_formal_power_series.
  */
 template<class T = Z, class FFT = FFT<T>>
-struct Poly : std::vector<T> {
+struct Poly : vector<T> {
     using poly = Poly;
-    using std::vector<T>::vector;
+    using vector<T>::vector;
 
-    Poly(const std::vector<T> &vec) : std::vector<T>(vec) {}
+    Poly(const vector<T> &vec) : vector<T>(vec) {}
 
     friend poly &operator+=(poly &as, const poly &bs) { /// start-hash
         if (as.size() < bs.size()) as.resize(bs.size(), 0);
@@ -63,7 +63,7 @@ struct Poly : std::vector<T> {
 
     /// end-hash
     poly modxk(int k) const {
-        return poly(this->begin(), this->begin() + std::min((int) this->size(), k));
+        return poly(this->begin(), this->begin() + min((int) this->size(), k));
     }
 
     poly derivative() const {
@@ -121,9 +121,9 @@ struct Poly : std::vector<T> {
         fk *= power(co, k);
         int rem_siz = this->size();
         if (1ll * d * k >= rem_siz) return Poly(rem_siz, 0);
-        std::reverse(fk.begin(), fk.end());
+        reverse(fk.begin(), fk.end());
         for (int i = 0; i < d * k; ++i) fk.emplace_back(0);
-        std::reverse(fk.begin(), fk.end());
+        reverse(fk.begin(), fk.end());
         fk.modxk(rem_siz);
         return fk;
     }

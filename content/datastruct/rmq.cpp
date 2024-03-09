@@ -19,9 +19,9 @@ class RMQ {
 private:
     const int H = 6; // Block size is 2^H
     const int B = 1 << H;
-    std::vector<T> vec; // Original values
-    std::vector<ull> mins; // Min bits
-    std::vector<int> tbl; // sparse table
+    vector<T> vec; // Original values
+    vector<ull> mins; // Min bits
+    vector<int> tbl; // sparse table
     int n, m;
 
     // Get index with minimum value in range [a, a + len) for 0 <= len <= B
@@ -34,7 +34,7 @@ private:
     }
 
 public:
-    RMQ(const std::vector<T> &vec_) : vec(vec_), mins(vec_.size()) {
+    RMQ(const vector<T> &vec_) : vec(vec_), mins(vec_.size()) {
         n = vec.size();
         m = (n + B - 1) >> H;
 
@@ -45,7 +45,7 @@ public:
         for (int i = 0; i < n; ++i) tbl[i >> H] = minInd(tbl[i >> H], i);
         for (int j = 1; j < h; ++j) {
             for (int i = j * m; i < (j + 1) * m; ++i) {
-                int i2 = std::min(i + (1 << (j - 1)), (j + 1) * m - 1);
+                int i2 = min(i + (1 << (j - 1)), (j + 1) * m - 1);
                 tbl[i] = minInd(tbl[i - m], tbl[i2 - m]);
             }
         }
@@ -62,7 +62,7 @@ public:
 
     int argmin(int a, int b) const {
         ++b; // to make the range inclusive
-        int len = std::min(b - a, B);
+        int len = min(b - a, B);
         int ind1 = minInd(getShort(a, len), getShort(b - len, len));
 
         int ax = (a >> H) + 1;

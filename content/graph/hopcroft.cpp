@@ -7,17 +7,17 @@
  */
 struct Hopcroft {
     int L, R; /// start-hash
-    std::vector<int> lm, rm; // record the matched vertex for each vertex on both sides.
-    std::vector<int> ldis, rdis; // put it here so you can get vertex cover easily.
+    vector<int> lm, rm; // record the matched vertex for each vertex on both sides.
+    vector<int> ldis, rdis; // put it here so you can get vertex cover easily.
 
-    Hopcroft(int L, int R, const std::vector<std::pair<int, int>> &es) : L(L), R(R), lm(L, -1), rm(R, -1) {
-        std::vector<std::vector<int>> g(L);
+    Hopcroft(int L, int R, const vector<pair<int, int>> &es) : L(L), R(R), lm(L, -1), rm(R, -1) {
+        vector<vector<int>> g(L);
         for (auto [x, y]: es) g[x].push_back(y);
         while (1) {
             ldis.assign(L, -1);
             rdis.assign(R, -1);
             bool ok = 0;
-            std::vector<int> que;
+            vector<int> que;
             for (int i = 0; i < L; ++i) {
                 if (lm[i] == -1) {
                     que.push_back(i);
@@ -36,7 +36,7 @@ struct Hopcroft {
                     }
             }
             if (ok == 0) break;
-            std::vector<int> vis(R); // changing to static does not speed up.
+            vector<int> vis(R); // changing to static does not speed up.
             auto find = [&](auto &dfs, int i) -> int {
                 for (auto j: g[i])
                     if (vis[j] == 0 && rdis[j] == ldis[i] + 1) {
@@ -55,10 +55,10 @@ struct Hopcroft {
         }
     } /// end-hash
 
-    std::vector<int> getMatch() { return lm; } // returns lm.
+    vector<int> getMatch() { return lm; } // returns lm.
 
-    std::pair<std::vector<int>, std::vector<int>> vertex_cover() { /// start-hash
-        std::vector<int> lvc, rvc;
+    pair<vector<int>, vector<int>> vertex_cover() { /// start-hash
+        vector<int> lvc, rvc;
         for (int i = 0; i < L; ++i) {
             if (ldis[i] == -1) lvc.push_back(i);
         }

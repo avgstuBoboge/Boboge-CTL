@@ -13,7 +13,7 @@
 template<char st, int C>
 struct AhoCorasick {
     struct node {
-        std::array<int, C> nxt;
+        array<int, C> nxt;
         int fail;
         int cnt;
 
@@ -24,11 +24,11 @@ struct AhoCorasick {
         }
     };
 
-    std::vector<node> t;
+    vector<node> t;
 
     AhoCorasick() : t(1) {}
 
-    int insert(const std::string &s) {
+    int insert(const string &s) {
         int now = 0;
         for (auto ch: s) {
             int c = ch - st;
@@ -43,7 +43,7 @@ struct AhoCorasick {
     }
 
     void build() {
-        std::vector<int> que{0};
+        vector<int> que{0};
         for (int ind = 0; ind < que.size(); ++ind) {
             int now = que[ind], fa = t[now].fail;
             for (int c = 0; c < C; ++c) {
@@ -56,10 +56,10 @@ struct AhoCorasick {
         }
     }
 
-    std::vector<int> query(const std::string &s) {
-        std::vector<int> ind(t.size());
-        std::vector<std::vector<int>> adj(t.size());
-        std::vector<int> que;
+    vector<int> query(const string &s) {
+        vector<int> ind(t.size());
+        vector<vector<int>> adj(t.size());
+        vector<int> que;
         for (int i = 0; i < t.size(); ++i) {
             if (t[i].fail != -1) {
                 ind[i]++;
@@ -69,7 +69,7 @@ struct AhoCorasick {
         for (int i = 0; i < t.size(); ++i) {
             if (ind[i] == 0) que.push_back(i);
         }
-        std::vector<int> top;
+        vector<int> top;
         for (int i = 0; i < que.size(); ++i) {
             int u = que[i];
             top.push_back(u);
@@ -77,8 +77,8 @@ struct AhoCorasick {
                 if (--ind[v] == 0) que.push_back(v);
             }
         }
-        std::reverse(top.begin(), top.end());
-        std::vector<int> dp(t.size());
+        reverse(top.begin(), top.end());
+        vector<int> dp(t.size());
         int now = 0;
         for (auto ch: s) {
             int c = ch - st;

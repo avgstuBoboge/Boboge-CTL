@@ -9,7 +9,7 @@
  * Status: tested on https://www.luogu.com.cn/problem/P6097.
  */
 template<class T>
-void fst(std::vector<T> &a, int is_inv) {
+void fst(vector<T> &a, int is_inv) {
     int n = a.size();
     for (int s = 1; s < n; s <<= 1) {
         for (int i = 0; i < n; ++i) {
@@ -22,11 +22,11 @@ void fst(std::vector<T> &a, int is_inv) {
 }
 
 template<class T>
-std::vector<T> SubsetConv(const std::vector<T> &as, const std::vector<T> &bs) {
+vector<T> SubsetConv(const vector<T> &as, const vector<T> &bs) {
     int n = as.size();
     assert(n > 0 && bs.size() == n);
-    int k = std::__lg(n);
-    std::vector<std::vector<T>> ps(k + 1, std::vector<T>(n)), qs(ps), rs(ps);
+    int k = __lg(n);
+    vector<vector<T>> ps(k + 1, vector<T>(n)), qs(ps), rs(ps);
     for (int x = 0; x < n; ++x) {
         ps[__builtin_popcount(x)][x] = as[x];
         qs[__builtin_popcount(x)][x] = bs[x];
@@ -41,7 +41,7 @@ std::vector<T> SubsetConv(const std::vector<T> &as, const std::vector<T> &bs) {
         }
     }
     for (auto &vec: rs) fst(vec, 1);
-    std::vector<T> cs(n);
+    vector<T> cs(n);
     for (int x = 0; x < n; ++x) {
         cs[x] = rs[__builtin_popcount(x)][x];
     }

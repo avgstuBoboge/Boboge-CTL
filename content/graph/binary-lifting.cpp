@@ -8,17 +8,17 @@
  */
 struct BinaryLifting {
     int n;
-    std::vector<int> dep;
-    std::vector<std::vector<int>> anc;
+    vector<int> dep;
+    vector<vector<int>> anc;
 
-    BinaryLifting(const std::vector<std::vector<int>> &g, int rt = 0) : n((int) g.size()), dep(n, -1) {
+    BinaryLifting(const vector<vector<int>> &g, int rt = 0) : n((int) g.size()), dep(n, -1) {
         assert(n > 0);
-        anc.assign(n, std::vector<int>(std::__lg(n) + 1));
-        std::function<void(int, int)> dfs = [&](int now, int fa) {
+        anc.assign(n, vector<int>(__lg(n) + 1));
+        function<void(int, int)> dfs = [&](int now, int fa) {
             assert(dep[now] == -1); // make sure it is indeed a tree.
             dep[now] = fa == -1 ? 0 : dep[fa] + 1;
             anc[now][0] = fa;
-            for (int i = 1; i <= std::__lg(n); ++i) {
+            for (int i = 1; i <= __lg(n); ++i) {
                 anc[now][i] = anc[now][i - 1] == -1 ? -1 : anc[anc[now][i - 1]][i - 1];
             }
             for (auto v: g[now]) if (v != fa) dfs(v, now);
@@ -32,10 +32,10 @@ struct BinaryLifting {
     }
 
     int lca(int x, int y) {
-        if (dep[x] < dep[y]) std::swap(x, y);
+        if (dep[x] < dep[y]) swap(x, y);
         x = swim(x, dep[x] - dep[y]);
         if (x == y) return x;
-        for (int i = std::__lg(n); i >= 0; --i) {
+        for (int i = __lg(n); i >= 0; --i) {
             if (anc[x][i] != anc[y][i]) {
                 x = anc[x][i];
                 y = anc[y][i];

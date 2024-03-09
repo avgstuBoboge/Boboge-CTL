@@ -10,18 +10,18 @@
 #include "suffix-array.cpp"
 
 struct SA_lcp : SA {
-    std::vector<std::vector<int>> st;
+    vector<vector<int>> st;
 
     template<class T>
     SA_lcp(const T &s): SA(s) {
         assert(n > 0);
-        int k = std::__lg(n);
-        st.assign(k + 1, std::vector<int>(n));
+        int k = __lg(n);
+        st.assign(k + 1, vector<int>(n));
         st[0] = h;
         st[0].push_back(0); // just to make st[0] of size n.
         for (int i = 1; i <= k; ++i) {
             for (int j = 0; j + (1 << i) <= n; ++j) {
-                st[i][j] = std::min(st[i - 1][j], st[i - 1][j + (1 << (i - 1))]);
+                st[i][j] = min(st[i - 1][j], st[i - 1][j + (1 << (i - 1))]);
             }
         }
     }
@@ -31,8 +31,8 @@ struct SA_lcp : SA {
         if (i == n || j == n) return 0;
         assert(i != j);
         int l = rank[i], r = rank[j];
-        if (l > r) std::swap(l, r);
-        int k = std::__lg(r - l);
-        return std::min(st[k][l], st[k][r - (1 << k)]);
+        if (l > r) swap(l, r);
+        int k = __lg(r - l);
+        return min(st[k][l], st[k][r - (1 << k)]);
     }
 };

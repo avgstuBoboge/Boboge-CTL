@@ -9,13 +9,13 @@
 template<class T>
 struct Minimum_Cost_Flow_Dijkstra {
 #define N 5050
-    using P = std::pair<T, int>;
+    using P = pair<T, int>;
     struct edge {
         int to;
         T cap, cost, rev;
     };
     T flow, res, dist[N], h[N];
-    std::vector<edge> G[N];
+    vector<edge> G[N];
     int preV[N], preE[N], n;
 
     inline void init(int x) {
@@ -34,7 +34,7 @@ struct Minimum_Cost_Flow_Dijkstra {
         fill(h + 1, h + 1 + n, 0);
         flow = res = 0;
         while (f > 0) {
-            std::priority_queue<P, std::vector<P>, std::greater<P>> D;
+            priority_queue<P, vector<P>, greater<P>> D;
             memset(dist, INF, sizeof dist);
             dist[s] = 0;
             D.push(P(0, s));

@@ -5,20 +5,20 @@
  * Time: O(|V||E|).
  * Status: tested on https://www.luogu.com.cn/problem/P6113， https://uoj.ac/problem/79, https://codeforces.com/gym/103260/problem/E, https://ac.nowcoder.com/acm/contest/5666/I.
  **/
-std::vector<int> Blossom(int n, const std::vector<std::pair<int, int>> &es) {
-    std::vector<std::vector<int>> g(n);
+vector<int> Blossom(int n, const vector<pair<int, int>> &es) {
+    vector<vector<int>> g(n);
     for (auto [x, y]: es) {
         g[x].push_back(y);
         g[y].push_back(x);
     }
-    std::vector<int> match(n, -1);
+    vector<int> match(n, -1);
     auto aug = [&](int st) {
-        std::vector<int> fa(n), clr(n, -1), pre(n, -1), tag(n);
-        std::iota(fa.begin(), fa.end(), 0);
+        vector<int> fa(n), clr(n, -1), pre(n, -1), tag(n);
+        iota(fa.begin(), fa.end(), 0);
         int tot = 0;
-        std::vector<int> que{st};
+        vector<int> que{st};
         clr[st] = 0;
-        std::function<int(int)> getfa = [&](int x) {
+        function<int(int)> getfa = [&](int x) {
             return fa[x] == x ? x : fa[x] = getfa(fa[x]);
         };
         auto lca = [&](int x, int y) {
@@ -32,7 +32,7 @@ std::vector<int> Blossom(int n, const std::vector<std::pair<int, int>> &es) {
                     if (match[x] != -1) x = getfa(pre[match[x]]);
                     else x = -1;
                 }
-                std::swap(x, y);
+                swap(x, y);
             }
         };
         auto shrink = [&](int x, int y, int f) {

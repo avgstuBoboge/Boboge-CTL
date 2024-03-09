@@ -6,7 +6,7 @@
  */
 
 struct DSU {
-    std::vector<int> f;
+    vector<int> f;
 
     DSU(int n) : f(n + 1, -1) {};
 
@@ -18,7 +18,7 @@ struct DSU {
         x = find(x);
         y = find(y);
         if (x == y) return false;
-        if (f[x] > f[y]) std::swap(x, y);
+        if (f[x] > f[y]) swap(x, y);
         f[x] += f[y];
         f[y] = x;
         return true;

@@ -10,10 +10,10 @@
  */
 struct HLD {
     int n; /// start-hash
-    std::vector<int> fa, hson, L, R, dep, top;
+    vector<int> fa, hson, L, R, dep, top;
 
-    HLD(std::vector<std::vector<int>> &g, int rt = 0) : n(g.size()), fa(n, -1), hson(n, -1), L(n), R(n), dep(n, 0), top(n) {
-        std::vector<int> siz(n);
+    HLD(vector<vector<int>> &g, int rt = 0) : n(g.size()), fa(n, -1), hson(n, -1), L(n), R(n), dep(n, 0), top(n) {
+        vector<int> siz(n);
         auto dfs = [&](auto &dfs, int now) -> void {
             siz[now] = 1;
             int mx = 0;
@@ -47,7 +47,7 @@ struct HLD {
 
     int lca(int u, int v) { /// start-hash
         while (top[u] != top[v]) {
-            if (dep[top[u]] < dep[top[v]]) std::swap(u, v);
+            if (dep[top[u]] < dep[top[v]]) swap(u, v);
             u = fa[top[u]];
         }
         if (dep[u] < dep[v]) return u;
@@ -56,30 +56,30 @@ struct HLD {
 
     template<class... T>
     /// start-hash
-    void chainApply(int u, int v, const std::function<void(int, int, T...)> &func, const T &... val) {
+    void chainApply(int u, int v, const function<void(int, int, T...)> &func, const T &... val) {
         int f1 = top[u], f2 = top[v];
         while (f1 != f2) {
-            if (dep[f1] < dep[f2]) std::swap(f1, f2), std::swap(u, v);
+            if (dep[f1] < dep[f2]) swap(f1, f2), swap(u, v);
             func(L[f1], L[u], val...);
             u = fa[f1];
             f1 = top[u];
         }
-        if (dep[u] < dep[v]) std::swap(u, v);
+        if (dep[u] < dep[v]) swap(u, v);
         func(L[v], L[u], val...); // change here if you want the info on edges.
     } /// end-hash
 
     template<class T>
     /// start-hash
-    T chainAsk(int u, int v, const std::function<T(int, int)> &func) {
+    T chainAsk(int u, int v, const function<T(int, int)> &func) {
         int f1 = top[u], f2 = top[v];
         T ans{};
         while (f1 != f2) {
-            if (dep[f1] < dep[f2]) std::swap(f1, f2), std::swap(u, v);
+            if (dep[f1] < dep[f2]) swap(f1, f2), swap(u, v);
             ans = ans + func(L[f1], L[u]);
             u = fa[f1];
             f1 = top[u];
         }
-        if (dep[u] < dep[v]) std::swap(u, v);
+        if (dep[u] < dep[v]) swap(u, v);
         ans = ans + func(L[v], L[u]); // change here if you want the info on edges.
         return ans;
     } /// end-hash

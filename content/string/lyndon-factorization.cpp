@@ -6,9 +6,9 @@
  * Time: O(|s|).
  * Status: tested on https://www.luogu.com.cn/problem/P6114, https://www.luogu.com.cn/problem/P1368.
  */
-std::vector<std::pair<int, int>> duval(const std::string &s) {
+vector<pair<int, int>> duval(const string &s) {
     int n = s.size(), i = 0;
-    std::vector<std::pair<int, int>> res;
+    vector<pair<int, int>> res;
     while (i < n) {
         int j = i + 1, k = i;
         while (j < n && s[k] <= s[j]) {

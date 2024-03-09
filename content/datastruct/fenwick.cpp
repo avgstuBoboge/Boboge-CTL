@@ -12,7 +12,7 @@
 template<typename T>
 struct Fenwick {
     int n;
-    std::vector<T> t;
+    vector<T> t;
 
     Fenwick(int n) : n(n + 1), t(n + 2) {};
 

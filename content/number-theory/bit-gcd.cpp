@@ -16,8 +16,8 @@ constexpr T gcd(T x, T y) {
     int ky = ctz(y);
     y >>= ky;
     for (;; y >>= ctz(y)) {
-        if (x > y) std::swap(x, y);
+        if (x > y) swap(x, y);
         y -= x;
-        if (!y) return x << std::min(kx, ky);
+        if (!y) return x << min(kx, ky);
     }
 }

@@ -12,7 +12,7 @@
 
 struct SA {
     int n;
-    std::vector<int> str, sa, rank, h;
+    vector<int> str, sa, rank, h;
 
     template<class T>
     SA(const T &s): n(s.size()), str(n + 1), sa(n + 1), rank(n + 1), h(n - 1) {
@@ -20,19 +20,19 @@ struct SA {
         sort(vec.begin(), vec.end());
         vec.erase(unique(vec.begin(), vec.end()), vec.end());
         for (int i = 0; i < n; ++i) str[i] = rank[i] = lower_bound(vec.begin(), vec.end(), s[i]) - vec.begin() + 1;
-        std::iota(sa.begin(), sa.end(), 0);
+        iota(sa.begin(), sa.end(), 0);
         n++;
         for (int len = 0; len < n; len = len ? len * 2 : 1) {
-            std::vector<int> cnt(n + 1);
+            vector<int> cnt(n + 1);
             for (auto v: rank) cnt[v + 1]++;
             for (int i = 1; i < n; ++i) cnt[i] += cnt[i - 1];
-            std::vector<int> nsa(n), nrank(n);
+            vector<int> nsa(n), nrank(n);
             for (auto pos: sa) {
                 pos -= len;
                 if (pos < 0) pos += n;
                 nsa[cnt[rank[pos]]++] = pos;
             }
-            std::swap(sa, nsa);
+            swap(sa, nsa);
             int r = 0, oldp = -1;
             for (auto p: sa) {
                 auto next = [&](int a, int b) { return a + b < n ? a + b : a + b - n; };
@@ -42,7 +42,7 @@ struct SA {
             }
             swap(rank, nrank);
         }
-        sa = std::vector<int>(sa.begin() + 1, sa.end());
+        sa = vector<int>(sa.begin() + 1, sa.end());
         rank.resize(--n);
         for (int i = 0; i < n; ++i) rank[sa[i]] = i;
         // compute height array.

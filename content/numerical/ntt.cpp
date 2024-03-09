@@ -14,7 +14,7 @@
  */
 template<class mint = Z>
 struct FFT {
-    static void dft(std::vector<mint> &as, int is_inv) { // is_inv == 1 -> idft.
+    static void dft(vector<mint> &as, int is_inv) { // is_inv == 1 -> idft.
         static int mod = mint::getMod();
         static mint root = 0;
         if (root == 0) {
@@ -25,7 +25,7 @@ struct FFT {
 
         int n = as.size();
         assert(__builtin_popcount(n) == 1);
-        static std::vector<int> r;
+        static vector<int> r;
         if (r.size() != n) {
             r.resize(n);
             for (int i = 1; i < n; ++i) {
@@ -33,11 +33,11 @@ struct FFT {
             }
         }
 
-        for (int i = 1; i < n; ++i) if (r[i] > i) std::swap(as[i], as[r[i]]);
+        for (int i = 1; i < n; ++i) if (r[i] > i) swap(as[i], as[r[i]]);
         for (int step = 1; step < n; step <<= 1) {
             mint zeta = root.pow((mod - 1) / (step << 1));
             if (is_inv) zeta = mint{1} / zeta;
-            std::vector<mint> ws(step);
+            vector<mint> ws(step);
             ws[0] = 1;
             for (int i = 1; i < step; ++i) ws[i] = ws[i - 1] * zeta;
             for (int i = 0; i < n; i += step << 1) {
@@ -55,15 +55,15 @@ struct FFT {
         }
     }
 
-    static std::vector<mint> conv(const std::vector<mint> &as, const std::vector<mint> &bs) {
-        if (std::min(as.size(), bs.size()) <= 128) {
-            std::vector<ll> cs(as.size() + bs.size() - 1);
+    static vector<mint> conv(const vector<mint> &as, const vector<mint> &bs) {
+        if (min(as.size(), bs.size()) <= 128) {
+            vector<ll> cs(as.size() + bs.size() - 1);
             for (int i = 0; i < as.size(); ++i)
                 for (int j = 0; j < bs.size(); ++j)
                     cs[i + j] += (int) (as[i] * bs[j]);
             return {cs.begin(), cs.end()};
         } else {
-            int n = as.size() + bs.size() - 1, n2 = 1 << std::__lg(n * 2 - 1);
+            int n = as.size() + bs.size() - 1, n2 = 1 << __lg(n * 2 - 1);
             auto xs = as, ys = bs;
             xs.resize(n2, 0);
             ys.resize(n2, 0);
