@@ -14,7 +14,7 @@ using u64 = unsigned long long;
 using i128 = __int128;
 
 int main() {
-    ios::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     return 0;
 }
