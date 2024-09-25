@@ -12,7 +12,7 @@ struct HLD {
     int n; /// start-hash
     vector<int> fa, hson, L, R, dep, top;
 
-    HLD(vector<vector<int>> &g, int rt = 0) : n(g.size()), fa(n, -1), hson(n, -1), L(n), R(n), dep(n, 0), top(n) {
+    HLD(vector <vector<int>> &g, int rt = 0) : n(g.size()), fa(n, -1), hson(n, -1), L(n), R(n), dep(n, 0), top(n) {
         vector<int> siz(n);
         auto dfs = [&](auto &dfs, int now) -> void {
             siz[now] = 1;
@@ -54,33 +54,19 @@ struct HLD {
         else return v;
     } /// end-hash
 
-    template<class... T>
-    /// start-hash
-    void chainApply(int u, int v, const function<void(int, int, T...)> &func, const T &... val) {
+    auto getChain(int u, int v) { /// start-hash
+        pair<int, int> ps;
         int f1 = top[u], f2 = top[v];
         while (f1 != f2) {
             if (dep[f1] < dep[f2]) swap(f1, f2), swap(u, v);
-            func(L[f1], L[u], val...);
+            ps.emplace_back(L[f1], L[u]);
             u = fa[f1];
             f1 = top[u];
         }
         if (dep[u] < dep[v]) swap(u, v);
-        func(L[v], L[u], val...); // change here if you want the info on edges.
-    } /// end-hash
-
-    template<class T>
-    /// start-hash
-    T chainAsk(int u, int v, const function<T(int, int)> &func) {
-        int f1 = top[u], f2 = top[v];
-        T ans{};
-        while (f1 != f2) {
-            if (dep[f1] < dep[f2]) swap(f1, f2), swap(u, v);
-            ans = ans + func(L[f1], L[u]);
-            u = fa[f1];
-            f1 = top[u];
-        }
-        if (dep[u] < dep[v]) swap(u, v);
-        ans = ans + func(L[v], L[u]); // change here if you want the info on edges.
-        return ans;
+        ps.emplace_back(L[v], L[u]);
+        // change here if you want the info on edges.
+        // if (L[v] < L[u]) ret.emplace_back(L[v] + 1, L[u]);
+        return ps;
     } /// end-hash
 };
