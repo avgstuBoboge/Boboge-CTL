@@ -66,7 +66,7 @@ struct HLD {
         if (dep[u] < dep[v]) swap(u, v);
         ps.emplace_back(L[v], L[u]);
         // change here if you want the info on edges.
-        // if (L[v] < L[u]) ret.emplace_back(L[v] + 1, L[u]);
+        // if (L[v] < L[u]) ps.emplace_back(L[v] + 1, L[u]);
         return ps;
     } /// end-hash
 };
