@@ -55,7 +55,7 @@ struct HLD {
     } /// end-hash
 
     auto getChain(int u, int v) { /// start-hash
-        pair<int, int> ps;
+        vector<pair<int, int>> ps;
         int f1 = top[u], f2 = top[v];
         while (f1 != f2) {
             if (dep[f1] < dep[f2]) swap(f1, f2), swap(u, v);
