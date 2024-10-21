@@ -50,6 +50,11 @@ Partitions of $n$ distinct elements into exactly $k$ groups.
 & S(n, k) = \frac{1}{k!}\sum_{j = 0}^k (-1)^{k - j}\binom{k}{j}j^n
 \end{align*}
 
+\subsection{Prefix sum of binomial}
+Let $f(n,k) = \sum_{i=0}^{k}\binom{n}{i}$.
+Then $f(n-1,k)=\frac{f(n,k) + \binom{n-1}{k}}{2}$.
+Use Mo's algo to solve it.
+
 \subsection{Catalan numbers} % from https://github.com/ecnerwala/icpc-book/blob/master/content/combinatorial/chapter.tex
 \[ C_n=\frac{1}{n+1}\binom{2n}{n}= \binom{2n}{n}-\binom{2n}{n+1} = \frac{(2n)!}{(n+1)!n!} \]
 \[ C_0=1,\ C_{n+1} = \frac{2(2n+1)}{n+2}C_n,\ C_{n+1}=\sum C_iC_{n-i} \]
