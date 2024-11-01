@@ -11,7 +11,7 @@
  * Status: tested on https://ac.nowcoder.com/acm/contest/33191/F.
  */
 template<class T>
-T power(T a, int b) {
+T power(T a, i64 b) {
     T res = 1;
     for (; b; b /= 2, a *= a) {
         if (b % 2) {
@@ -27,28 +27,14 @@ struct mint {
 
     constexpr mint() : x{} {}
 
-    constexpr mint(i64 x) : x{norm(x % getMod())} {}
-
-    static int Mod;
-
-    constexpr static int getMod() {
-        if (P > 0) {
-            return P;
-        } else {
-            return Mod;
-        }
-    }
-
-    constexpr static void setMod(int Mod_) {
-        Mod = Mod_;
-    }
+    constexpr mint(i64 x) : x{norm(x % P)} {}
 
     constexpr int norm(int x) const {
         if (x < 0) {
-            x += getMod();
+            x += P;
         }
-        if (x >= getMod()) {
-            x -= getMod();
+        if (x >= P) {
+            x -= P;
         }
         return x;
     }
@@ -63,17 +49,20 @@ struct mint {
 
     constexpr mint operator-() const {
         mint res;
-        res.x = norm(getMod() - x);
+        res.x = norm(P - x);
         return res;
     }
 
+    constexpr int pow(i64 b) {
+        return power(*this, b);
+    }
+    
     constexpr mint inv() const {
         assert(x != 0);
-        return power(*this, getMod() - 2);
+        return power(*this, P - 2);
     }
-
     constexpr mint &operator*=(mint rhs) &{
-        x = 1LL * x * rhs.x % getMod();
+        x = 1LL * x * rhs.x % P;
         return *this;
     }
 
@@ -116,7 +105,4 @@ struct mint {
     }
 };
 
-template<>
-int mint<0>::Mod = 998244353;
-
-using Z = mint<0>;
+using Z = mint<998244353>;

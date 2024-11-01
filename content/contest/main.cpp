@@ -2,10 +2,10 @@
 
 #ifndef ONLINE_JUDGE
 
-#include "debug-header.cpp"
+#include "debug.cpp"
 
 #else
-#define debug(...) (void)(0)
+#define debug(...) (void)(0721)
 #endif
 
 using namespace std;
