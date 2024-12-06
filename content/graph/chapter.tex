@@ -12,11 +12,26 @@
 \kactlimport{hungarian.cpp}
 
 \section{Trees}
+
+\subsection{Number of spanning trees}
+For any Graph $G$:
+$$
+D_{ii}(G) = deg(i), D_{ij}=0,i \neq j
+$$
+$$
+A_{ij}(G)=A_{ji}(G)= \#e(i,j), i \neq j
+$$
+$$
+L(G)=A(G)-D(G)
+$$
+The number of spanning trees in $G$ rooted at $k$ is $\det L(G)_{[n] \setminus\{k\},[n] \setminus\{k\}}$.
+For directed graph you change the degree matrix to in/out degree matrix to get the number of in/out root spanning trees.
+
 \kactlimport{binary-lifting.cpp}
 % \kactlimport{rmq-lca.cpp}
 \kactlimport{heavy-light-decomposition.cpp}
 \kactlimport{centroid-decomposition.cpp}
-\kactlimport{tree-hash.cpp}
+% \kactlimport{tree-hash.cpp}
 \kactlimport{tree-hash-map.cpp}
 \kactlimport{manhattan-mst.cpp}
 
@@ -28,6 +43,7 @@
 \kactlimport{edge-bcc.cpp}
 \kactlimport{tarjan.cpp}
 \kactlimport{2sat.cpp}
+\kactlimport{dominator-tree.cpp}
 % \kactlimport{link-cut.cpp} % not learned
 
 \section{Paths}
