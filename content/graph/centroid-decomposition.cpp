@@ -13,26 +13,26 @@ struct CentroidDecomposition {
         vector<int> siz(n), vis(n);
         auto solve = [&](auto &solve, int st, int tot) -> void {
             int mn = 0x3f3f3f3f, cent = -1;
-            auto getcent = [&](auto &dfs, int now, int fa) -> void {
-                siz[now] = 1;
+            auto getcent = [&](auto &dfs, int u, int fa) -> void {
+                siz[u] = 1;
                 int mx = 0;
-                for (auto v: g[now]) {
+                for (auto v: g[u]) {
                     if (v != fa && vis[v] == 0) {
-                        dfs(dfs, v, now);
-                        siz[now] += siz[v];
+                        dfs(dfs, v, u);
+                        siz[u] += siz[v];
                         mx = max(mx, siz[v]);
                     }
                 }
-                mx = max(mx, tot - siz[now]);
-                if (mn > mx) mn = mx, cent = now;
+                mx = max(mx, tot - siz[u]);
+                if (mn > mx) mn = mx, cent = u;
             };
             getcent(getcent, st, -1);
             vis[cent] = 1;
-            auto dfs = [&](auto &dfs, int now, int fa, int dep) -> void {
-                ancs[now].emplace_back(cent, dep);
-                for (auto v: g[now]) {
+            auto dfs = [&](auto &dfs, int u, int fa, int dep) -> void {
+                ancs[u].emplace_back(cent, dep);
+                for (auto v: g[u]) {
                     if (v != fa && vis[v] == 0) {
-                        dfs(dfs, v, now, dep + 1);
+                        dfs(dfs, v, u, dep + 1);
                     }
                 }
             };
