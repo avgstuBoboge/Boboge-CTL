@@ -13,7 +13,7 @@ struct MCMF {
     };
     vector<Edge> edges;
     vector<i64> head, fa, fe, dual, mark, cyc;
-    i64 ti{}, sum{};
+    i64 ti{}, sum{1};
 
     MCMF(i64 n) : head(n, 0), fa(n), fe(n), dual(n), mark(n), cyc(n + 1) {
         edges.push_back({0, 0, 0, 0});
