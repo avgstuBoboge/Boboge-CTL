@@ -21,7 +21,7 @@ struct segTree {
     segTree(const vector<Info> &init) : n(init.size()) {
         assert(n > 0);
         info.resize(4 << __lg(n));
-        auto build = [&](auto dfs, int i, int l, int r) {
+        auto build = [&](auto &dfs, int i, int l, int r) {
             if (l == r) {
                 info[i] = init[l];
                 return;
@@ -37,7 +37,7 @@ struct segTree {
 
     template<class... T>
     void pointApply(int p, const T &... val) {
-        auto dfs = [&](auto dfs, int i, int l, int r) {
+        auto dfs = [&](auto &dfs, int i, int l, int r) {
             if (p < l || r < p) return;
             if (l == r) {
                 ::apply(info[i], val...);
