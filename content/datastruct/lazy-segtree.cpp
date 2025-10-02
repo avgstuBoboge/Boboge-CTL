@@ -24,7 +24,7 @@ public:
         assert(n > 0);
         info.resize(4 << __lg(n));
         tag.resize(4 << __lg(n));
-        auto build = [&](auto dfs, int i, int l, int r) {
+        auto build = [&](auto &dfs, int i, int l, int r) {
             if (l == r) {
                 info[i] = init[l];
                 return;
@@ -55,7 +55,7 @@ private:
 public:
     template<class... T>
     void rangeApply(int ql, int qr, const T &... val) {
-        auto dfs = [&](auto dfs, int i, int l, int r) {
+        auto dfs = [&](auto &dfs, int i, int l, int r) {
             if (qr < l || r < ql) return;
             if (ql <= l && r <= qr) {
                 apply(i, l, r, val...);
@@ -71,7 +71,7 @@ public:
 
     Info rangeAsk(int ql, int qr) {
         Info res{};
-        auto dfs = [&](auto dfs, int i, int l, int r) {
+        auto dfs = [&](auto &dfs, int i, int l, int r) {
             if (qr < l || r < ql) return;
             if (ql <= l && r <= qr) {
                 res = res + info[i];
