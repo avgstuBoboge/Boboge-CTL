@@ -52,7 +52,7 @@ struct segTree {
 
     Info rangeAsk(int ql, int qr) {
         Info res{};
-        auto dfs = [&](auto dfs, int i, int l, int r) {
+        auto dfs = [&](auto &dfs, int i, int l, int r) {
             if (qr < l || r < ql) return;
             if (ql <= l && r <= qr) {
                 res = res + info[i];
