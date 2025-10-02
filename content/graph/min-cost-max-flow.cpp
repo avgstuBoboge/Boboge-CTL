@@ -4,93 +4,96 @@
  * Description: min-cost-max-flow for graph $G = (V, E)$.
  * Run $compute(src, sink)$ for some $src$ and $sink$ to get the minimum cost and the maximum flow. Can deal with negative costs.
  * Time: not sure. seems fast enough.
- * Status: tested on https://uoj.ac/problem/487 and luogu(same problem)
+ * Status: tested on https://uoj.ac/problem/487
  */
+template<class T>
 struct MCMF {
     struct Edge {
-        i64 nxt, to;
-        i64 cap, cost;
+        int nxt, to;
+        T cap, cost;
     };
-    vector<Edge> edges;
-    vector<i64> head, fa, fe, dual, mark, cyc;
-    i64 ti{}, sum{1};
+    vector<Edge> es;
+    vector<int> head, fa, fe, mark, cyc;
+    vector<T> dual;
+    int ti;
+    T sum;
 
-    MCMF(i64 n) : head(n, 0), fa(n), fe(n), dual(n), mark(n), cyc(n + 1) {
-        edges.push_back({0, 0, 0, 0});
-        edges.push_back({0, 0, 0, 0});
+    MCMF(int n) : head(n, 0), fa(n), fe(n), dual(n), mark(n), cyc(n) {
+        sum = 1, ti = 0;
+        es.push_back({0, 0, 0, 0});
+        es.push_back({0, 0, 0, 0});
     }
 
-    i64 addEdge(i64 u, i64 v, i64 cap, i64 cost) {
+    int addEdge(int u, int v, T cap, T cost) {
         sum += abs(cost);
-        assert(edges.size() % 2 == 0);
-        i64 e = edges.size();
-        edges.push_back({head[u], v, cap, cost});
+        int e = (int) es.size();
+        es.push_back({head[u], v, cap, cost});
         head[u] = e;
-        edges.push_back({head[v], u, 0, -cost});
+        es.push_back({head[v], u, 0, -cost});
         head[v] = e + 1;
         return e;
     }
 
-    void initTree(i64 x) {
+    void dfs(int x) {
         mark[x] = 1;
-        for (i64 i = head[x]; i; i = edges[i].nxt) {
-            i64 v = edges[i].to;
-            if (!mark[v] and edges[i].cap) {
+        for (int i = head[x]; i; i = es[i].nxt) {
+            int v = es[i].to;
+            if (!mark[v] and es[i].cap) {
                 fa[v] = x, fe[v] = i;
-                initTree(v);
+                dfs(v);
             }
         }
     }
 
-    i64 phi(i64 x) {
+    T phi(int x) {
         if (mark[x] == ti) return dual[x];
-        return mark[x] = ti, dual[x] = phi(fa[x]) - edges[fe[x]].cost;
+        return mark[x] = ti, dual[x] = phi(fa[x]) - es[fe[x]].cost;
     }
 
-    void pushFlow(i64 e, i64 &cost) {
-        i64 pen = edges[e ^ 1].to, lca = edges[e].to;
+    void push(int e, T &cost) {
+        int pen = es[e ^ 1].to, lca = es[e].to;
         ti++;
         while (pen) mark[pen] = ti, pen = fa[pen];
         while (mark[lca] != ti) mark[lca] = ti, lca = fa[lca];
-        i64 e2 = 0, path = 2, clen = 0;
-        i64 f = edges[e].cap;
-        for (i64 i = edges[e ^ 1].to; i != lca; i = fa[i]) {
-            cyc[++clen] = fe[i];
-            if (edges[fe[i]].cap < f) f = edges[fe[e2 = i] ^ (path = 0)].cap;
+        int e2 = 0, path = 2, clen = 0;
+        T f = es[e].cap;
+        for (int i = es[e ^ 1].to; i != lca; i = fa[i]) {
+            cyc[clen++] = fe[i];
+            if (es[fe[i]].cap < f) f = es[fe[e2 = i] ^ (path = 0)].cap;
         }
-        for (i64 i = edges[e].to; i != lca; i = fa[i]) {
-            cyc[++clen] = fe[i] ^ 1;
-            if (edges[fe[i] ^ 1].cap <= f) f = edges[fe[e2 = i] ^ (path = 1)].cap;
+        for (int i = es[e].to; i != lca; i = fa[i]) {
+            cyc[clen++] = fe[i] ^ 1;
+            if (es[fe[i] ^ 1].cap <= f) f = es[fe[e2 = i] ^ (path = 1)].cap;
         }
-        cyc[++clen] = e;
-        for (i64 i = 1; i <= clen; ++i) {
-            edges[cyc[i]].cap -= f, edges[cyc[i] ^ 1].cap += f;
-            cost += edges[cyc[i]].cost * f;
+        cyc[clen++] = e;
+        for (int i = 0; i < clen; ++i) {
+            es[cyc[i]].cap -= f, es[cyc[i] ^ 1].cap += f;
+            cost += es[cyc[i]].cost * f;
         }
         if (path == 2) return;
-        i64 laste = e ^ path, last = edges[laste].to, cur = edges[laste ^ 1].to;
+        int le = e ^ path, last = es[le].to, cur = es[le ^ 1].to;
         while (last != e2) {
             mark[cur]--;
-            laste ^= 1;
-            swap(laste, fe[cur]);
+            le ^= 1;
+            swap(le, fe[cur]);
             swap(last, fa[cur]);
             swap(last, cur);
         }
     }
 
-    pair<i64, i64> compute(i64 s, i64 t) {
-        i64 tot = sum;
-        i64 ed = addEdge(t, s, 1e18, -tot);
-        i64 cost = 0;
-        initTree(0);
+    pair<T, T> compute(int s, int t) {
+        T tot = sum;
+        int ed = addEdge(t, s, numeric_limits<T>::max(), -tot);
+        T cost = 0;
+        dfs(0);
         mark[0] = ti = 2;
-        fa[0] = cost = 0;
-        i64 ncnt = (i64) edges.size() - 1;
-        for (i64 i = 2, pre = ncnt; i != pre; i = i == ncnt ? 2 : i + 1) {
-            if (edges[i].cap && edges[i].cost < phi(edges[i ^ 1].to) - phi(edges[i].to)) pushFlow(pre = i, cost);
+        fa[0] = 0;
+        int nc = (int) es.size() - 1;
+        for (int i = 2, pre = nc; i != pre; i = i == nc ? 2 : i + 1) {
+            if (es[i].cap && es[i].cost < phi(es[i ^ 1].to) - phi(es[i].to)) push(pre = i, cost);
         }
-        i64 flow = edges[ed ^ 1].cap;
+        T flow = es[ed ^ 1].cap;
         cost += tot * flow;
-        return {cost, flow};
+        return {flow, cost};
     }
 };
