@@ -43,7 +43,7 @@ struct persistSegTree {
     int update(int rt, int pos, const T &... val) {
         function<void(int &, int, int)> dfs = [&](int &id, int l, int r) {
             t.push_back(t[id]);
-            id = (int) t.size() - 1;
+            id = sz(t) - 1;
             if (l == r) {
                 ::apply(t[id].info, val...);
                 return;

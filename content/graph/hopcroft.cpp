@@ -24,7 +24,7 @@ struct Hopcroft {
                     ldis[i] = 0;
                 }
             }
-            for (int ind = 0; ind < que.size(); ++ind) {
+            for (int ind = 0; ind < sz(que); ++ind) {
                 int i = que[ind];
                 for (auto j: g[i])
                     if (rdis[j] == -1) {

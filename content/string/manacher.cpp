@@ -11,7 +11,7 @@
 
 template<class T>
 vector<int> Manacher(const T &s) {
-    int n = s.size(), j = 0;
+    int n = sz(s), j = 0;
     vector<int> len(n * 2 - 1, 1);
     for (int i = 1; i < n * 2 - 1; ++i) {
         int p = i / 2, q = i - p, r = (j + 1) / 2 + len[j] - 1;

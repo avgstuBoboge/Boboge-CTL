@@ -20,7 +20,7 @@ class segTree {
     vector<Info> info;
     vector<Tag> tag;
 public:
-    segTree(const vector<Info> &init) : n(init.size()) {
+    segTree(const vector<Info> &init) : n(sz(init)) {
         assert(n > 0);
         info.resize(4 << __lg(n));
         tag.resize(4 << __lg(n));

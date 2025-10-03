@@ -1,13 +1,11 @@
 \chapter{Graph algorithms}
 \section{Flows}
 \kactlimport{dinic.cpp}
-\kactlimport{min-cost-max-flow.cpp}
-% \kactlimport{min-cost-max-flow-dij.cpp} % It's worse than primal dual
-% \kactlimport{costflow-successive-shortest-path.cpp}
+\kactlimport{costflow-successive-shortest-path.cpp}
 
 \section{Matchings}
-% \kactlimport{kuhn-matching.cpp}
-\kactlimport{hopcroft.cpp}
+\kactlimport{kuhn-matching.cpp}
+\kactlimport{hopcroft.cpp} % dinic gives the same complexity, considering deleting this
 \kactlimport{blossom.cpp}
 \kactlimport{hungarian.cpp}
 
@@ -27,11 +25,9 @@ $$
 The number of spanning trees in $G$ rooted at $k$ is $\det L(G)_{[n] \setminus\{k\},[n] \setminus\{k\}}$.
 For directed graph you change the degree matrix to in/out degree matrix to get the number of in/out root spanning trees.
 
-\kactlimport{binary-lifting.cpp}
-% \kactlimport{rmq-lca.cpp}
+% \kactlimport{binary-lifting.cpp} I can write it myself
 \kactlimport{heavy-light-decomposition.cpp}
 \kactlimport{centroid-decomposition.cpp}
-% \kactlimport{tree-hash.cpp}
 \kactlimport{tree-hash-map.cpp}
 \kactlimport{manhattan-mst.cpp}
 
@@ -44,7 +40,7 @@ For directed graph you change the degree matrix to in/out degree matrix to get t
 \kactlimport{tarjan.cpp}
 \kactlimport{2sat.cpp}
 \kactlimport{dominator-tree.cpp}
-% \kactlimport{link-cut.cpp} % not learned
+\kactlimport{link-cut.cpp}
 
 \section{Paths}
 \kactlimport{euler-tour-nonrec.cpp}

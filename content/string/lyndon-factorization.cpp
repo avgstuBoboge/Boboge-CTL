@@ -7,7 +7,7 @@
  * Status: tested on https://www.luogu.com.cn/problem/P6114, https://www.luogu.com.cn/problem/P1368.
  */
 vector<pair<int, int>> duval(const string &s) {
-    int n = s.size(), i = 0;
+    int n = sz(s), i = 0;
     vector<pair<int, int>> res;
     while (i < n) {
         int j = i + 1, k = i;

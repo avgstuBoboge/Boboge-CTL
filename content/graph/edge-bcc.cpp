@@ -6,10 +6,10 @@
  * Status: tested on https://www.luogu.com.cn/problem/P8436
  */
 auto EdgeBCC(int n, const vector<pair<int, int>> &es) {
-    vector<int> dfn(n, -1), low(n), id(n), mark(es.size(), 0), sta;
+    vector<int> dfn(n, -1), low(n), id(n), mark(sz(es), 0), sta;
     int cnt = 0, bcc = 0;
     vector<vector<int>> g(n);
-    for (int i = 0; i < es.size(); ++i) {
+    for (int i = 0; i < sz(es); ++i) {
         auto [x, y] = es[i];
         g[x].push_back(i);
         g[y].push_back(i);

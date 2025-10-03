@@ -10,7 +10,7 @@
  */
 template<class T>
 void fst(vector<T> &a, int is_inv) {
-    int n = a.size();
+    int n = sz(a);
     for (int s = 1; s < n; s <<= 1) {
         for (int i = 0; i < n; ++i) {
             if (i & s) {
@@ -23,8 +23,8 @@ void fst(vector<T> &a, int is_inv) {
 
 template<class T>
 vector<T> SubsetConv(const vector<T> &as, const vector<T> &bs) {
-    int n = as.size();
-    assert(n > 0 && bs.size() == n);
+    int n = sz(as);
+    assert(n > 0 && sz(bs) == n);
     int k = __lg(n);
     vector<vector<T>> ps(k + 1, vector<T>(n)), qs(ps), rs(ps);
     for (int x = 0; x < n; ++x) {

@@ -5,7 +5,7 @@
  * Status: tested on http://ejudge.opencup.org/~ejudge/team.cgi?contest_id=2745 problem J. https://www.luogu.com.cn/problem/P3387
  */
 auto tarjan(const vector<vector<int>> &g) {
-    int n = (int) g.size();
+    int n = sz(g);
     vector<int> id(n, -1), dfn(n, -1), low(n, -1), sta;
     int cnt = 0, scc = 0;
 

@@ -58,10 +58,10 @@ public:
         return 1;
     }
 
-    int top() { return sta.size(); }
+    int top() { return sz(sta); }
 
     void undo(int top) {
-        while (sta.size() > top) {
+        while (sz(sta) > top) {
             auto &[x, y, dat, g] = sta.back();
             fa[y] = y;
             ts[x] = dat;

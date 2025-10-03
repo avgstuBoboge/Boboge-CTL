@@ -23,7 +23,7 @@ pair<T, T> merge(T a1, T m1, T a2, T m2) {
 template<class T>
 pair<T, T> exCRT(const vector<T> &as, const vector<T> &ms) {
     T a = 0, m = 1;
-    for (int i = 0; i < as.size(); ++i) {
+    for (int i = 0; i < sz(as); ++i) {
         T a2 = as[i], m2 = ms[i];
         auto [x, y] = merge(a, m, a2, m2);
         a = x, m = y;

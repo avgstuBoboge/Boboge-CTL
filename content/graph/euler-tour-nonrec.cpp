@@ -11,9 +11,9 @@ struct EulerTour {
     vector<vector<int>> tours;
     vector<int> ori;
 
-    EulerTour(int n, const vector<pair<int, int>> &es, int dir = 0) : n(n), ori(es.size()) {
+    EulerTour(int n, const vector<pair<int, int>> &es, int dir = 0) : n(n), ori(sz(es)) {
         vector<vector<int>> g(n);
-        int m = es.size();
+        int m = sz(es);
         for (int i = 0; i < m; ++i) {
             auto [x, y] = es[i];
             g[x].push_back(i);
@@ -26,7 +26,7 @@ struct EulerTour {
             while (!sta.empty()) {
                 auto [now, pre] = sta.back();
                 int fin = 1;
-                for (int &i = cur[now]; i < g[now].size();) {
+                for (int &i = cur[now]; i < sz(g[now]);) {
                     auto ind = g[now][i++];
                     if (ori[ind]) continue;
                     auto [x, y] = es[ind];

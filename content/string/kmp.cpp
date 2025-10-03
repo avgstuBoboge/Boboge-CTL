@@ -14,7 +14,7 @@ struct KMP {
     int n;
     vector<int> fail;
 
-    KMP(const T &s) : s(s), n(s.size()), fail(n) {
+    KMP(const T &s) : s(s), n(sz(s)), fail(n) {
         int j = 0;
         for (int i = 1; i < n; ++i) {
             while (j > 0 && s[j] != s[i]) j = fail[j - 1];
@@ -24,7 +24,7 @@ struct KMP {
     } ///end-hash
 
     vector<int> match(const T &t) { /// start-hash
-        int m = t.size(), j = 0;
+        int m = sz(t), j = 0;
         vector<int> res(m);
         for (int i = 0; i < m; ++i) {
             while (j > 0 && (j == n || s[j] != t[i])) j = fail[j - 1];

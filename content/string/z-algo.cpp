@@ -13,7 +13,7 @@ struct z_function {
     int n;
     vector<int> z;
 
-    z_function(const T &s) : s(s), n(s.size()), z(n) {
+    z_function(const T &s) : s(s), n(sz(s)), z(n) {
         z[0] = n;
         int l = 0, r = 0;
         for (int i = 1; i < n; ++i) {
@@ -27,7 +27,7 @@ struct z_function {
     } /// end-hash
 
     vector<int> cal(const T &t) { /// start-hash
-        int m = t.size();
+        int m = sz(t);
         vector<int> res(m);
         int l = 0, r = 0;
         for (int i = 0; i < m; ++i) {

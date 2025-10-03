@@ -10,7 +10,7 @@
 //fwt_or[i] = \sum a[j], j & i = j(j is the subset of i).
 template<class T>
 void fwt_or(vector<T> &a, int is_inv = 0) {
-    int n = a.size();
+    int n = sz(a);
     for (int s = 1; s < n; s <<= 1) {
         for (int i = 0; i < n; i += s << 1) {
             for (int j = 0; j < s; j++) {
@@ -24,7 +24,7 @@ void fwt_or(vector<T> &a, int is_inv = 0) {
 //fwt_and[i] = \sum a[j], j & i = i(j is the superset of i)
 template<class T>
 void fwt_and(vector<T> &a, int is_inv = 0) {
-    int n = a.size();
+    int n = sz(a);
     for (int s = 1; s < n; s <<= 1) {
         for (int i = 0; i < n; i += s << 1) {
             for (int j = 0; j < s; j++) {
@@ -38,7 +38,7 @@ void fwt_and(vector<T> &a, int is_inv = 0) {
 //don't know how it works
 template<class T>
 void fwt_xor(vector<T> &a, int is_inv = 0) {
-    int n = a.size();
+    int n = sz(a);
     for (int s = 1; s < n; s <<= 1) {
         for (int i = 0; i < n; i += s << 1) {
             for (int j = 0; j < s; ++j) {

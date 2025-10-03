@@ -6,7 +6,7 @@
  * Status: tested on https://codeforces.com/gym/104854/problem/A
  */
 auto manhattan_mst(vector<pair<int, int>> ps) {
-    int n = ps.size();
+    int n = sz(ps);
     vector<array<int, 3>> es;
     for (int j = 0; j < 4; ++j) {
         for (auto &[x, y]: ps) {
@@ -34,7 +34,7 @@ auto manhattan_mst(vector<pair<int, int>> ps) {
             return (int) (ranges::lower_bound(vec, v) - vec.begin());
         };
         // Min initial: {inf, -1}
-        Fenwick<Min> t((int) vec.size());
+        Fenwick<Min> t(sz(vec));
         for (int i = 0; i < n; ++i) {
             int u = ord[i];
             int id = get(val[u]);

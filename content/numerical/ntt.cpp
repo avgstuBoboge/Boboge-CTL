@@ -23,10 +23,10 @@ struct FFT {
                 root += 1; // it is not necessarily a primitive root but lowbit(mod - 1) divides its order.
         }
 
-        int n = as.size();
+        int n = sz(as);
         assert(__builtin_popcount(n) == 1);
         static vector<int> r;
-        if (r.size() != n) {
+        if (sz(r) != n) {
             r.resize(n);
             for (int i = 1; i < n; ++i) {
                 r[i] = (r[i >> 1] >> 1) | ((i & 1) << (__builtin_ctz(n) - 1));
@@ -56,14 +56,14 @@ struct FFT {
     }
 
     static vector<mint> conv(const vector<mint> &as, const vector<mint> &bs) {
-        if (min(as.size(), bs.size()) <= 128) {
-            vector<i64> cs(as.size() + bs.size() - 1);
-            for (int i = 0; i < as.size(); ++i)
-                for (int j = 0; j < bs.size(); ++j)
+        if (min(sz(as), sz(bs)) <= 128) {
+            vector<i64> cs(sz(as) + sz(bs) - 1);
+            for (int i = 0; i < sz(as); ++i)
+                for (int j = 0; j < sz(bs); ++j)
                     cs[i + j] += (int) (as[i] * bs[j]);
             return {cs.begin(), cs.end()};
         } else {
-            int n = as.size() + bs.size() - 1, n2 = 1 << __lg(n * 2 - 1);
+            int n = sz(as) + sz(bs) - 1, n2 = 1 << __lg(n * 2 - 1);
             auto xs = as, ys = bs;
             xs.resize(n2, 0);
             ys.resize(n2, 0);

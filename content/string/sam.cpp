@@ -27,13 +27,13 @@ struct SAM {
     vector<node> t;
     vector<int> at; // at[i] = the state at which the i-th prefix of s is.
 
-    SAM(const T &s) : s(s), n(s.size()), at(n) {
+    SAM(const T &s) : s(s), n(sz(s)), at(n) {
         t.emplace_back();
         int last = 0; // create root.
         auto ins = [&](int i, int c) {
             int now = last;
             t.emplace_back(-1, t[now].len + 1);
-            last = (int) t.size() - 1;
+            last = sz(t) - 1;
             t[last].occ = 1;
             t[last].pos = i;
             at[i] = last;
@@ -50,7 +50,7 @@ struct SAM {
                     tmp.len = t[now].len + 1;
                     tmp.occ = 0; // do not copy occ.
                     t.push_back(tmp);
-                    int np = (int) t.size() - 1;
+                    int np = sz(t) - 1;
 
                     t[last].fa = t[p].fa = np;
                     while (now != -1 && t[now].nxt.count(c) && t[now].nxt[c] == p) {
@@ -66,21 +66,21 @@ struct SAM {
     } /// end-hash
 
     void calOccurrence() { /// start-hash
-        vector<int> sum(n + 1), que(t.size());
+        vector<int> sum(n + 1), que(sz(t));
         for (auto &it: t) sum[it.len]++;
         for (int i = 1; i < n; ++i)
             sum[i] += sum[i - 1];
-        for (int i = 0; i < t.size(); ++i)
+        for (int i = 0; i < sz(t); ++i)
             que[--sum[t[i].len]] = i;
         reverse(que.begin(), que.end());
         for (auto now: que) if (now != 0) t[t[now].fa].occ += t[now].occ;
     } /// end-hash
 
     vector<vector<int>> ReversedPrefixTree() { /// start-hash
-        vector<vector<int>> g(t.size());
-        for (int now = 1; now < t.size(); ++now)
+        vector<vector<int>> g(sz(t));
+        for (int now = 1; now < sz(t); ++now)
             g[t[now].fa].push_back(now);
-        for (int now = 0; now < t.size(); ++now) {
+        for (int now = 0; now < sz(t); ++now) {
             sort(g[now].begin(), g[now].end(), [&](int i, int j) {
                 return s[t[i].pos - t[now].len] < s[t[j].pos - t[now].len];
             });

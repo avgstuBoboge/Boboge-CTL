@@ -47,11 +47,11 @@ struct FFT {
 
     template<class Z>
     vector<Z> conv(const vector<Z> &A, const vector<Z> &B) {
-        int n = A.size() + B.size() - 1;
+        int n = sz(A) + sz(B) - 1;
         pre(n);
         vector<cp> a(n2, 0), b(n2, 0);;
-        for (int i = 0; i < A.size(); ++i) a[i] = A[i];
-        for (int i = 0; i < B.size(); ++i) b[i] = B[i];
+        for (int i = 0; i < sz(A); ++i) a[i] = A[i];
+        for (int i = 0; i < sz(B); ++i) b[i] = B[i];
         dft(a, 0);
         dft(b, 0);
         for (int i = 0; i < n2; ++i) a[i] *= b[i];
@@ -64,11 +64,11 @@ struct FFT {
 
     vector<int> conv(const vector<int> &A, const vector<int> &B, int mod) { /// start-hash
         int M = sqrt(mod) + 0.5;
-        int n = A.size() + B.size() - 1;
+        int n = sz(A) + sz(B) - 1;
         pre(n);
         vector<cp> a(n2, 0), b(n2, 0), c(n2, 0), d(n2, 0);
-        for (int i = 0; i < A.size(); ++i) a[i] = A[i] / M, b[i] = A[i] % M;
-        for (int i = 0; i < B.size(); ++i) c[i] = B[i] / M, d[i] = B[i] % M;
+        for (int i = 0; i < sz(A); ++i) a[i] = A[i] / M, b[i] = A[i] % M;
+        for (int i = 0; i < sz(B); ++i) c[i] = B[i] / M, d[i] = B[i] % M;
         dft(a, 0);
         dft(b, 0);
         dft(c, 0);

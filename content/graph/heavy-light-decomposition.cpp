@@ -12,7 +12,7 @@ struct HLD {
     int n; /// start-hash
     vector<int> fa, hson, L, R, dep, top;
 
-    HLD(vector <vector<int>> &g, int rt = 0) : n(g.size()), fa(n, -1), hson(n, -1), L(n), R(n), dep(n, 0), top(n) {
+    HLD(vector <vector<int>> &g, int rt = 0) : n(sz(g)), fa(n, -1), hson(n, -1), L(n), R(n), dep(n), top(n) {
         vector<int> siz(n);
         auto dfs = [&](auto &dfs, int now) -> void {
             siz[now] = 1;

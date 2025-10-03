@@ -12,11 +12,11 @@ class ST {
     vector<vector<T>> st;
     const F func;
 public:
-    ST(const vector<T> &init, const F &f) : n(init.size()), func(f) {
+    ST(const vector<T> &init, const F &f) : n(sz(init)), func(f) {
         assert(n > 0);
         st.assign(__lg(n) + 1, vector<T>(n));
         st[0] = init;
-        for (int j = 1; j < st.size(); ++j) {
+        for (int j = 1; j < sz(st); ++j) {
             for (int i = 0; i + (1 << j) <= n; ++i) {
                 st[j][i] = func(st[j - 1][i], st[j - 1][i + (1 << (j - 1))]);
             }

@@ -48,7 +48,7 @@ vector<int> Blossom(int n, const vector<pair<int, int>> &es) {
                 x = pre[y];
             }
         };
-        for (int ind = 0; ind < que.size(); ++ind) {
+        for (int ind = 0; ind < sz(que); ++ind) {
             int now = que[ind];
             for (auto v: g[now]) {
                 if (getfa(now) == getfa(v) || clr[v] == 1) continue;

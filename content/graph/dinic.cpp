@@ -21,9 +21,9 @@ struct Dinic {
     Dinic(int n) : n(n), g(n) {}
 
     void addEdge(int u, int v, Cap c, bool dir = 1) {
-        g[u].push_back(es.size());
+        g[u].push_back(sz(es));
         es.push_back({v, c});
-        g[v].push_back(es.size());
+        g[v].push_back(sz(es));
         es.push_back({u, dir ? 0 : c});
     }
 
@@ -32,7 +32,7 @@ struct Dinic {
             dis.assign(n, -1);
             dis[sink] = 0;
             vector<int> que{sink};
-            for (int ind = 0; ind < que.size(); ++ind) {
+            for (int ind = 0; ind < sz(que); ++ind) {
                 int now = que[ind];
                 for (auto i: g[now]) {
                     int v = es[i].to;
@@ -49,7 +49,7 @@ struct Dinic {
         auto dfs = [&](auto &dfs, int now, Cap flow) {
             if (now == sink) return flow;
             Cap res = 0;
-            for (int &ind = cur[now]; ind < g[now].size(); ind++) {
+            for (int &ind = cur[now]; ind < sz(g[now]); ind++) {
                 int i = g[now][ind];
                 auto [v, c] = es[i];
                 if (c > 0 && dis[v] == dis[now] - 1) {

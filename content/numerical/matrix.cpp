@@ -36,7 +36,7 @@ struct Matrix {
     /// end-hash
 
     Mat operator+(const Mat &b) const {
-        int n = a.size(), m = a[0].size();
+        int n = sz(a), m = sz(a[0]);
         Mat c(n, m);
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
@@ -47,7 +47,7 @@ struct Matrix {
     }
 
     Mat operator-(const Mat &b) const {
-        int n = a.size(), m = a[0].size();
+        int n = sz(a), m = sz(a[0]);
         Mat c(n, m);
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
@@ -58,8 +58,8 @@ struct Matrix {
     }
 
     Mat operator*(const Mat &b) const {
-        int n = a.size(), m = a[0].size(), l = b[0].size();
-        assert(m == b.a.size());
+        int n = sz(a), m = sz(a[0]), l = sz(b[0]);
+        assert(m == sz(b));
         Mat c(n, l);
         for (int i = 0; i < n; ++i) {
             for (int k = 0; k < m; ++k) {
@@ -72,7 +72,7 @@ struct Matrix {
     }
 
     Mat tran() const {
-        int n = a.size(), m = a[0].size();
+        int n = sz(a), m = sz(a[0]);
         Mat res(m, n);
         for (int i = 0; i < n; ++i)
             for (int j = 0; j < m; ++j)
@@ -82,7 +82,7 @@ struct Matrix {
 
     // Eliminate the first C columns, return the rank of matrix induced by first C columns.
     int Gaussian(int C) { /// start-hash
-        int n = a.size(), m = a[0].size(), rk = 0;
+        int n = sz(a), m = sz(a[0]), rk = 0;
         assert(C <= m);
         for (int c = 0; c < C; ++c) {
             int id = rk;
@@ -105,7 +105,7 @@ struct Matrix {
     } /// end-hash
 
     Mat inverse() const { /// start-hash
-        int n = a.size(), m = a[0].size();
+        int n = sz(a), m = sz(a[0]);
         assert(n == m);
         auto b = *this;
         for (int i = 0; i < n; ++i)
@@ -117,8 +117,8 @@ struct Matrix {
 
     //return [true, solution] if there's any solution, if the solution is not unique, rk < n
     friend pair<bool, Vec> SolveLinear(Mat A, const Vec &b) { /// start-hash
-        int n = A.a.size(), m = A[0].size();
-        assert(b.size() == n);
+        int n = sz(A.a), m = sz(A[0]);
+        assert(sz(b) == n);
         for (int i = 0; i < n; ++i) {
             A[i].push_back(b[i]);
         }

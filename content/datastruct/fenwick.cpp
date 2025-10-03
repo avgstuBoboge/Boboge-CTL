@@ -34,7 +34,7 @@ struct Fenwick {
     int search(T v) {
         int res = 0;
         for (int h = 1 << 30; h; h >>= 1) {
-            if ((res | h) < t.size() && t[res | h] <= v) {
+            if ((res | h) < sz(t) && t[res | h] <= v) {
                 res |= h;
                 v -= t[res];
             }

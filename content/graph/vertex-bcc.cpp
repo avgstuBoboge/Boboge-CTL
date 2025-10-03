@@ -16,15 +16,15 @@ struct VertexBCC {
     vector<int> id, top, fa;
     vector<pair<int, int>> bf; // edges of the block-forest.
 
-    VertexBCC(int n, const vector<pair<int, int>> &es) : n(n), bcc(0), id(es.size()), top(n), fa(n, -1) {
+    VertexBCC(int n, const vector<pair<int, int>> &es) : n(n), bcc(0), id(sz(es)), top(n), fa(n, -1) {
         vector<vector<int>> g(n);
-        for (int i = 0; i < es.size(); ++i) {
+        for (int i = 0; i < sz(es); ++i) {
             auto [x, y] = es[i];
             g[x].push_back(i);
             g[y].push_back(i);
         }
         int cnt = 0;
-        vector<int> dfn(n, -1), low(n), mark(es.size()), vsta, esta;
+        vector<int> dfn(n, -1), low(n), mark(sz(es)), vsta, esta;
         auto dfs = [&](auto dfs, int now) -> void {
             low[now] = dfn[now] = cnt++;
             vsta.push_back(now);

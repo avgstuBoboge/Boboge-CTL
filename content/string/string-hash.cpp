@@ -27,7 +27,7 @@ struct StringHash {
     int n;
     vector<pii> hs, pw;
 
-    StringHash(const string &s) : n(s.size()), hs(n + 1), pw(n + 1) {
+    StringHash(const string &s) : n(sz(s)), hs(n + 1), pw(n + 1) {
         pw[0] = {1, 1};
         for (int i = 1; i <= n; ++i) pw[i] = pw[i - 1] * base;
         for (int i = 0; i < n; ++i) hs[i + 1] = hs[i] * base + pii(s[i], s[i]);

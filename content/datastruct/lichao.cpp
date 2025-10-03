@@ -3,7 +3,7 @@
  * Date: 23-02-11
  * Description: Li Chao tree. Given x-coordinates, supports adding segments and computing minimum Y-coordinate at a given input x-coordinate
  * Time: O(\log ^ 2 N).
- * Usage: update(x0, x1, line) to add a segment between [x0, x1], query(x) to get the maximum number
+ * Usage: update(ql, qr, line) to add a segment between [ql, qr], query(x) to get the maximum number
  * Status: tested on https://www.luogu.com.cn/record/101969534.
  */
 using T = double;
@@ -54,7 +54,7 @@ struct LiChao {
 
     void update(int ql, int qr, Line &line) {
         lines.push_back(line);
-        int u = (int) lines.size() - 1;
+        int u = sz(lines) - 1;
         auto dfs = [&](auto &dfs, int i, int l, int r) {
             if (qr < l || r < ql) return;
             if (ql <= l && r <= qr) {
@@ -67,6 +67,7 @@ struct LiChao {
         dfs(dfs, 1, 0, n - 1);
     }
 
+    // return {minimum y-value, line index}, in case of tie, return the line with smaller index
     pair<T, int> query(int x) {
         auto dfs = [&](auto &dfs, int i, int l, int r) {
             auto res = make_pair(lines[t[i]].eval(x), t[i]);

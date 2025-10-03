@@ -15,7 +15,7 @@ struct SA {
     vector<int> str, sa, rank, h;
 
     template<class T>
-    SA(const T &s): n(s.size()), str(n + 1), sa(n + 1), rank(n + 1), h(n - 1) {
+    SA(const T &s): n(sz(s)), str(n + 1), sa(n + 1), rank(n + 1), h(n - 1) {
         auto vec = s;
         sort(vec.begin(), vec.end());
         vec.erase(unique(vec.begin(), vec.end()), vec.end());

@@ -15,8 +15,8 @@ struct Poly : vector<T> {
     Poly(const vector<T> &vec) : vector<T>(vec) {}
 
     friend poly &operator+=(poly &as, const poly &bs) { /// start-hash
-        if (as.size() < bs.size()) as.resize(bs.size(), 0);
-        for (int i = 0; i < bs.size(); ++i) as[i] += bs[i];
+        if (sz(as) < sz(bs)) as.resize(sz(bs), 0);
+        for (int i = 0; i < sz(bs); ++i) as[i] += bs[i];
         return as;
     }
 
@@ -26,8 +26,8 @@ struct Poly : vector<T> {
     }
 
     friend poly &operator-=(poly &as, const poly &bs) {
-        if (as.size() < bs.size()) as.resize(bs.size(), 0);
-        for (int i = 0; i < bs.size(); ++i) as[i] -= bs[i];
+        if (sz(as) < sz(bs)) as.resize(sz(bs), 0);
+        for (int i = 0; i < sz(bs); ++i) as[i] -= bs[i];
         return as;
     }
 
@@ -69,21 +69,21 @@ struct Poly : vector<T> {
     poly derivative() const {
         assert(!this->empty());
         auto as = poly(this->begin() + 1, this->end());
-        for (int i = 0; i < as.size(); ++i) as[i] *= i + 1;
+        for (int i = 0; i < sz(as); ++i) as[i] *= i + 1;
         if (as.empty()) as = poly{0};
         return as;
     }
 
     poly integral() const {
         poly as(this->size() + 1);
-        for (int i = 1; i < as.size(); ++i) as[i] = (*this)[i - 1] / i;
+        for (int i = 1; i < sz(as); ++i) as[i] = (*this)[i - 1] / i;
         return as;
     }
 
     poly inv(int k = 0) const { /// start-hash
         const poly &as = *this;
         assert(!as.empty());
-        if (k == 0) k = as.size();
+        if (k == 0) k = sz(as);
         poly res{T{1} / as[0]};
         for (int m = 2; m < k * 2; m <<= 1) {
             res = res * 2 - (res * res * as.modxk(m)).modxk(m);
@@ -96,12 +96,12 @@ struct Poly : vector<T> {
         poly as = *this;
         if (k > 0) as.resize(k);
         assert(!as.empty() && as[0] == T{1}); // be cautious when T is float or double.
-        return (as.derivative() * as.inv()).modxk(as.size() - 1).integral();
+        return (as.derivative() * as.inv()).modxk(sz(as) - 1).integral();
     }
 
     poly exp(int k = 0) const {
         const poly &as = *this;
-        if (k == 0) k = as.size();
+        if (k == 0) k = sz(as);
         assert(k > 0 && (as.empty() || as[0] == T{0})); // be cautious when T is float or double.
         poly res{1};
         for (int m = 2; m < k * 2; m <<= 1) {

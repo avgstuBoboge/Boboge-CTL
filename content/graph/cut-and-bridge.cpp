@@ -8,12 +8,12 @@
  */
 auto CutAndBridge(int n, const vector<pair<int, int>> es) {
     vector<vector<int>> g(n);
-    for (int i = 0; i < es.size(); ++i) {
+    for (int i = 0; i < sz(es); ++i) {
         auto [x, y] = es[i];
         g[x].push_back(i);
         g[y].push_back(i);
     }
-    vector<int> cut, bridge, dfn(n, -1), low(n), mark(es.size());
+    vector<int> cut, bridge, dfn(n, -1), low(n), mark(sz(es));
     int cnt = 0;
     auto dfs = [&](auto &dfs, int now, int fa) -> void {
         dfn[now] = low[now] = cnt++;

@@ -9,7 +9,7 @@
  */
 template<class T = i64, T INF = numeric_limits<T>::max()>
 vector<pair<int, int>> Hungarian(const vector<vector<T>> &ws) {
-    int L = ws.size(), R = L == 0 ? 0 : ws[0].size();
+    int L = sz(ws), R = L == 0 ? 0 : sz(ws[0]);
     vector<T> lp(L), rp(R); // left & right potential
     vector<int> lm(L, -1), rm(R, -1); // left & right match
     for (int i = 0; i < L; ++i)
@@ -41,7 +41,7 @@ vector<pair<int, int>> Hungarian(const vector<vector<T>> &ws) {
                     if (extend(j)) return;
                 }
             }
-            if (ind == (int) que.size() - 1) { // Update potentials
+            if (ind == sz(que) - 1) { // Update potentials
                 T d = INF;
                 for (int j = 0; j < R; ++j)
                     if (sa[j]) d = min(d, sa[j]);

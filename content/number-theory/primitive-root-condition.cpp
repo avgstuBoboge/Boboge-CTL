@@ -17,5 +17,5 @@ bool hasPrimitiveRoot(i64 n) {
         }
     }
     if (n > 1) ps.push_back(n);
-    return ps.size() < 2;
+    return sz(ps) < 2;
 }

@@ -133,7 +133,7 @@ class LinkCutTree {
 		template<class... Args> /// start-hash
 		int emplace(Args&&... args) {
 			nodes.emplace_back(forward<Args>(args)...);
-			return (int)nodes.size() - 1;
+			return sz(nodes) - 1;
 		}
 		T& expose(int ai, int bi) {
 			return *expose(&nodes[ai], &nodes[bi]);

@@ -41,7 +41,7 @@ struct GSAM {
                 if (t[p].len == t[now].len + 1) t[last].fa = p;
                 else { // clone a node np from node p.
                     t.emplace_back();
-                    int np = (int) t.size() - 1;
+                    int np = sz(t) - 1;
                     for (int i = 0; i < 26; ++i) {
                         if (t[p].nxt[i] == -1) continue;
                         int v = t[p].nxt[i];
@@ -61,7 +61,7 @@ struct GSAM {
         };
 
         vector<int> que{0};
-        for (int ind = 0; ind < que.size(); ++ind) {
+        for (int ind = 0; ind < sz(que); ++ind) {
             int now = que[ind];
             vector<int> cs;
             for (int c = 0; c < 26; ++c) {

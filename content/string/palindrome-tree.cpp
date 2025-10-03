@@ -23,7 +23,7 @@ struct PalindromeTree {
 
     template<class T>
     PalindromeTree(const T &s) {
-        int n = s.size();
+        int n = sz(s);
         t.emplace_back(-1, -1); // Odd root -> state 0.
         t.emplace_back(0, 0); // Even root -> state 1.
 
@@ -38,7 +38,7 @@ struct PalindromeTree {
             if (t[now].nxt.count(c) == 0) {
                 int q = now == 0 ? 1 : t[get(t[now].fail)].nxt[c];
                 t.emplace_back(q, t[now].len + 2);
-                t[now].nxt[c] = (int) t.size() - 1;
+                t[now].nxt[c] = sz(t) - 1;
             }
             now = t[now].nxt[c];
             t[now].cnt++;
