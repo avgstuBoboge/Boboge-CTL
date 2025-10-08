@@ -9,21 +9,21 @@ auto tarjan(const vector<vector<int>> &g) {
     vector<int> id(n, -1), dfn(n, -1), low(n, -1), sta;
     int cnt = 0, scc = 0;
 
-    auto dfs = [&](auto &dfs, int now) -> void {
-        dfn[now] = low[now] = cnt++;
-        sta.push_back(now);
-        for (auto v: g[now]) {
+    auto dfs = [&](auto &dfs, int u) -> void {
+        dfn[u] = low[u] = cnt++;
+        sta.push_back(u);
+        for (auto v: g[u]) {
             if (dfn[v] == -1) {
                 dfs(dfs, v);
-                low[now] = min(low[now], low[v]);
-            } else if (id[v] == -1) low[now] = min(low[now], dfn[v]);
+                low[u] = min(low[u], low[v]);
+            } else if (id[v] == -1) low[u] = min(low[u], dfn[v]);
         }
-        if (low[now] == dfn[now]) {
+        if (low[u] == dfn[u]) {
             while (1) {
                 int z = sta.back();
                 sta.pop_back();
                 id[z] = scc;
-                if (z == now) break;
+                if (z == u) break;
             }
             scc++;
         }
