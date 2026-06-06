@@ -8,7 +8,7 @@
 struct DSU {
     vector<int> f;
 
-    DSU(int n) : f(n + 1, -1) {};
+    DSU(int n) : f(n, -1) {};
 
     int find(int x) {
         return f[x] < 0 ? x : f[x] = find(f[x]);
