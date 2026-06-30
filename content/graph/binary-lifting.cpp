@@ -11,7 +11,7 @@ struct BinaryLifting {
     vector<int> dep;
     vector<vector<int>> anc;
 
-    BinaryLifting(const vector<vector<int>> &g, int rt = 0) : n((int) g.size()), dep(n, -1) {
+    BinaryLifting(const vector<vector<int>> &g, int rt = 0) : n(sz(g)), dep(n, -1) {
         assert(n > 0);
         anc.assign(n, vector<int>(__lg(n) + 1));
         function<void(int, int)> dfs = [&](int now, int fa) {
