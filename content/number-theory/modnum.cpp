@@ -53,7 +53,7 @@ struct mint {
         return res;
     }
 
-    constexpr int pow(i64 b) {
+    constexpr mint pow(i64 b) {
         return power(*this, b);
     }
     
