@@ -84,7 +84,7 @@ namespace Factorization {
             }
         };
         dfs(dfs, n);
-		sort(res.begin(), res.end());
+		sort(all(res));
         return res;
     } /// end-hash
 }
