@@ -5,10 +5,10 @@
  * Time: O(8|V| \log |V|)
  * Status: tested on https://codeforces.com/gym/104854/problem/A
  */
-auto manhattan_mst(vector<pair<int, int>> ps) {
+auto manhattan_mst(vector<pii> ps) {
     int n = sz(ps);
     vector<array<int, 3>> es;
-    for (int j = 0; j < 4; ++j) {
+    rep(j, 0, 3) {
         for (auto &[x, y]: ps) {
             if (j & 1) {
                 swap(x, y);
@@ -17,25 +17,25 @@ auto manhattan_mst(vector<pair<int, int>> ps) {
                 x = -x;
             }
         }
-        vector<int> ord(n);
-        iota(ord.begin(), ord.end(), 0);
+        vi ord(n);
+        iota(all(ord), 0);
         ranges::sort(ord, [&](int i, int j) {
             return ps[i] > ps[j];
         });
-        vector<int> val(n);
-        for (int i = 0; i < n; ++i) {
+        vi val(n);
+        rep(i, 0, n - 1) {
             auto [x, y] = ps[i];
             val[i] = x - y;
         }
         auto vec = val;
         ranges::sort(vec);
-        vec.erase(unique(vec.begin(), vec.end()), vec.end());
+        vec.erase(unique(all(vec)), vec.end());
         auto get = [&](int v) {
             return (int) (ranges::lower_bound(vec, v) - vec.begin());
         };
         // Min initial: {inf, -1}
         Fenwick<Min> t(sz(vec));
-        for (int i = 0; i < n; ++i) {
+        rep(i, 0, n - 1) {
             int u = ord[i];
             int id = get(val[u]);
             auto [x, y] = ps[u];
