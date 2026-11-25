@@ -42,7 +42,7 @@ struct GSAM {
                 else { // clone a node np from node p.
                     t.emplace_back();
                     int np = sz(t) - 1;
-                    for (int i = 0; i < 26; ++i) {
+                    rep(i, 0, 25) {
                         if (t[p].nxt[i] == -1) continue;
                         int v = t[p].nxt[i];
                         if (t[v].len > 0) {
@@ -60,11 +60,11 @@ struct GSAM {
             }
         };
 
-        vector<int> que{0};
-        for (int ind = 0; ind < sz(que); ++ind) {
+        vi que{0};
+        rep(ind, 0, sz(que) - 1) {
             int now = que[ind];
-            vector<int> cs;
-            for (int c = 0; c < 26; ++c) {
+            vi cs;
+            rep(c, 0, 25) {
                 int v = t[now].nxt[c];
                 if (v == -1) continue;
                 cs.push_back(c);
