@@ -12,7 +12,7 @@ template<class T>
 void fst(vector<T> &a, int is_inv) {
     int n = sz(a);
     for (int s = 1; s < n; s <<= 1) {
-        for (int i = 0; i < n; ++i) {
+        rep(i, 0, n - 1) {
             if (i & s) {
                 if (is_inv == 0) a[i] += a[i ^ s];
                 else a[i] -= a[i ^ s];
@@ -27,22 +27,22 @@ vector<T> SubsetConv(const vector<T> &as, const vector<T> &bs) {
     assert(n > 0 && sz(bs) == n);
     int k = __lg(n);
     vector<vector<T>> ps(k + 1, vector<T>(n)), qs(ps), rs(ps);
-    for (int x = 0; x < n; ++x) {
+    rep(x, 0, n - 1) {
         ps[__builtin_popcount(x)][x] = as[x];
         qs[__builtin_popcount(x)][x] = bs[x];
     }
     for (auto &vec: ps) fst(vec, 0);
     for (auto &vec: qs) fst(vec, 0);
-    for (int i = 0; i <= k; ++i) {
-        for (int j = 0; j <= k - i; ++j) {
-            for (int x = 0; x < n; ++x) {
+    rep(i, 0, k) {
+        rep(j, 0, k - i) {
+            rep(x, 0, n - 1) {
                 rs[i + j][x] += ps[i][x] * qs[j][x];
             }
         }
     }
     for (auto &vec: rs) fst(vec, 1);
     vector<T> cs(n);
-    for (int x = 0; x < n; ++x) {
+    rep(x, 0, n - 1) {
         cs[x] = rs[__builtin_popcount(x)][x];
     }
     return cs;
