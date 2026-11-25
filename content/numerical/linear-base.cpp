@@ -18,7 +18,7 @@ struct LB {
 
     // insert x. return 1 if the base is expanded.
     int insert(T x, Z val = 0) {
-        for (int i = d - 1; i >= 0; --i) {
+        revrep(i, 0, d - 1) {
             if (x[i]) {
                 if (a[i] == 0) {
                     a[i] = x;
@@ -36,7 +36,7 @@ struct LB {
 
     // View vectors as binary numbers. Then calculate the minimum number we can get if we add vectors from linear base (with weight at least $val$) to $x$.
     T ask_min(T x, Z val = 0) { /// start-hash
-        for (int i = d - 1; i >= 0; --i) {
+        revrep(i, 0, d - 1) {
             if (x[i] && w[i] >= val) x ^= a[i]; // change x[i] to x[i] == 0 to ask maximum value we can get.
         }
         return x;
@@ -44,7 +44,7 @@ struct LB {
 
     // Compute the union of two bases.
     friend LB operator+(LB l, const LB &r) { /// start-hash
-        for (int i = d - 1; i >=0; --i) {
+        revrep(i, 0, d - 1) {
             l.insert(r[i], r.w[i]);
         }
         return l;
@@ -53,12 +53,12 @@ struct LB {
     // Returns the k-th smallest number spanned by vectors of weight at least $val$. k starts from 0.
     T kth(unsigned long long k, Z val = 0) { /// start-hash
         int N = 0;
-        for (int i = 0; i < d; ++i) {
+        rep(i, 0, d - 1) {
             N += (a[i] != 0 && w[i] >= val);
         }
         if (k >= (1ull << N)) return -1; // return -1 if k is too large.
         T res = 0;
-        for (int i = d - 1; i >= 0; --i) {
+        revrep(i, 0, d - 1) {
             if (a[i] != 0 && w[i] >= val) {
                 --N;
                 auto bit = k >> N & 1;
