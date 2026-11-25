@@ -33,13 +33,13 @@ private:
         // also remember to maintain glob here.
     }
 
-    vector<int> fa;
+    vi fa;
     vector<T> ts;
     vector<tuple<int, int, T, Z>> sta;
 public:
     UndoDSU(int n) : fa(n), ts(n) {
-        iota(fa.begin(), fa.end(), 0);
-        iota(ts.begin(), ts.end(), 0);
+        iota(all(fa), 0);
+        iota(all(ts), 0);
         // remember initializing glob here.
     }
 
