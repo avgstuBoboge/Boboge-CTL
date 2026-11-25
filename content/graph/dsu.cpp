@@ -3,10 +3,11 @@
  * Date: 23-02-03
  * Description: Disjoint set union. $merge(x, y)$ merges components which $x$ and $y$ are in respectively and returns $1$ if $x$ and $y$ are in different components.
  * Time: amortized O(\alpha(M, N)) where $M$ is the number of operations. Almost constant in competitive programming.
+ * Status: tested.
  */
 
 struct DSU {
-    vector<int> f;
+    vi f;
 
     DSU(int n) : f(n, -1) {};
 
