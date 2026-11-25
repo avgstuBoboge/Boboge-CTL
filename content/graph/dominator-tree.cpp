@@ -5,16 +5,16 @@
  * Time: O((|V|+|E|) \alpha(|V|,|E|)).
  * Status: tested on https://judge.yosupo.jp/submission/252293.
  */
-auto domTree(int n, const vector<pair<int, int>> &es, int rt = 0) {
-    vector g(3, vector<vector<int>>(n));
+auto domTree(int n, const vector<pii> &es, int rt = 0) {
+    vector g(3, vector<vi>(n));
     for (auto [u, v]: es) {
         g[0][u].push_back(v);
         g[1][v].push_back(u);
     }
-    vector<int> dfn(n, -1), pos(n), fth(n, -1), fa(n), mn(n), sdm(n), idm(n, -1);
-    iota(fa.begin(), fa.end(), 0);
-    iota(mn.begin(), mn.end(), 0);
-    iota(sdm.begin(), sdm.end(), 0);
+    vi dfn(n, -1), pos(n), fth(n, -1), fa(n), mn(n), sdm(n), idm(n, -1);
+    iota(all(fa), 0);
+    iota(all(mn), 0);
+    iota(all(sdm), 0);
     int now = 0;
     auto dfs = [&](auto &dfs, int u) -> void {
         pos[now] = u;
@@ -38,7 +38,7 @@ auto domTree(int n, const vector<pair<int, int>> &es, int rt = 0) {
         return fa[x];
     };
     dfs(dfs, rt);
-    for (int i = now - 1; i; --i) {
+    revrep(i, 1, now - 1) {
         int u = pos[i], res = 1e9;
         for (int v: g[1][u]) {
             if (dfn[v] == -1) continue;
@@ -63,7 +63,7 @@ auto domTree(int n, const vector<pair<int, int>> &es, int rt = 0) {
         }
         g[2][u].clear();
     }
-    for (int i = 1; i < now; ++i) {
+    rep(i, 1, now - 1) {
         int u = pos[i];
         if (idm[u] != sdm[u]) {
             idm[u] = idm[idm[u]];
