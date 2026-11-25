@@ -10,15 +10,15 @@
 template<int d, class T = bitset<d * 2>>
 LB<d, T> intersect(LB<d, T> a, const LB<d, T> &b) {
     LB<d, T> res;
-    for (int i = 0; i < d; ++i) if (a[i] != 0) a[i][d + i] = 1;
+    rep(i, 0, d - 1) if (a[i] != 0) a[i][d + i] = 1;
     T msk(string(d, '1'));
-    for (int i = 0; i < d; ++i) {
+    rep(i, 0, d - 1) {
         T x = a.ask_min(b[i]);
         if ((x & msk) != 0) {
             a.insert(x);
         } else {
             T y = 0;
-            for (int j = 0; j < d; ++j) if (x[d + j]) y ^= a[j];
+            rep(j, 0, d - 1) if (x[d + j]) y ^= a[j];
             res.insert(y & msk);
         }
     }
