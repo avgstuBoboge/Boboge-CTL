@@ -6,7 +6,7 @@
  * Description: van Emde Boas tree for maintaining a subset of $\{0, \dots, 2^B - 1\}$
  * Time: O(\log B).
  * Usage: findPrev(i): returns maximum $j \leq i$ in set, or -1 if none exist\\ insert(i), erase(i): insert/erase i to/from the set\\ empty(): returns TRUE if the set is empty\\ clear(): empties the set\\init(bts): inits the set, after the call i will be in the set if bts[i] = 1. bts should be a bitset, but can be a vector of 0/1
- * Status: tested a bit. Should not be included in the PDF
+ * Status: tested.
  */
 template<int B, typename ENABLE = void>
 class VEBTree {
@@ -77,7 +77,7 @@ class VEBTree {
 		void clear() {
 			mi = M, ma = -1;
 			act.clear();
-			for (int i = 0; i < S; ++i) ch[i].clear();
+			rep(i, 0, S - 1) ch[i].clear();
 		}
 		template<class T>
 		void init(const T& bts, int shift = 0, int s0 = 0, int s1 = 0) {
@@ -88,7 +88,7 @@ class VEBTree {
 				act.clear();
 				mi = s0, ma = M-1 - s1;
 				++s0; ++s1;
-				for (int j = 0; j < S; ++j) {
+				rep(j, 0, S - 1) {
 					ch[j].init(bts, shift + (j << R), max(0, s0 - (j << R)), max(0, s1 - ((S-1-j) << R)));
 					if (! ch[j].empty()) act.insert(j);
 				}
@@ -116,6 +116,6 @@ class VEBTree<B, enable_if_t<(B <= 6)>> {
 		template<class T>
 		void init(const T& bts, int shift = 0, int s0 = 0, int s1 = 0) {
 			act = 0;
-			for (int i = s0; i + s1 < M; ++i) act |= ((ull)bts[shift + i]) << i;
+			rep(i, s0, M - s1 - 1) act |= ((ull)bts[shift + i]) << i;
 		}
 };
