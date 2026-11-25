@@ -21,7 +21,7 @@ struct treeHash {
 
     vector<ull> h;
 
-    treeHash(vector<vector<int>> &adj, int rt = 0) : h(adj.size()) {
+    treeHash(vector<vi> &adj, int rt = 0) : h(sz(adj)) {
         auto dfs = [&](auto dfs, int u, int fa) -> void {
             h[u] = bas;
             for (int v: adj[u]) {
