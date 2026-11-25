@@ -15,8 +15,8 @@ struct Dinic {
         Cap a;
     }; // Endpoint & Admissible flow.
     vector<E> es;
-    vector<vector<int>> g;
-    vector<int> dis; // Put it here to get the minimum cut easily.
+    vector<vi> g;
+    vi dis; // Put it here to get the minimum cut easily.
 
     Dinic(int n) : n(n), g(n) {}
 
@@ -31,8 +31,8 @@ struct Dinic {
         auto revbfs = [&]() {
             dis.assign(n, -1);
             dis[sink] = 0;
-            vector<int> que{sink};
-            for (int ind = 0; ind < sz(que); ++ind) {
+            vi que{sink};
+            rep(ind, 0, sz(que) - 1) {
                 int now = que[ind];
                 for (auto i: g[now]) {
                     int v = es[i].to;
@@ -45,7 +45,7 @@ struct Dinic {
             }
             return 0;
         };
-        vector<int> cur;
+        vi cur;
         auto dfs = [&](auto &dfs, int now, Cap flow) {
             if (now == sink) return flow;
             Cap res = 0;
@@ -72,9 +72,9 @@ struct Dinic {
     } /// end-hash
 
     // Returns a min-cut containing the src.
-    vector<int> getMinCut() { /// start-hash
-        vector<int> res;
-        for (int i = 0; i < n; ++i)
+    vi getMinCut() { /// start-hash
+        vi res;
+        rep(i, 0, n - 1)
             if (dis[i] == -1) res.push_back(i);
         return res;
     } /// end-hash
