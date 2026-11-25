@@ -13,7 +13,7 @@ void fwt_or(vector<T> &a, int is_inv = 0) {
     int n = sz(a);
     for (int s = 1; s < n; s <<= 1) {
         for (int i = 0; i < n; i += s << 1) {
-            for (int j = 0; j < s; j++) {
+            rep(j, 0, s - 1) {
                 if (is_inv) a[i + j + s] -= a[i + j];
                 else a[i + j + s] += a[i + j];
             }
@@ -27,7 +27,7 @@ void fwt_and(vector<T> &a, int is_inv = 0) {
     int n = sz(a);
     for (int s = 1; s < n; s <<= 1) {
         for (int i = 0; i < n; i += s << 1) {
-            for (int j = 0; j < s; j++) {
+            rep(j, 0, s - 1) {
                 if (is_inv) a[i + j] -= a[i + j + s];
                 else a[i + j] += a[i + j + s];
             }
@@ -41,7 +41,7 @@ void fwt_xor(vector<T> &a, int is_inv = 0) {
     int n = sz(a);
     for (int s = 1; s < n; s <<= 1) {
         for (int i = 0; i < n; i += s << 1) {
-            for (int j = 0; j < s; ++j) {
+            rep(j, 0, s - 1) {
                 T x = a[i + j], y = a[i + j + s];
                 a[i + j] = x + y;
                 a[i + j + s] = x - y;
