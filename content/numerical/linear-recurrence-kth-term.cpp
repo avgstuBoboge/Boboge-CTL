@@ -9,13 +9,13 @@
 
 #include "polynomial.cpp"
 template<class T>
-T fps_coeff(poly<T> P, poly<T> Q, ll k) {
+T fps_coeff(Poly<T> P, Poly<T> Q, ll k) {
 	while (k >= sz(Q)) {
 		auto nQ(Q);
 		rep(i, 0, sz(nQ) - 1) if (i & 1) nQ[i] = 0 - nQ[i];
 		auto PQ = P * nQ;
 		auto Q2 = Q * nQ;
-		poly<T> R, S;
+		Poly<T> R, S;
 		rep(i, 0, sz(PQ) - 1) if ((k + i) % 2 == 0) R.push_back(PQ[i]);
 		rep(i, 0, sz(Q2) - 1) if (i % 2 == 0) S.push_back(Q2[i]);
 		
@@ -27,8 +27,8 @@ T fps_coeff(poly<T> P, poly<T> Q, ll k) {
 }
 
 template<class T>
-T linear_rec_kth(const poly<T> &A, const poly<T> &C, ll k) {
-	poly<T> Q{1}; // Q is characteristic polynomial.
+T linear_rec_kth(const Poly<T> &A, const Poly<T> &C, ll k) {
+	Poly<T> Q{1}; // Q is characteristic polynomial.
 	for (auto x: C) Q.push_back(0 - x);
 	auto P = A * Q;
 	P.resize(sz(Q) - 1);
