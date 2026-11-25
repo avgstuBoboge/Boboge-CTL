@@ -13,7 +13,7 @@ struct MCMF {
         T cap, cost;
     };
     vector<Edge> es;
-    vector<int> head, fa, fe, mark, cyc;
+    vi head, fa, fe, mark, cyc;
     vector<T> dual;
     int ti;
     T sum;
@@ -26,7 +26,7 @@ struct MCMF {
 
     int addEdge(int u, int v, T cap, T cost) {
         sum += abs(cost);
-        int e = (int) es.size();
+        int e = sz(es);
         es.push_back({head[u], v, cap, cost});
         head[u] = e;
         es.push_back({head[v], u, 0, -cost});
@@ -66,7 +66,7 @@ struct MCMF {
             if (es[fe[i] ^ 1].cap <= f) f = es[fe[e2 = i] ^ (path = 1)].cap;
         }
         cyc[clen++] = e;
-        for (int i = 0; i < clen; ++i) {
+        rep(i, 0, clen - 1) {
             es[cyc[i]].cap -= f, es[cyc[i] ^ 1].cap += f;
             cost += es[cyc[i]].cost * f;
         }
@@ -88,7 +88,7 @@ struct MCMF {
         dfs(0);
         mark[0] = ti = 2;
         fa[0] = 0;
-        int nc = (int) es.size() - 1;
+        int nc = sz(es) - 1;
         for (int i = 2, pre = nc; i != pre; i = i == nc ? 2 : i + 1) {
             if (es[i].cap && es[i].cost < phi(es[i ^ 1].to) - phi(es[i].to)) push(pre = i, cost);
         }
