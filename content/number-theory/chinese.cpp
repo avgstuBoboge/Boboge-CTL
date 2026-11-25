@@ -10,7 +10,7 @@ template<class T>
 T CRT(const vector<T> &as, const vector<T> &ms) {
     T M = 1, res = 0;
     for (auto x: ms) M *= x;
-    for (int i = 0; i < sz(as); ++i) {
+    rep(i, 0, sz(as) - 1) {
         T m = ms[i], Mi = M / m;
         auto [x, y] = exgcd(Mi, m);
         res = (res + as[i] % m * Mi * x) % M;
