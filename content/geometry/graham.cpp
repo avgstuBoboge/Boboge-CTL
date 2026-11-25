@@ -5,7 +5,7 @@
  *  By setting $nonStrict = 1$, we also have the points on the border of the Convex Hull.
  *  When using double / long double the exact shape of returned Convex Hull might not be trustful (especially for imprecise points), so you should only use it for calculating the area / perimeter?
  * Time: O(|poly| \log |poly|).
- * Status: (long long, nonStrict = 0 & 1) tested on https://codeforces.com/gym/103470/problem/F.
+ * Status: tested. (long long, nonStrict = 0 & 1) tested on https://codeforces.com/gym/103470/problem/F.
  */
 template<class P>
 vector<P> Graham(vector<P> as, int nonStrict = 0) {
@@ -23,7 +23,7 @@ vector<P> Graham(vector<P> as, int nonStrict = 0) {
 		res.push_back(as[i]);
 	}
 	if (nonStrict && P::sgn((as[1] - o).cross(as[n - 1] - o)) != 0) {
-		for (int i = n - 2; i >= 1; --i) {
+		revrep(i, 1, n - 2) {
 			if (P::sgn((as[i] - o).cross(as[n - 1] - o)) != 0) break;
 			res.push_back(as[i]);
 		}
