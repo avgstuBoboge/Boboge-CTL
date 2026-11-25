@@ -18,7 +18,7 @@ struct segTree {
     int n;
     vector<Info> info;
 
-    segTree(const vector<Info> &init) : n(init.size()) {
+    segTree(const vector<Info> &init) : n(sz(init)) {
         assert(n > 0);
         info.resize(4 << __lg(n));
         auto build = [&](auto &dfs, int i, int l, int r) {
