@@ -10,10 +10,10 @@
  */
 struct HLD {
     int n; /// start-hash
-    vector<int> fa, hson, L, R, dep, top;
+    vi fa, hson, L, R, dep, top;
 
-    HLD(vector <vector<int>> &g, int rt = 0) : n(sz(g)), fa(n, -1), hson(n, -1), L(n), R(n), dep(n), top(n) {
-        vector<int> siz(n);
+    HLD(vector <vi> &g, int rt = 0) : n(sz(g)), fa(n, -1), hson(n, -1), L(n), R(n), dep(n), top(n) {
+        vi siz(n);
         auto dfs = [&](auto &dfs, int now) -> void {
             siz[now] = 1;
             int mx = 0;
@@ -55,7 +55,7 @@ struct HLD {
     } /// end-hash
 
     auto getChain(int u, int v) { /// start-hash
-        vector<pair<int, int>> ps;
+        vector<pii> ps;
         int f1 = top[u], f2 = top[v];
         while (f1 != f2) {
             if (dep[f1] < dep[f2]) swap(f1, f2), swap(u, v);
