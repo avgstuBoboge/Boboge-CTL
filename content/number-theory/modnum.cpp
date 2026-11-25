@@ -7,11 +7,13 @@
    3. Sometimes the input number is greater than $mod$ and this code handles it.
   Do not write things like $mint\{1 / 3\}.pow(10)$ since $1 / 3$ simply equals $0$.
   Do not write things like $mint\{a * b\}$ where $a$ and $b$ are int since you might first have integer overflow.
- * Usage: ...
+ *  Division/inversion requires prime $P$ and a nonzero divisor. Comparisons use residues in $[0, P)$.
+ * Usage: using Z = mint<998244353>; // choose the modulus in this alias.
  * Status: tested on https://ac.nowcoder.com/acm/contest/33191/F.
  */
 template<class T>
-T power(T a, i64 b) {
+constexpr T power(T a, i64 b) {
+    assert(b >= 0);
     T res = 1;
     for (; b; b /= 2, a *= a) {
         if (b % 2) {
@@ -23,7 +25,10 @@ T power(T a, i64 b) {
 
 template<int P>
 struct mint {
+    static_assert(1 < P && P < (1 << 30));
     int x;
+
+    static constexpr int getMod() { return P; }
 
     constexpr mint() : x{} {}
 
@@ -53,7 +58,7 @@ struct mint {
         return res;
     }
 
-    constexpr mint pow(i64 b) {
+    constexpr mint pow(i64 b) const {
         return power(*this, b);
     }
     
@@ -103,6 +108,23 @@ struct mint {
         res /= rhs;
         return res;
     }
+
+    friend constexpr bool operator==(mint a, mint b) { return a.x == b.x; }
+    friend constexpr bool operator!=(mint a, mint b) { return a.x != b.x; }
+    friend constexpr bool operator<(mint a, mint b) { return a.x < b.x; }
+    friend constexpr bool operator>(mint a, mint b) { return b < a; }
+    friend constexpr bool operator<=(mint a, mint b) { return !(b < a); }
+    friend constexpr bool operator>=(mint a, mint b) { return !(a < b); }
+    friend ostream &operator<<(ostream &os, mint a) { return os << a.x; }
+    friend istream &operator>>(istream &is, mint &a) {
+        i64 x;
+        if (is >> x) a = mint(x);
+        return is;
+    }
+    friend string to_string(mint a) { return std::to_string(a.x); }
 };
+
+template<int P>
+constexpr bool isZero(mint<P> a) { return a.val() == 0; }
 
 using Z = mint<998244353>;
