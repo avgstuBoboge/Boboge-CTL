@@ -43,7 +43,7 @@ struct PalindromeTree {
             now = t[now].nxt[c];
             t[now].cnt++;
         };
-        for (int i = 0; i < n; ++i) {
+        rep(i, 0, n - 1) {
             ins(i);
         }
     }
