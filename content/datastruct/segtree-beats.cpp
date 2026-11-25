@@ -81,7 +81,7 @@ struct segTree {
         tag[x] = {};
     }
 
-    void build(int i, int l, int r, const vector<int> &a) {
+    void build(int i, int l, int r, const vi &a) {
         tag[i] = {};
         if (l == r) {
             info[i].mx = a[l], info[i].sec = -inf, info[i].mx_cnt = 1, info[i].his = a[l], info[i].sum = a[l], info[i].len = 1;
@@ -129,7 +129,7 @@ struct segTree {
 
     int n;
 
-    segTree(int n, vector<int> &a) : n(n), tag(n * 4 + 10), info(n * 4 + 10) {
+    segTree(int n, vi &a) : n(n), tag(n * 4 + 10), info(n * 4 + 10) {
         build(1, 1, n, a);
     }
 
