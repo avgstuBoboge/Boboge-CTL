@@ -3,6 +3,7 @@
  * Date: 22-10-25
  * Description: Let $b = fwt(a)$. One can calculate $b_{id}$ for some index $id$ in $O(N)$ time. Length of $a$ should be a power of $2$.
  * Time: O(N), where $N$ is the length of $a$.
+ * Status: tested.
  */
 template<class T>
 T fwt_eval(const vector<T> &a, int id) {
