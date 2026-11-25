@@ -8,17 +8,17 @@
  */
 struct BinaryLifting {
     int n;
-    vector<int> dep;
-    vector<vector<int>> anc;
+    vi dep;
+    vector<vi> anc;
 
-    BinaryLifting(const vector<vector<int>> &g, int rt = 0) : n(sz(g)), dep(n, -1) {
+    BinaryLifting(const vector<vi> &g, int rt = 0) : n(sz(g)), dep(n, -1) {
         assert(n > 0);
-        anc.assign(n, vector<int>(__lg(n) + 1));
+        anc.assign(n, vi(__lg(n) + 1));
         function<void(int, int)> dfs = [&](int now, int fa) {
             assert(dep[now] == -1); // make sure it is indeed a tree.
             dep[now] = fa == -1 ? 0 : dep[fa] + 1;
             anc[now][0] = fa;
-            for (int i = 1; i <= __lg(n); ++i) {
+            rep(i, 1, __lg(n)) {
                 anc[now][i] = anc[now][i - 1] == -1 ? -1 : anc[anc[now][i - 1]][i - 1];
             }
             for (auto v: g[now]) if (v != fa) dfs(v, now);
@@ -35,7 +35,7 @@ struct BinaryLifting {
         if (dep[x] < dep[y]) swap(x, y);
         x = swim(x, dep[x] - dep[y]);
         if (x == y) return x;
-        for (int i = __lg(n); i >= 0; --i) {
+        revrep(i, 0, __lg(n)) {
             if (anc[x][i] != anc[y][i]) {
                 x = anc[x][i];
                 y = anc[y][i];
