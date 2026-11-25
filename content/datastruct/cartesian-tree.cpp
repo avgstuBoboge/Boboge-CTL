@@ -9,8 +9,8 @@
  template<class T>
  auto CartesianTree(const vector<T> &as, int gr = 0) {
      int n = sz(as);
-     vector<int> ls(n, -1), rs(n, -1), stk;
-     for (int i = 0; i < n; ++i) {
+     vi ls(n, -1), rs(n, -1), stk;
+     rep(i, 0, n - 1) {
          while (!stk.empty() && ((as[i] < as[stk.back()]) ^ gr)) {
              ls[i] = stk.back();
              stk.pop_back();
