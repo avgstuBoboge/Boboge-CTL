@@ -3,7 +3,7 @@
  * Date: ~2 years ago
  * Description: Link-Cut tree
  * Time: TODO
- * Status: Untested
+ * Status: tested.
  */
 
 struct Node { /// start-hash
@@ -155,9 +155,9 @@ int main() {
 	cin >> n >> q;
 
 	LinkCutTree<Node> lctree;
-	for (int i = 0; i < n; ++i) lctree.emplace();
+	rep(i, 0, n - 1) lctree.emplace();
 
-	for (int ti = 0; ti < q; ++ti) {
+	rep(ti, 0, q - 1) {
 		char op;
 		int a, b;
 		cin >> op >> a >> b;
