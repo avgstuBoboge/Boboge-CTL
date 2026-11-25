@@ -4,9 +4,9 @@
  * Description: Tarjan algorithm for directed graph $G = (V, E)$. 
  * Status: tested on http://ejudge.opencup.org/~ejudge/team.cgi?contest_id=2745 problem J. https://www.luogu.com.cn/problem/P3387
  */
-auto tarjan(const vector<vector<int>> &g) {
+auto tarjan(const vector<vi> &g) {
     int n = sz(g);
-    vector<int> id(n, -1), dfn(n, -1), low(n, -1), sta;
+    vi id(n, -1), dfn(n, -1), low(n, -1), sta;
     int cnt = 0, scc = 0;
 
     auto dfs = [&](auto &dfs, int u) -> void {
@@ -28,6 +28,6 @@ auto tarjan(const vector<vector<int>> &g) {
             scc++;
         }
     };
-    for (int i = 0; i < n; ++i) if (dfn[i] == -1) dfs(dfs, i);
+    rep(i, 0, n - 1) if (dfn[i] == -1) dfs(dfs, i);
     return make_tuple(scc, id);
 }
