@@ -25,7 +25,7 @@ struct SAM {
     T s;
     int n;
     vector<node> t;
-    vector<int> at; // at[i] = the state at which the i-th prefix of s is.
+    vi at; // at[i] = the state at which the i-th prefix of s is.
 
     SAM(const T &s) : s(s), n(sz(s)), at(n) {
         t.emplace_back();
@@ -60,28 +60,28 @@ struct SAM {
                 }
             }
         };
-        for (int i = 0; i < n; ++i) {
+        rep(i, 0, n - 1) {
             ins(i, s[i]);
         }
     } /// end-hash
 
     void calOccurrence() { /// start-hash
-        vector<int> sum(n + 1), que(sz(t));
+        vi sum(n + 1), que(sz(t));
         for (auto &it: t) sum[it.len]++;
-        for (int i = 1; i < n; ++i)
+        rep(i, 1, n)
             sum[i] += sum[i - 1];
-        for (int i = 0; i < sz(t); ++i)
+        rep(i, 0, sz(t) - 1)
             que[--sum[t[i].len]] = i;
-        reverse(que.begin(), que.end());
+        reverse(all(que));
         for (auto now: que) if (now != 0) t[t[now].fa].occ += t[now].occ;
     } /// end-hash
 
-    vector<vector<int>> ReversedPrefixTree() { /// start-hash
-        vector<vector<int>> g(sz(t));
-        for (int now = 1; now < sz(t); ++now)
+    vector<vi> ReversedPrefixTree() { /// start-hash
+        vector<vi> g(sz(t));
+        rep(now, 1, sz(t) - 1)
             g[t[now].fa].push_back(now);
-        for (int now = 0; now < sz(t); ++now) {
-            sort(g[now].begin(), g[now].end(), [&](int i, int j) {
+        rep(now, 0, sz(t) - 1) {
+            sort(all(g[now]), [&](int i, int j) {
                 return s[t[i].pos - t[now].len] < s[t[j].pos - t[now].len];
             });
         }
