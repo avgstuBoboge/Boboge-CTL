@@ -8,7 +8,7 @@
  * Status: tested on https://www.luogu.com.cn/problem/P5491, https://judge.yosupo.jp/problem/sqrt_mod.
  */
 pair<bool, Z> ModSqrt(Z a) {
-    int p = mod; //make mod not const if you need to change
+    int p = Z::getMod();
     if (p == 2) return {true, a};
     if (a.pow((p - 1) / 2) == p - 1) return {false, 0};
     if (p % 4 == 3) return {true, a.pow((p + 1) / 4)};
