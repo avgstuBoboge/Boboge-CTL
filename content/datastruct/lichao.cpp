@@ -33,7 +33,7 @@ struct LiChao {
 #define lson ls, l, mid
 #define rson rs, mid + 1, r
 
-    vector<int> t;
+    vi t;
     vector<Line> lines;
     int n;
 
