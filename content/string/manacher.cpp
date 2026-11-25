@@ -10,10 +10,10 @@
  */
 
 template<class T>
-vector<int> Manacher(const T &s) {
+vi Manacher(const T &s) {
     int n = sz(s), j = 0;
-    vector<int> len(n * 2 - 1, 1);
-    for (int i = 1; i < n * 2 - 1; ++i) {
+    vi len(n * 2 - 1, 1);
+    rep(i, 1, n * 2 - 2) {
         int p = i / 2, q = i - p, r = (j + 1) / 2 + len[j] - 1;
         len[i] = r < q ? 0 : min(r - q + 1, len[j * 2 - i]);
         while (p > len[i] - 1 && q + len[i] < n && s[p - len[i]] == s[q + len[i]]) len[i]++;
