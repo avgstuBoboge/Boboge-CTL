@@ -13,18 +13,18 @@
  */
 struct VertexBCC {
     int n, bcc; /// start-hash
-    vector<int> id, top, fa;
-    vector<pair<int, int>> bf; // edges of the block-forest.
+    vi id, top, fa;
+    vector<pii> bf; // edges of the block-forest.
 
-    VertexBCC(int n, const vector<pair<int, int>> &es) : n(n), bcc(0), id(sz(es)), top(n), fa(n, -1) {
-        vector<vector<int>> g(n);
-        for (int i = 0; i < sz(es); ++i) {
+    VertexBCC(int n, const vector<pii> &es) : n(n), bcc(0), id(sz(es)), top(n), fa(n, -1) {
+        vector<vi> g(n);
+        rep(i, 0, sz(es) - 1) {
             auto [x, y] = es[i];
             g[x].push_back(i);
             g[y].push_back(i);
         }
         int cnt = 0;
-        vector<int> dfn(n, -1), low(n), mark(sz(es)), vsta, esta;
+        vi dfn(n, -1), low(n), mark(sz(es)), vsta, esta;
         auto dfs = [&](auto dfs, int now) -> void {
             low[now] = dfn[now] = cnt++;
             vsta.push_back(now);
@@ -60,7 +60,7 @@ struct VertexBCC {
                     }
                 }
         };
-        for (int i = 0; i < n; ++i) {
+        rep(i, 0, n - 1) {
             if (dfn[i] == -1) {
                 dfs(dfs, i);
                 top[i] = i;
@@ -73,8 +73,8 @@ struct VertexBCC {
         else return top[x] == top[y];
     } /// end-hash
 
-    vector<vector<int>> getBlockForest() { /// start-hash
-        vector<vector<int>> g(n + bcc);
+    vector<vi> getBlockForest() { /// start-hash
+        vector<vi> g(n + bcc);
         for (auto [x, y]: bf) {
             g[x].push_back(y);
             g[y].push_back(x);
