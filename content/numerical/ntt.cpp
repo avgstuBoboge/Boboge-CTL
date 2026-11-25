@@ -25,23 +25,23 @@ struct FFT {
 
         int n = sz(as);
         assert(__builtin_popcount(n) == 1);
-        static vector<int> r;
+        static vi r;
         if (sz(r) != n) {
             r.resize(n);
-            for (int i = 1; i < n; ++i) {
+            rep(i, 1, n - 1) {
                 r[i] = (r[i >> 1] >> 1) | ((i & 1) << (__builtin_ctz(n) - 1));
             }
         }
 
-        for (int i = 1; i < n; ++i) if (r[i] > i) swap(as[i], as[r[i]]);
+        rep(i, 1, n - 1) if (r[i] > i) swap(as[i], as[r[i]]);
         for (int step = 1; step < n; step <<= 1) {
             mint zeta = root.pow((mod - 1) / (step << 1));
             if (is_inv) zeta = mint{1} / zeta;
             vector<mint> ws(step);
             ws[0] = 1;
-            for (int i = 1; i < step; ++i) ws[i] = ws[i - 1] * zeta;
+            rep(i, 1, step - 1) ws[i] = ws[i - 1] * zeta;
             for (int i = 0; i < n; i += step << 1) {
-                for (int j = 0; j < step; ++j) {
+                rep(j, 0, step - 1) {
                     auto x = as[i + j], y = as[i + j + step] * ws[j];
                     as[i + j] = x + y;
                     as[i + j + step] = x - y;
@@ -58,10 +58,10 @@ struct FFT {
     static vector<mint> conv(const vector<mint> &as, const vector<mint> &bs) {
         if (min(sz(as), sz(bs)) <= 128) {
             vector<i64> cs(sz(as) + sz(bs) - 1);
-            for (int i = 0; i < sz(as); ++i)
-                for (int j = 0; j < sz(bs); ++j)
+            rep(i, 0, sz(as) - 1)
+                rep(j, 0, sz(bs) - 1)
                     cs[i + j] += (int) (as[i] * bs[j]);
-            return {cs.begin(), cs.end()};
+            return {all(cs)};
         } else {
             int n = sz(as) + sz(bs) - 1, n2 = 1 << __lg(n * 2 - 1);
             auto xs = as, ys = bs;
@@ -70,7 +70,7 @@ struct FFT {
             dft(xs, 0);
             if (as == bs) ys = xs;
             else dft(ys, 0);
-            for (int i = 0; i < n2; ++i) xs[i] *= ys[i];
+            rep(i, 0, n2 - 1) xs[i] *= ys[i];
             dft(xs, 1);
             xs.resize(n);
             return xs;
