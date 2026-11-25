@@ -5,7 +5,7 @@
  * Status: tested on https://judge.yosupo.jp/problem/maximum_independent_set, https://codeforces.com/contest/1578/problem/K.
  */
 template<int L>
-vector<int> BronKerbosch(int n, const vector<pair<int, int>> &es) {
+vi BronKerbosch(int n, const vector<pii> &es) {
     using bs = bitset<L>;
     vector<bs> nbrs(n);
     for (auto [x, y]: es) {
@@ -26,7 +26,7 @@ vector<int> BronKerbosch(int n, const vector<pair<int, int>> &es) {
         }
     };
     dfs(dfs, bs{}, bs{string(n, '1')}, bs{});
-    vector<int> res;
-    for (int i = 0; i < n; ++i) if (best[i]) res.push_back(i);
+    vi res;
+    rep(i, 0, n - 1) if (best[i]) res.push_back(i);
     return res;
 }
