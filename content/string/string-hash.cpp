@@ -6,8 +6,6 @@
  * Time: O(|s|) preprocessing, O(1) query.
  * Status: tested on https://www.luogu.com.cn/problem/P3370.
  */
-using pii = pair<int, int>;
-
 constexpr pii mod = {1000000007, 1000050131};
 constexpr pii base = {73, 131};
 
@@ -29,8 +27,8 @@ struct StringHash {
 
     StringHash(const string &s) : n(sz(s)), hs(n + 1), pw(n + 1) {
         pw[0] = {1, 1};
-        for (int i = 1; i <= n; ++i) pw[i] = pw[i - 1] * base;
-        for (int i = 0; i < n; ++i) hs[i + 1] = hs[i] * base + pii(s[i], s[i]);
+        rep(i, 1, n) pw[i] = pw[i - 1] * base;
+        rep(i, 0, n - 1) hs[i + 1] = hs[i] * base + pii(s[i], s[i]);
     }
 
     pii get(int l, int r) { return hs[r + 1] - hs[l] * pw[r + 1 - l]; }
