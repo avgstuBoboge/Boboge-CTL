@@ -16,8 +16,8 @@ public:
         assert(n > 0);
         st.assign(__lg(n) + 1, vector<T>(n));
         st[0] = init;
-        for (int j = 1; j < sz(st); ++j) {
-            for (int i = 0; i + (1 << j) <= n; ++i) {
+        rep(j, 1, sz(st) - 1) {
+            rep(i, 0, n - (1 << j)) {
                 st[j][i] = func(st[j - 1][i], st[j - 1][i + (1 << (j - 1))]);
             }
         }
