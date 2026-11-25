@@ -7,10 +7,10 @@
  */
 Z lagrange(int n, int k, vector<Z> &x, vector<Z> &y) {
     Z ret = 0;
-    for (int i = 0; i < n; ++i) {
+    rep(i, 0, n - 1) {
         Z s1 = y[i];
         Z s2 = 1;
-        for (int j = 0; j < n; ++j) {
+        rep(j, 0, n - 1) {
             if (i == j) continue;
             s1 *= k - x[j];
             s2 *= x[i] - x[j];
@@ -27,11 +27,11 @@ Z lagrange(int n, int m, vector<Z> &y) {
     Z ret = 0;
     Z all = 1;
     vector<Z> fac(n + 1);
-    for (int i = 0; i <= n; ++i) {
+    rep(i, 0, n) {
         fac[i] = (i == 0 ? 1 : fac[i - 1] * i);
         all *= m - i;
     }
-    for (int i = 0; i <= n; ++i) {
+    rep(i, 0, n) {
         Z fz = all / (m - i);
         Z fm = fac[i] * fac[n - i] * ((n - i) % 2 == 0 ? 1 : -1);
         ret += y[i] * fz / fm;
