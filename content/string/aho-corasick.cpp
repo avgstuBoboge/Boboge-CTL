@@ -43,10 +43,10 @@ struct AhoCorasick {
     }
 
     void build() {
-        vector<int> que{0};
-        for (int ind = 0; ind < sz(que); ++ind) {
+        vi que{0};
+        rep(ind, 0, sz(que) - 1) {
             int now = que[ind], fa = t[now].fail;
-            for (int c = 0; c < C; ++c) {
+            rep(c, 0, C - 1) {
                 int &v = t[now].nxt[c];
                 int u = fa == -1 ? 0 : t[fa].nxt[c];
                 if (v == -1) v = u;
@@ -56,29 +56,29 @@ struct AhoCorasick {
         }
     }
 
-    vector<int> query(const string &s) {
-        vector<int> ind(sz(t));
-        vector<vector<int>> adj(sz(t));
-        vector<int> que;
-        for (int i = 0; i < sz(t); ++i) {
+    vi query(const string &s) {
+        vi ind(sz(t));
+        vector<vi> adj(sz(t));
+        vi que;
+        rep(i, 0, sz(t) - 1) {
             if (t[i].fail != -1) {
                 ind[i]++;
                 adj[t[i].fail].push_back(i);
             }
         }
-        for (int i = 0; i < sz(t); ++i) {
+        rep(i, 0, sz(t) - 1) {
             if (ind[i] == 0) que.push_back(i);
         }
-        vector<int> top;
-        for (int i = 0; i < sz(que); ++i) {
+        vi top;
+        rep(i, 0, sz(que) - 1) {
             int u = que[i];
             top.push_back(u);
             for (int v: adj[u]) {
                 if (--ind[v] == 0) que.push_back(v);
             }
         }
-        reverse(top.begin(), top.end());
-        vector<int> dp(sz(t));
+        reverse(all(top));
+        vi dp(sz(t));
         int now = 0;
         for (auto ch: s) {
             int c = ch - st;
