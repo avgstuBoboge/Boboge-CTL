@@ -8,8 +8,8 @@
  */
 struct TwoSat {
     int n;
-    vector<vector<int>> e;
-    vector<int> ans;
+    vector<vi> e;
+    vi ans;
 
     TwoSat(int n) : n(n), e(n * 2), ans(n) {}
 
@@ -19,7 +19,7 @@ struct TwoSat {
     }
 
     bool satisfiable() {
-        vector<int> id(n * 2, -1), dfn(n * 2, -1), low(n * 2, -1), sta;
+        vi id(n * 2, -1), dfn(n * 2, -1), low(n * 2, -1), sta;
         int cnt = 0, scc = 0;
         function<void(int)> dfs = [&](int now) {
             dfn[now] = low[now] = cnt++;
@@ -40,15 +40,15 @@ struct TwoSat {
                 scc++;
             }
         };
-        for (int i = 0; i < n * 2; ++i) {
+        rep(i, 0, n * 2 - 1) {
             if (dfn[i] == -1) dfs(i);
         }
-        for (int i = 0; i < n; ++i) {
+        rep(i, 0, n - 1) {
             if (id[i * 2] == id[i * 2 + 1]) return false;
             ans[i] = id[i * 2] > id[i * 2 + 1];
         }
         return true;
     }
 
-    vector<int> getAss() { return ans; }
+    vi getAss() { return ans; }
 };
