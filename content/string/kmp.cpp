@@ -12,21 +12,21 @@ template<class T>
 struct KMP {
     const T s; /// start-hash
     int n;
-    vector<int> fail;
+    vi fail;
 
     KMP(const T &s) : s(s), n(sz(s)), fail(n) {
         int j = 0;
-        for (int i = 1; i < n; ++i) {
+        rep(i, 1, n - 1) {
             while (j > 0 && s[j] != s[i]) j = fail[j - 1];
             if (s[j] == s[i]) j++;
             fail[i] = j;
         }
     } ///end-hash
 
-    vector<int> match(const T &t) { /// start-hash
+    vi match(const T &t) { /// start-hash
         int m = sz(t), j = 0;
-        vector<int> res(m);
-        for (int i = 0; i < m; ++i) {
+        vi res(m);
+        rep(i, 0, m - 1) {
             while (j > 0 && (j == n || s[j] != t[i])) j = fail[j - 1];
             if (s[j] == t[i]) j++;
             if (j == n) res[i - n + 1] = 1;
