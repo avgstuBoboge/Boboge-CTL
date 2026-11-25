@@ -21,7 +21,7 @@ private:
     const int B = 1 << H;
     vector<T> vec; // Original values
     vector<u64> mins; // Min bits
-    vector<int> tbl; // sparse table
+    vi tbl; // sparse table
     int n, m;
 
     // Get index with minimum value in range [a, a + len) for 0 <= len <= B
@@ -34,24 +34,24 @@ private:
     }
 
 public:
-    RMQ(const vector<T> &vec_) : vec(vec_), mins(vec_.size()) {
-        n = vec.size();
+    RMQ(const vector<T> &vec_) : vec(vec_), mins(sz(vec_)) {
+        n = sz(vec);
         m = (n + B - 1) >> H;
 
         // Build sparse table
         int h = lastBit(m) + 1;
         tbl.resize(h * m);
-        for (int j = 0; j < m; ++j) tbl[j] = j << H;
-        for (int i = 0; i < n; ++i) tbl[i >> H] = minInd(tbl[i >> H], i);
-        for (int j = 1; j < h; ++j) {
-            for (int i = j * m; i < (j + 1) * m; ++i) {
+        rep(j, 0, m - 1) tbl[j] = j << H;
+        rep(i, 0, n - 1) tbl[i >> H] = minInd(tbl[i >> H], i);
+        rep(j, 1, h - 1) {
+            rep(i, j * m, (j + 1) * m - 1) {
                 int i2 = min(i + (1 << (j - 1)), (j + 1) * m - 1);
                 tbl[i] = minInd(tbl[i - m], tbl[i2 - m]);
             }
         }
         // Build min bits
         u64 cur = 0;
-        for (int i = n - 1; i >= 0; --i) {
+        revrep(i, 0, n - 1) {
             for (cur <<= 1; cur > 0; cur ^= cur & -cur) {
                 if (vec[i + firstBit(cur)] < vec[i]) break;
             }
