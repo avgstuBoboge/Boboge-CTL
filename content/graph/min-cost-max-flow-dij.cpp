@@ -20,14 +20,14 @@ struct Minimum_Cost_Flow_Dijkstra {
 
     inline void init(int x) {
         n = x;
-        for (int i = 0; i <= n; i++) {
+        rep(i, 0, n) {
             G[i].clear();
         }
     }
 
     inline void addEdge(int from, int to, T cap, T cost) {
-        G[from].push_back((edge) {to, cap, cost, (int) G[to].size()});
-        G[to].push_back((edge) {from, 0, -cost, (int) G[from].size() - 1});
+        G[from].push_back((edge) {to, cap, cost, sz(G[to])});
+        G[to].push_back((edge) {from, 0, -cost, sz(G[from]) - 1});
     }
 
     inline void min_cost_flow(int s, int t, T f) {
@@ -44,7 +44,7 @@ struct Minimum_Cost_Flow_Dijkstra {
                 if (dist[now.second] < now.first) continue;
 
                 int v = now.second;
-                for (int i = 0; i < (int) G[v].size(); ++i) {
+                rep(i, 0, sz(G[v]) - 1) {
                     edge &e = G[v][i];
                     if (e.cap > 0 &&
                         dist[e.to] > dist[v] + e.cost + h[v] - h[e.to]) {
@@ -56,7 +56,7 @@ struct Minimum_Cost_Flow_Dijkstra {
                 }
             }
             if (dist[t] == INF) break;
-            for (int i = 1; i <= n; ++i) {
+            rep(i, 1, n) {
                 h[i] += dist[i];
             }
             T d = f;
