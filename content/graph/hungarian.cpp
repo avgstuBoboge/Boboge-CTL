@@ -5,17 +5,17 @@
  *  $ws[i][j]$ is the weight of the edge from $i$-th vertex in $L$ to $j$-th vertex in $R$.
  *  Not sure how to choose safe $T$ since I can not give a bound on values in $lp$ and $rp$. Seems safe to always use \textbf{long long}.
  * Time: O(|L|^2 |R|).
- * Status: Seems to be fast enough. Tested on https://www.luogu.com.cn/problem/P6577, https://codeforces.com/gym/101635/problem/G, https://codeforces.com/gym/101194/problem/J.
+ * Status: tested. Seems to be fast enough. Tested on https://www.luogu.com.cn/problem/P6577, https://codeforces.com/gym/101635/problem/G, https://codeforces.com/gym/101194/problem/J.
  */
 template<class T = i64, T INF = numeric_limits<T>::max()>
-vector<pair<int, int>> Hungarian(const vector<vector<T>> &ws) {
+vector<pii> Hungarian(const vector<vector<T>> &ws) {
     int L = sz(ws), R = L == 0 ? 0 : sz(ws[0]);
     vector<T> lp(L), rp(R); // left & right potential
-    vector<int> lm(L, -1), rm(R, -1); // left & right match
-    for (int i = 0; i < L; ++i)
-        lp[i] = *min_element(ws[i].begin(), ws[i].end());
+    vi lm(L, -1), rm(R, -1); // left & right match
+    rep(i, 0, L - 1)
+        lp[i] = *min_element(all(ws[i]));
     auto step = [&](int src) {
-        vector<int> que{src}, pre(R, -1); // bfs que & back pointers
+        vi que{src}, pre(R, -1); // bfs que & back pointers
         vector<T> sa(R, INF); // slack array; min slack from node in que
         auto extend = [&](int j) {
             if (sa[j] == 0) {
@@ -30,9 +30,9 @@ vector<pair<int, int>> Hungarian(const vector<vector<T>> &ws) {
             }
             return 0;
         };
-        for (int ind = 0; ind < L; ++ind) { // BFS to new nodes
+        rep(ind, 0, L - 1) { // BFS to new nodes
             int i = que[ind];
-            for (int j = 0; j < R; ++j) {
+            rep(j, 0, R - 1) {
                 if (j == lm[i]) continue;
                 T off = ws[i][j] - lp[i] - rp[j]; // Slack in edge
                 if (sa[j] > off) {
@@ -43,11 +43,11 @@ vector<pair<int, int>> Hungarian(const vector<vector<T>> &ws) {
             }
             if (ind == sz(que) - 1) { // Update potentials
                 T d = INF;
-                for (int j = 0; j < R; ++j)
+                rep(j, 0, R - 1)
                     if (sa[j]) d = min(d, sa[j]);
                 bool found = false;
                 for (auto j: que) lp[j] += d;
-                for (int j = 0; j < R; ++j) {
+                rep(j, 0, R - 1) {
                     if (sa[j]) {
                         sa[j] -= d;
                         if (!found) found |= extend(j);
@@ -57,8 +57,8 @@ vector<pair<int, int>> Hungarian(const vector<vector<T>> &ws) {
             }
         }
     };
-    for (int i = 0; i < L; ++i) step(i);
-    vector<pair<int, int>> res;
-    for (int i = 0; i < L; ++i) res.emplace_back(i, lm[i]);
+    rep(i, 0, L - 1) step(i);
+    vector<pii> res;
+    rep(i, 0, L - 1) res.emplace_back(i, lm[i]);
     return res;
 }
