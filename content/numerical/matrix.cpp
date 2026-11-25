@@ -13,7 +13,7 @@
  *  ... // set values for A and b.
  *  vector<double> xs = SolveLinear(A, b);
  * Time: O(n m \min\{n, m\}) for Gaussian, inverse and SolveLinear.
- * Status: inverse() tested on https://ac.nowcoder.com/acm/contest/33187/J; 
+ * Status: tested. inverse() tested on https://ac.nowcoder.com/acm/contest/33187/J;
  *  SolveLinear() tested on https://www.luogu.com.cn/problem/P6125.
  */
 template<class T>
@@ -38,8 +38,8 @@ struct Matrix {
     Mat operator+(const Mat &b) const {
         int n = sz(a), m = sz(a[0]);
         Mat c(n, m);
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
+        rep(i, 0, n - 1) {
+            rep(j, 0, m - 1) {
                 c[i][j] = a[i][j] + b[i][j];
             }
         }
@@ -49,8 +49,8 @@ struct Matrix {
     Mat operator-(const Mat &b) const {
         int n = sz(a), m = sz(a[0]);
         Mat c(n, m);
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < m; ++j) {
+        rep(i, 0, n - 1) {
+            rep(j, 0, m - 1) {
                 c[i][j] = a[i][j] - b[i][j];
             }
         }
@@ -59,11 +59,11 @@ struct Matrix {
 
     Mat operator*(const Mat &b) const {
         int n = sz(a), m = sz(a[0]), l = sz(b[0]);
-        assert(m == sz(b));
+        assert(m == sz(b.a));
         Mat c(n, l);
-        for (int i = 0; i < n; ++i) {
-            for (int k = 0; k < m; ++k) {
-                for (int j = 0; j < l; ++j) {
+        rep(i, 0, n - 1) {
+            rep(k, 0, m - 1) {
+                rep(j, 0, l - 1) {
                     c[i][j] += a[i][k] * b[k][j];
                 }
             }
@@ -74,8 +74,8 @@ struct Matrix {
     Mat tran() const {
         int n = sz(a), m = sz(a[0]);
         Mat res(m, n);
-        for (int i = 0; i < n; ++i)
-            for (int j = 0; j < m; ++j)
+        rep(i, 0, n - 1)
+            rep(j, 0, m - 1)
                 res[j][i] = a[i][j];
         return res;
     }
@@ -84,17 +84,17 @@ struct Matrix {
     int Gaussian(int C) { /// start-hash
         int n = sz(a), m = sz(a[0]), rk = 0;
         assert(C <= m);
-        for (int c = 0; c < C; ++c) {
+        rep(c, 0, C - 1) {
             int id = rk;
             while (id < n && ::isZero(a[id][c])) id++;
             if (id == n) continue;
             if (id != rk) swap(a[id], a[rk]);
             T tmp = a[rk][c];
             for (auto &x: a[rk]) x /= tmp;
-            for (int i = 0; i < n; ++i) {
+            rep(i, 0, n - 1) {
                 if (i != rk) {
                     T fac = a[i][c];
-                    for (int j = 0; j < m; ++j) {
+                    rep(j, 0, m - 1) {
                         a[i][j] -= fac * a[rk][j];
                     }
                 }
@@ -108,7 +108,7 @@ struct Matrix {
         int n = sz(a), m = sz(a[0]);
         assert(n == m);
         auto b = *this;
-        for (int i = 0; i < n; ++i)
+        rep(i, 0, n - 1)
             b[i].resize(n * 2, 0), b[i][n + i] = 1;
         assert(b.Gaussian(n) == n);
         for (auto &row: b.a) row.erase(row.begin(), row.begin() + n);
@@ -119,20 +119,20 @@ struct Matrix {
     friend pair<bool, Vec> SolveLinear(Mat A, const Vec &b) { /// start-hash
         int n = sz(A.a), m = sz(A[0]);
         assert(sz(b) == n);
-        for (int i = 0; i < n; ++i) {
+        rep(i, 0, n - 1) {
             A[i].push_back(b[i]);
         }
         int rk = A.Gaussian(m);
-        for (int i = rk; i < n; ++i) {
+        rep(i, rk, n - 1) {
             if (::isZero(A[i].back()) == 0) {
                 return {0, Vec{}};
             }
         }
         Vec res(m);
-        for (int i = rk - 1; i >= 0; --i) {
+        revrep(i, 0, rk - 1) {
             T x = A[i][m];
             int last = -1;
-            for (int j = m - 1; j >= 0; --j) {
+            revrep(j, 0, m - 1) {
                 if (::isZero(A[i][j]) == 0) {
                     x -= A[i][j] * res[j];
                     last = j;
