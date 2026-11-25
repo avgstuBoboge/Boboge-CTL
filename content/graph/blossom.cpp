@@ -5,18 +5,18 @@
  * Time: O(|V||E|).
  * Status: tested on https://www.luogu.com.cn/problem/P6113， https://uoj.ac/problem/79, https://codeforces.com/gym/103260/problem/E, https://ac.nowcoder.com/acm/contest/5666/I.
  **/
-vector<int> Blossom(int n, const vector<pair<int, int>> &es) {
-    vector<vector<int>> g(n);
+vi Blossom(int n, const vector<pii> &es) {
+    vector<vi> g(n);
     for (auto [x, y]: es) {
         g[x].push_back(y);
         g[y].push_back(x);
     }
-    vector<int> match(n, -1);
+    vi match(n, -1);
     auto aug = [&](int st) {
-        vector<int> fa(n), clr(n, -1), pre(n, -1), tag(n);
-        iota(fa.begin(), fa.end(), 0);
+        vi fa(n), clr(n, -1), pre(n, -1), tag(n);
+        iota(all(fa), 0);
         int tot = 0;
-        vector<int> que{st};
+        vi que{st};
         clr[st] = 0;
         function<int(int)> getfa = [&](int x) {
             return fa[x] == x ? x : fa[x] = getfa(fa[x]);
@@ -48,7 +48,7 @@ vector<int> Blossom(int n, const vector<pair<int, int>> &es) {
                 x = pre[y];
             }
         };
-        for (int ind = 0; ind < sz(que); ++ind) {
+        rep(ind, 0, sz(que) - 1) {
             int now = que[ind];
             for (auto v: g[now]) {
                 if (getfa(now) == getfa(v) || clr[v] == 1) continue;
@@ -78,7 +78,7 @@ vector<int> Blossom(int n, const vector<pair<int, int>> &es) {
             }
         }
     };
-    for (int i = 0; i < n; ++i) {
+    rep(i, 0, n - 1) {
         if (match[i] == -1) aug(i);
     }
     return match;
