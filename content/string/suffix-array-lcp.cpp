@@ -10,17 +10,17 @@
 #include "suffix-array.cpp"
 
 struct SA_lcp : SA {
-    vector<vector<int>> st;
+    vector<vi> st;
 
     template<class T>
     SA_lcp(const T &s): SA(s) {
         assert(n > 0);
         int k = __lg(n);
-        st.assign(k + 1, vector<int>(n));
+        st.assign(k + 1, vi(n));
         st[0] = h;
         st[0].push_back(0); // just to make st[0] of size n.
-        for (int i = 1; i <= k; ++i) {
-            for (int j = 0; j + (1 << i) <= n; ++j) {
+        rep(i, 1, k) {
+            rep(j, 0, n - (1 << i)) {
                 st[i][j] = min(st[i - 1][j], st[i - 1][j + (1 << (i - 1))]);
             }
         }
