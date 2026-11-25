@@ -2,11 +2,12 @@
  * Author: Boboge
  * Description: calculate binom(n, m) % p
  *  It is used when $p$ is not large but $n, m$ are large.
- *  Usually we use $Z$ as template parameter.
+ *  Requires prime Z::getMod() and fact.fac/fact.inv precomputed through P - 1.
  * Time: O(p) for preprosessing and O(\log_p n) for one query.
  * Status: tested on https://www.luogu.com.cn/problem/P3807.
  */
  Z binom(i64 n, i64 m) {
+     int mod = Z::getMod();
      Z ret = 1;
      while (n || m) {
          i64 a = n % mod, b = m % mod;
