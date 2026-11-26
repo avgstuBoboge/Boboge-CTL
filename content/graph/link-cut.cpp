@@ -5,13 +5,11 @@
  * Time: TODO
  * Status: tested.
  */
-
 struct Node { /// start-hash
 	Node* p = nullptr; // Parent (or path parent)
 	Node* ch[2] = {nullptr, nullptr}; // Children
 	bool flip = 0; // Should this node's subtree be flipped
 	// Put other wanted data here
-
 	void push() {
 		if (flip) {
 			swap(ch[0], ch[1]);
@@ -20,14 +18,12 @@ struct Node { /// start-hash
 			flip = 0;
 		}
 	}
-
 	void update() {
 		// Do nothing by default
 		// Note that while it is guaranteed that this node is pushed,
 		// its children haven't necessarily been pushed.
 	}
 };/// end-hash
-
 // Link-Cut tree
 // https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-854j-advanced-algorithms-fall-2008/lecture-notes/lec6.pdf
 // https://courses.csail.mit.edu/6.851/spring14/scribe/L19.pdf
@@ -46,23 +42,19 @@ class LinkCutTree {
 		static bool irc(const T* a) {
 			return a->p->ch[1] == a;
 		}
-
 		// Zigs or zags na up one step
 		// na and its parent should be pushed beforehand
 		static void rotate(T* a) {
 			bool dir = irc(a);
 			Node* b = a->p;
 			Node* c = a->ch[dir ^ 1];
-			
 			if (isRoot(b)) a->p = b->p;
 			else setChild(b->p, a, irc(b));
 			setChild(b, c, dir);
 			setChild(a, b, dir ^ 1);
-
 			b->update();
 			a->update();
 		}
-
 		// Splays on na. Path from na to it's root should be pushed.
 		static void splay(T* a) {
 			while(! isRoot(a)) {
@@ -73,7 +65,6 @@ class LinkCutTree {
 				rotate(a);
 			}
 		} ///end-hash
-
 		// Pushes all nodes on path from na to root of its represented tree
 		static void pushPath(T* a) { /// start-hash
 			if (a->p) pushPath(a->p);
@@ -102,7 +93,6 @@ class LinkCutTree {
 			access(b);
 			return b;
 		} /// end-hash
-
 		// Adds an edge between nodes a and b
 		// returns false if a and b are in the same component
 		static bool link(T* a, T* b) { /// start-hash
@@ -114,7 +104,6 @@ class LinkCutTree {
 				return true;
 			}
 		}
-
 		// Cuts the edge between nodes a and b
 		// Returns false if no such edge exists
 		static bool cut(T* a, T* b) {
@@ -127,7 +116,6 @@ class LinkCutTree {
 				return true;
 			}
 		} /// end-hash
-
 		vector<T> nodes;
 	public:
 		template<class... Args> /// start-hash
@@ -147,16 +135,13 @@ class LinkCutTree {
 			else return cut(&nodes[ai], &nodes[bi]);
 		} /// end-hash
 };
-
 // Example usage
 // Solves the tree dynamic connectivity problem
 int main() {
 	int n, q;
 	cin >> n >> q;
-
 	LinkCutTree<Node> lctree;
 	rep(i, 0, n - 1) lctree.emplace();
-
 	rep(ti, 0, q - 1) {
 		char op;
 		int a, b;
