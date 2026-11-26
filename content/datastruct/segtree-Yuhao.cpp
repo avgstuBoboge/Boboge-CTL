@@ -7,7 +7,6 @@
  * Time: O(\log N) per operation.
  * Status: tested on https://qoj.ac/contest/695/problem/1856.
  */
-
 template<class Info>
 struct segTree {
 #define ls i * 2
@@ -17,7 +16,6 @@ struct segTree {
 #define rson rs, mid + 1, r
     int n;
     vector<Info> info;
-
     segTree(const vector<Info> &init) : n(sz(init)) {
         assert(n > 0);
         info.resize(4 << __lg(n));
@@ -32,9 +30,7 @@ struct segTree {
         };
         build(build, 1, 0, n - 1);
     }
-
     void pull(int i) { info[i] = info[ls] + info[rs]; }
-
     template<class... T>
     void pointApply(int p, const T &... val) {
         auto dfs = [&](auto &dfs, int i, int l, int r) {
@@ -49,7 +45,6 @@ struct segTree {
         };
         dfs(dfs, 1, 0, n - 1);
     }
-
     Info rangeAsk(int ql, int qr) {
         Info res{};
         auto dfs = [&](auto &dfs, int i, int l, int r) {
@@ -64,7 +59,6 @@ struct segTree {
         dfs(dfs, 1, 0, n - 1);
         return res;
     }
-
 #undef lson
 #undef rson
 #undef mid
