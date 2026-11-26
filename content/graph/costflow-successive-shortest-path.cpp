@@ -13,14 +13,11 @@ struct SuccessiveShortestPath {
 	vector<E> es;
 	vector<vi> g;
 	vector<Cost> h;
-
 	SuccessiveShortestPath(int n): n(n), g(n), h(n) {}
-
 	void addEdge(int u, int v, Cap c, Cost w) {
 		g[u].push_back(sz(es)); es.push_back({v, c, w});
 		g[v].push_back(sz(es)); es.push_back({u, 0, -w});
 	}
-
 	pair<Cost, Cap> mincostflow(int src, int sink, Cap mx_flow = Cap_MAX) {
 		// Run Bellman-Ford first if necessary.
 		h.assign(n, Cost_MAX);
@@ -30,14 +27,12 @@ struct SuccessiveShortestPath {
 			if (c > 0) h[v] = min(h[v], h[now] + w);
 		}
 		// Bellman-Ford stops here.
-
 		Cost cost = 0;
 		Cap flow = 0;
 		while (mx_flow) {
 			priority_queue<pair<Cost, int>> pq;
 			vector<Cost> dis(n, Cost_MAX);
 			dis[src] = 0; pq.emplace(0, src);
-			
 			vi pre(n, -1), mark(n, 0);
 			while (sz(pq)) {
 				auto [d, now] = pq.top(); pq.pop();
@@ -55,7 +50,6 @@ struct SuccessiveShortestPath {
 				}
 			}
 			if (pre[sink] == -1) break;
-			
 			rep(i, 0, n - 1) if (dis[i] != Cost_MAX) h[i] += dis[i];
 			Cap aug = mx_flow;
 			for (int i = pre[sink]; ~i; i = pre[es[i ^ 1].to]) aug = min(aug, es[i].a);
