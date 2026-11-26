@@ -15,7 +15,6 @@ template<class T> T RecTS(int d, const vector<T> &mn, const vector<T> &mx, funct
 		rep(_, 1, 60) { // change here if time is tight.
 			T m1 = (l * 2 + r) / 3;
 			T m2 = (l + r * 2) / 3;
-
 			xs[dep] = m1; T res1 = dfs(dfs, dep + 1);
 			xs[dep] = m2; T res2 = dfs(dfs, dep + 1);
 			if (res1 < res2) r = m2;
