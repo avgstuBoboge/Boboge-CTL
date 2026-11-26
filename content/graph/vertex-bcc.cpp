@@ -15,7 +15,6 @@ struct VertexBCC {
     int n, bcc; /// start-hash
     vi id, top, fa;
     vector<pii> bf; // edges of the block-forest.
-
     VertexBCC(int n, const vector<pii> &es) : n(n), bcc(0), id(sz(es)), top(n), fa(n, -1) {
         vector<vi> g(n);
         rep(i, 0, sz(es) - 1) {
@@ -67,12 +66,10 @@ struct VertexBCC {
             }
         }
     } /// end-hash
-
     bool SameBcc(int x, int y) { /// start-hash
         if (x == fa[top[y]] || y == fa[top[x]]) return 1;
         else return top[x] == top[y];
     } /// end-hash
-
     vector<vi> getBlockForest() { /// start-hash
         vector<vi> g(n + bcc);
         for (auto [x, y]: bf) {
