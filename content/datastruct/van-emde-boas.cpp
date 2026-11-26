@@ -18,26 +18,21 @@ class VEBTree {
 		int mi, ma;
 	public:
 		bool empty() const { return ma < mi; }
-		
 		int findNext(int i) const {
 			if (i <= mi) return mi;
 			if (i > ma) return M;
-			
 			int j = i >> R, x = i & MASK;
 			int res = ch[j].findNext(x);
 			if (res <= MASK) return (j << R) + res;
-			
 			j = act.findNext(j + 1);
 			return (j >= S) ? ma : ((j << R) + ch[j].findNext(0));
 		}
 		int findPrev(int i) const {
 			if (i >= ma) return ma;
 			if (i < mi) return -1;
-			
 			int j = i >> R, x = i & MASK;
 			int res = ch[j].findPrev(x);
 			if (res >= 0) return (j << R) + res;
-			
 			j = act.findPrev(j - 1);
 			return (j < 0) ? mi : ((j << R) + ch[j].findPrev(MASK));
 		}
@@ -73,7 +68,6 @@ class VEBTree {
 			ch[j].erase(i & MASK);
 			if (ch[j].empty()) act.erase(j);
 		}
-
 		void clear() {
 			mi = M, ma = -1;
 			act.clear();
@@ -103,7 +97,6 @@ class VEBTree<B, enable_if_t<(B <= 6)>> {
 	public:
 		bool empty() const { return !act; }
 		void clear() { act = 0; }
-
 		int findNext(int i) const {
 			return ((i < M) && (act >> i)) ? i + __builtin_ctzll(act >> i) : M;
 		}
@@ -112,7 +105,6 @@ class VEBTree<B, enable_if_t<(B <= 6)>> {
 		}
 		void insert(int i) { act |= 1ull << i; }
 		void erase(int i) { act &= ~(1ull << i); }
-		
 		template<class T>
 		void init(const T& bts, int shift = 0, int s0 = 0, int s1 = 0) {
 			act = 0;
