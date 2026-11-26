@@ -13,18 +13,15 @@
  * Time: Amortized O(\log N).
  * Status: tested on https://ac.nowcoder.com/acm/contest/33193/I.
  */
-
 struct UndoDSU {
     using Z = int; // choose some proper type (Z) for global variable glob.
     struct T {
         int siz;
-
         // add things you want to maintain here.
         T(int ind = 0) : siz(1) {
             // initialize what you add here.
         }
     };
-
     Z glob;
 private:
     void join(T &a, const T &b) {
@@ -32,7 +29,6 @@ private:
         // maintain the things you added to struct T.
         // also remember to maintain glob here.
     }
-
     vi fa;
     vector<T> ts;
     vector<tuple<int, int, T, Z>> sta;
@@ -42,12 +38,10 @@ public:
         iota(all(ts), 0);
         // remember initializing glob here.
     }
-
     int getcomp(int x) {
         while (x != fa[x]) x = fa[x];
         return x;
     }
-
     bool merge(int x, int y) {
         int fx = getcomp(x), fy = getcomp(y);
         if (fx == fy) return 0;
@@ -57,9 +51,7 @@ public:
         join(ts[fx], ts[fy]);
         return 1;
     }
-
     int top() { return sz(sta); }
-
     void undo(int top) {
         while (sz(sta) > top) {
             auto &[x, y, dat, g] = sta.back();
