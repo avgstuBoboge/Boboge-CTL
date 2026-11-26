@@ -14,7 +14,6 @@ T PolyUnionArea(const vector<vector<P>> &polys) {
 		rep(i, 0, sz(poly) - 1) {
 			P a = poly[i];
 			P b = poly[(i + 1) % sz(poly)];
-
 			vector<pair<T, int>> vec{{0, 1}, {1, -1}};
 			rep(ind2, 0, sz(polys) - 1) {
 				if (ind2 == ind) continue;
