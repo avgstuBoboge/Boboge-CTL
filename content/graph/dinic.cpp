@@ -6,7 +6,6 @@
  * Status: tested on https://codeforces.com/gym/103861/problem/H. Seems to be fast enough now.
  *  getDirFlow() and getUndirFlow() are not tested yet.
  */
-
 template<class Cap = int, Cap Cap_MAX = numeric_limits<Cap>::max()>
 struct Dinic {
     int n; /// start-hash
@@ -17,16 +16,13 @@ struct Dinic {
     vector<E> es;
     vector<vi> g;
     vi dis; // Put it here to get the minimum cut easily.
-
     Dinic(int n) : n(n), g(n) {}
-
     void addEdge(int u, int v, Cap c, bool dir = 1) {
         g[u].push_back(sz(es));
         es.push_back({v, c});
         g[v].push_back(sz(es));
         es.push_back({u, dir ? 0 : c});
     }
-
     Cap MaxFlow(int src, int sink) {
         auto revbfs = [&]() {
             dis.assign(n, -1);
@@ -62,7 +58,6 @@ struct Dinic {
             }
             return res;
         };
-
         Cap ans = 0;
         while (revbfs()) {
             cur.assign(n, 0);
@@ -70,7 +65,6 @@ struct Dinic {
         }
         return ans;
     } /// end-hash
-
     // Returns a min-cut containing the src.
     vi getMinCut() { /// start-hash
         vi res;
@@ -78,9 +72,7 @@ struct Dinic {
             if (dis[i] == -1) res.push_back(i);
         return res;
     } /// end-hash
-
     // Gives flow on edge assuming it is directed/undirected. Undirected flow is signed.
     Cap getDirFlow(int i) { return es[i * 2 + 1].a; }
-
     Cap getUndirFlow(int i) { return (es[i * 2 + 1].a - es[i * 2].a) / 2; }
 };
