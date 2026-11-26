@@ -12,14 +12,12 @@ vector<T> MatroidIntersection(const vector<T> &as, function<void(const vector<T>
 	vi used(n);
 	vector<vi> g;
 	vector<T> A;
-
 	auto augment = [&]() {
 		int tot = n, s = tot++, t = tot++;
 		g.assign(tot, {});
 		A.clear();
 		rep(i, 0, n - 1) if (used[i]) A.push_back(as[i]);
 		rebuild(A);
-
 		rep(y, 0, n - 1) if (used[y] == 0) {
 			int cnt = 0;
 			if (check1(as[y])) g[s].push_back(y), cnt++;
