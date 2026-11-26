@@ -10,7 +10,6 @@
  * Time: O(|T|).
  * Status: tested on https://www.luogu.com.cn/problem/P6139, https://nanti.jisuanke.com/t/42551, https://codeforces.com/contest/316/problem/G3.
  */
-
 struct node {
     array<int, 26> nxt;
     int fa, len; // keep fa = -1 and len = 0 initially.
@@ -21,10 +20,8 @@ struct node {
         nxt.fill(-1);
     }
 };
-
 struct GSAM {
     vector<node> t;
-
     GSAM(vector<node> &trie) {
         swap(t, trie); //breaks the trie
         auto ins = [&](int now, int c) {
@@ -59,7 +56,6 @@ struct GSAM {
                 }
             }
         };
-
         vi que{0};
         rep(ind, 0, sz(que) - 1) {
             int now = que[ind];
