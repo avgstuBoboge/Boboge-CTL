@@ -7,7 +7,6 @@
 */
 template<class T>
 constexpr int ctz(T x) { return sizeof(T) & 8 ? __builtin_ctzll(x) : __builtin_ctz(x); }
-
 template<class T>
 constexpr T gcd(T x, T y) {
     if (!x || !y) return x ^ y;
