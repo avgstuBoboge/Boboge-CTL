@@ -6,7 +6,6 @@
  * Time: O(d \log^2 d).
  * Status: tested on https://judge.yosupo.jp/problem/kth_term_of_linearly_recurrent_sequence.
  */
-
 #include "polynomial.cpp"
 template<class T>
 T fps_coeff(Poly<T> P, Poly<T> Q, ll k) {
@@ -18,14 +17,12 @@ T fps_coeff(Poly<T> P, Poly<T> Q, ll k) {
 		Poly<T> R, S;
 		rep(i, 0, sz(PQ) - 1) if ((k + i) % 2 == 0) R.push_back(PQ[i]);
 		rep(i, 0, sz(Q2) - 1) if (i % 2 == 0) S.push_back(Q2[i]);
-		
 		swap(P, R);
 		swap(Q, S);
 		k >>= 1;
 	}
 	return (P * Q.inv())[k];
 }
-
 template<class T>
 T linear_rec_kth(const Poly<T> &A, const Poly<T> &C, ll k) {
 	Poly<T> Q{1}; // Q is characteristic polynomial.
