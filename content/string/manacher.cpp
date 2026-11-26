@@ -8,7 +8,6 @@
  * Time: O(|s|).
  * Status: tested on https://www.luogu.com.cn/problem/P3805, https://qoj.ac/problem/4844, https://www.luogu.com.cn/problem/P6216, https://www.luogu.com.cn/problem/P4555.
  */
-
 template<class T>
 vi Manacher(const T &s) {
     int n = sz(s), j = 0;
