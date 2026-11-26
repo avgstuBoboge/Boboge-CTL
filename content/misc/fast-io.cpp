@@ -14,7 +14,6 @@ namespace fastIO  {
 		}
 		return *s++;
 	}
-	
 	template<class T> inline void read(T &x) {
 		bool sgn = 1;
 		T a = 0;
