@@ -8,7 +8,6 @@
  */
 #include "circle-circle-outer-tangentline.cpp"
 #include "graham.cpp"
-
 template<class T, class P = Point<T>>
 T CirclesHullArea(const vector<P> &os, const vector<T> &rs) {
 	vector<pair<P, T>> cs;
