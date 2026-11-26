@@ -8,7 +8,6 @@ auto tarjan(const vector<vi> &g) {
     int n = sz(g);
     vi id(n, -1), dfn(n, -1), low(n, -1), sta;
     int cnt = 0, scc = 0;
-
     auto dfs = [&](auto &dfs, int u) -> void {
         dfn[u] = low[u] = cnt++;
         sta.push_back(u);
