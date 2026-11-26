@@ -12,7 +12,6 @@ struct z_function {
     const T s; /// start-hash
     int n;
     vi z;
-
     z_function(const T &s) : s(s), n(sz(s)), z(n) {
         z[0] = n;
         int l = 0, r = 0;
@@ -25,7 +24,6 @@ struct z_function {
             }
         }
     } /// end-hash
-
     vi cal(const T &t) { /// start-hash
         int m = sz(t);
         vi res(m);
