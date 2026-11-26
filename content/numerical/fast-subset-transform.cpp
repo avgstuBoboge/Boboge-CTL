@@ -20,7 +20,6 @@ void fst(vector<T> &a, int is_inv) {
         }
     }
 }
-
 template<class T>
 vector<T> SubsetConv(const vector<T> &as, const vector<T> &bs) {
     int n = sz(as);
