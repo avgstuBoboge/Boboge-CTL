@@ -22,7 +22,6 @@ struct FFT {
             while (root.pow((mod - 1) / 2) == 1)
                 root += 1; // it is not necessarily a primitive root but lowbit(mod - 1) divides its order.
         }
-
         int n = sz(as);
         assert(__builtin_popcount(n) == 1);
         static vi r;
@@ -32,7 +31,6 @@ struct FFT {
                 r[i] = (r[i >> 1] >> 1) | ((i & 1) << (__builtin_ctz(n) - 1));
             }
         }
-
         rep(i, 1, n - 1) if (r[i] > i) swap(as[i], as[r[i]]);
         for (int step = 1; step < n; step <<= 1) {
             mint zeta = root.pow((mod - 1) / (step << 1));
@@ -48,13 +46,11 @@ struct FFT {
                 }
             }
         }
-
         if (is_inv == 1) {
             auto inv = mint{1} / n;
             for (auto &x: as) x *= inv;
         }
     }
-
     static vector<mint> conv(const vector<mint> &as, const vector<mint> &bs) {
         if (min(sz(as), sz(bs)) <= 128) {
             vector<i64> cs(sz(as) + sz(bs) - 1);
