@@ -38,11 +38,9 @@ public:
 			int d = s[i];
 			rep(j, 1, t) chadd(d, 1ll * rec[j] * seq[i - j] % mod);
 			if (d == 0) continue;
-
 			int mult = 1ll * d * mPow(old_d, mod - 2) % mod;
 			rep(j, 0, t) nxt[j] = rec[j];
 			rep(j, 0, old_t) chsub(nxt[j + i - old_i], 1ll * old[j] * mult % mod);
-
 			if (t * 2 <= i) {
 				old_i = i, old_d = d, old_t = t;
 				t = i + 1 - t;
@@ -56,7 +54,6 @@ public:
 	// Time complexity: O(t^2 log k)
 	int kthTerm(ll k) {
 		if (t == 1) return 1ll * seq[0] * mPow((mod - rec[1]) % mod, k) % mod;
-
 		vi cur(t * 2 + 2, 0), mult(t * 2 + 2, 0);
 		cur[0] = 1, mult[1] = 1;
 		for (; k > 0; k >>= 1) {
