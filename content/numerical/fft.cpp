@@ -15,7 +15,6 @@ struct FFT {
     using cp = complex<T>; /// start-hash
     vi r;
     int n2;
-
     void dft(vector<cp> &a, int is_inv) { // is_inv == 1 -> idft.
         rep(i, 1, n2 - 1) if (r[i] > i) swap(a[i], a[r[i]]);
         for (int step = 1; step < n2; step <<= 1) {
@@ -37,14 +36,12 @@ struct FFT {
             for (auto &x: a) x /= n2;
         }
     }
-
     void pre(int n) { // set n2, r;
         int len = 0;
         for (n2 = 1; n2 < n; n2 <<= 1) len++;
         r.resize(n2);
         rep(i, 1, n2 - 1) r[i] = (r[i >> 1] >> 1) | ((i & 1) << (len - 1));
     }
-
     template<class Z>
     vector<Z> conv(const vector<Z> &A, const vector<Z> &B) {
         int n = sz(A) + sz(B) - 1;
@@ -61,7 +58,6 @@ struct FFT {
         rep(i, 0, n - 1) res[i] = a[i].real() + eps;
         return res;
     } /// end-hash
-
     vi conv(const vi &A, const vi &B, int mod) { /// start-hash
         int M = sqrt(mod) + 0.5;
         int n = sz(A) + sz(B) - 1;
