@@ -10,7 +10,6 @@ struct EulerTour {
     int n;
     vector<vi> tours;
     vi ori;
-
     EulerTour(int n, const vector<pii> &es, int dir = 0) : n(n), ori(sz(es)) {
         vector<vi> g(n);
         int m = sz(es);
@@ -42,7 +41,6 @@ struct EulerTour {
                 }
             }
         };
-
         rep(i, 0, n - 1) {
             path.clear();
             solve(i);
@@ -52,8 +50,6 @@ struct EulerTour {
             }
         }
     }
-
     vector<vi> getTours() { return tours; }
-
     vi getOrient() { return ori; }
 };
