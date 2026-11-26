@@ -10,7 +10,6 @@
  * Time: Amortized O(\log^2 N) per update.
  * Status: tested
  */
-
 // 1. Define before segTree; keep its apply and pull unchanged.
 constexpr int inf = 1e9;
 struct Info {
@@ -51,7 +50,6 @@ void tagApply(Tag &t, int, int, const Tag &k) {
     t.add_mx += k.add_mx;
     t.add_sec += k.add_sec;
 }
-
 // 2. Replace private push; dir is recorded by pull, before pending updates.
 void push(int i, int l, int r) {
     Tag lt = tag[i], rt = tag[i];
@@ -61,7 +59,6 @@ void push(int i, int l, int r) {
     apply(rson, rt);
     tag[i] = {};
 }
-
 // 3. Add public members before the #undef lines; reuse rangeApply/rangeAsk.
 void Min(int ql, int qr, int x) {
     auto dfs = [&](auto &dfs, int i, int l, int r) {
