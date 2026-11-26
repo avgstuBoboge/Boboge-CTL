@@ -9,7 +9,6 @@
  * Status: submitted to a few problems, but needs more testing! In particular, we got a very odd TLE on nowcoder.
  */
 #pragma once
-
 struct Montgomery {
 	constexpr static ull modPow(ull a, ull b, ull c) {
 		ull r = 1;
@@ -19,7 +18,6 @@ struct Montgomery {
 		}
 		return r;
 	}
-
 	static constexpr ull R = (ull)1 << 32;
 	uint P, P2, RR, MC; // Modulo, 2^64 mod P, x for which xP = -1 mod 2^32
 	Montgomery(uint m = (uint)1e9 + 7) : P(m), P2(2*m), RR((R%m)*R % m), MC((R * modPow(R % m, m-2, m) - 1) / m) {}
@@ -29,7 +27,6 @@ struct Montgomery {
 		return (t + k * P) >> 32; // < 2P, Exact division!
 	}
 };
-
 template<const Montgomery& mt> struct Z {
 	private:
 		uint x;
@@ -38,7 +35,6 @@ template<const Montgomery& mt> struct Z {
 		Z(ll a = 0) : x(mt.mult(a, mt.RR)) { assert(a >= 0); }
 		explicit operator int() { uint res = mt.mult(x, 1); return (res < mt.P ? res : res - mt.P); }
 		static int getP() { return mt.P; }
-	
 		Z& operator +=(Z b) { x += b.x; if (x >= mt.P2) x -= mt.P2; return *this; }
 		Z& operator -=(Z b) { if (x < b.x) x += mt.P2; x -= b.x; return *this; }
 		Z& operator *=(Z b) { x = mt.mult(x, b.x); return *this; }
@@ -47,7 +43,6 @@ template<const Montgomery& mt> struct Z {
 		friend Z operator *(Z a, Z b) { return a *= b; }
 		bool operator ==(Z b) const { return (x > mt.P ? x - mt.P : x) == (b.x > mt.P ? b.x - mt.P : b.x); }
 		/// end-hash
-
 		// the following are needed for fft and polynomial operations.
 		/// start-hash
 		Z pow(ll k) const {
@@ -62,6 +57,5 @@ template<const Montgomery& mt> struct Z {
 		}
 		friend Z operator /(Z a, Z b) { return a /= b; }
 		/// end-hash
-
 		friend string to_string(Z a) { return to_string((int)a); }
 };
