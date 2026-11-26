@@ -19,7 +19,6 @@ Z lagrange(int n, int k, vector<Z> &x, vector<Z> &y) {
     }
     return ret;
 }
-
 //$x_i = i$, we have $y_0 ... y_n$
 Z lagrange(int n, int m, vector<Z> &y) {
     assert(sz(y) > n);
