@@ -8,16 +8,13 @@
  * Usage: ??
  * Status: Needs change: ll -> template, return index of minimum, take vector in constructor
  */
-
 // Segment tree for range addition, range sum and range minimum.
 class SegTree {
 	private:
 		vector<ll> sum, minv, tag;
 		int h = 1;
-
 		// Returns length of interval corresponding to position i
 		ll len(int i) { return h >> (31 - __builtin_clz(i)); }
-
 		void apply(int i, ll v) {
 			sum[i] += v * len(i);
 			minv[i] += v;
@@ -29,7 +26,6 @@ class SegTree {
 			apply(2*i+1, tag[i]);
 			tag[i] = 0;
 		}
-
 		ll recGetSum(int a, int b, int i, int ia, int ib) {
 			if (ib <= a || b <= ia) return 0;
 			if (a <= ia && ib <= b) return sum[i];
