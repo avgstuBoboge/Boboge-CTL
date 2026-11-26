@@ -9,7 +9,6 @@ template<class T, class P = Point<T>>
 vector<pair<P, P>> CircleCirlceOuterTagentLine(P o1, T r1, P o2, T r2) {
 	if (P::cmp(r2, (o1 - o2).len() + r1) >= 0) return {};
 	if (P::cmp(r1, (o1 - o2).len() + r2) >= 0) return {};
-	
 	T val = (r1 - r2) / (o1 - o2).len();
 	T theta = acos(max(min(val, T{1}), T{-1}));
 	vector<pair<P, P>> res;
