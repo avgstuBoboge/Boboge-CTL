@@ -5,7 +5,6 @@
  * Time: O(N \log N) for construction, O(1) per query.
  * Status: tested on https://qoj.ac/contest/695/problem/1857, https://codeforces.com/gym/103371/problem/M.
  */
-
 template<class T, class F = function<T(const T &, const T &)>>
 class ST {
     int n;
@@ -22,7 +21,6 @@ public:
             }
         }
     }
-
     T ask(int l, int r) {
         assert(0 <= l && l <= r && r < n);
         int k = __lg(r - l + 1);
