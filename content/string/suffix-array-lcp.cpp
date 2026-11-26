@@ -6,12 +6,9 @@
  * Time: O(|s| \log |s|) for construction. O(1) per query.
  * Status: tested on https://ac.nowcoder.com/acm/contest/33186/B, https://codeforces.com/gym/102994/problem/D, https://ac.nowcoder.com/acm/contest/33195/D, https://www.luogu.com.cn/problem/P4094, https://www.luogu.com.cn/problem/P7769.
  */
-
 #include "suffix-array.cpp"
-
 struct SA_lcp : SA {
     vector<vi> st;
-
     template<class T>
     SA_lcp(const T &s): SA(s) {
         assert(n > 0);
@@ -25,7 +22,6 @@ struct SA_lcp : SA {
             }
         }
     }
-
     // return lcp(suff_i, suff_j) for i != j.
     int lcp(int i, int j) {
         if (i == n || j == n) return 0;
