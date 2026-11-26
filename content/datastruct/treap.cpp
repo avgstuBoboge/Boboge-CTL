@@ -6,22 +6,17 @@
  * Usage: Treap::join(treap1, treap2),  auto [x, y] = Treap::split(treap1)
  * Status: tested on https://www.luogu.com.cn/record/101544554
  */
-
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-
 int rand() { return uniform_int_distribution<int>()(rng); }
-
 struct Treap {
     const int pri;
     Treap *l = nullptr, *r = nullptr;
     i64 val, sum;
     int siz = 1, flip = 0;
-
     void update() {
         siz = 1 + getSiz(l) + getSiz(r);
         sum = val + getSum(l) + getSum(r);
     }
-
     void push() {
         if (flip) {
             swap(l, r);
@@ -30,20 +25,14 @@ struct Treap {
             flip = 0;
         }
     }
-
     Treap(i64 v) : val(v), sum(v), pri(rand()) {}
-
     ~Treap() {
         delete l;
         delete r;
     }
-
     static int getSiz(Treap *x) { return x ? x->siz : 0; }
-
     static i64 getSum(Treap *x) { return x ? x->sum : 0; }
-
     static void reverse(Treap *x) { if (x) x->flip ^= 1; }
-
     static Treap *join(Treap *a, Treap *b) {
         if (!a || !b) return a ? a : b;
         Treap *res = (a->pri < b->pri ? a : b);
@@ -53,7 +42,6 @@ struct Treap {
         res->update();
         return res;
     }
-
     // Split the treap into a left and right part, the left of size "le_siz"
     static pair<Treap *, Treap *> split(Treap *x, int le_siz) {
         if (!le_siz || !x) return {0, x};
