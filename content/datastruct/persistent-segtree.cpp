@@ -15,9 +15,7 @@
  * Time: O(\log N) per operation.
  * Status: tested on https://codeforces.com/contest/1479/problem/D, https://www.luogu.com.cn/problem/P7361, https://www.luogu.com.cn/problem/P4094.
  */
-
 void apply(int &a, int b) { a += b; }
-
 template<class Info>
 struct persistSegTree {
 #define mid ((l + r) >> 1)
@@ -27,18 +25,15 @@ struct persistSegTree {
     };
     vector<node> t;
     int n;
-
     persistSegTree(int n, int q) : n(n), t(1) {
         assert(n >= 0);
         t.reserve(q * (__lg(n + 1) + 2) + 10);
     }
-
     void up(int x) {
         int ls = t[x].ls;
         int rs = t[x].rs;
         t[x].info = t[ls].info + t[rs].info;
     }
-
     template<class... T>
     int update(int rt, int pos, const T &... val) {
         function<void(int &, int, int)> dfs = [&](int &id, int l, int r) {
@@ -55,7 +50,6 @@ struct persistSegTree {
         dfs(rt, 0, n);
         return rt;
     }
-
     //on a single version
     Info rangeAsk(int rt, int ql, int qr) {
         Info res{};
@@ -71,7 +65,6 @@ struct persistSegTree {
         dfs(rt, 0, n);
         return res;
     }
-
     // lower_bound on prefix sums of difference between two versions.
     int lower_bound(int rt_l, int rt_r, Info k) {
         Info sum{};
@@ -91,6 +84,5 @@ struct persistSegTree {
         };
         return dfs(rt_l, rt_r, 0, n);
     }
-
 #undef mid
 };
