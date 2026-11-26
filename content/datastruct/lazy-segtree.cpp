@@ -18,7 +18,6 @@ class segTree {
 #define mid ((l + r) >> 1)
 #define lson ls, l, mid
 #define rson rs, mid + 1, r
-
     int n;
     vector<Info> info;
     vector<Tag> tag;
@@ -38,23 +37,19 @@ public:
         };
         build(build, 1, 0, n - 1);
     }
-
 private:
     void pull(int i) { info[i] = info[ls] + info[rs]; }
-
     template<class... T>
     void apply(int i, int l, int r, const T &... val) {
         ::infoApply(info[i], l, r, val...);
         ::tagApply(tag[i], l, r, val...);
     }
-
     void push(int i, int l, int r) {
         if (tag[i] == Tag{}) return;
         apply(lson, tag[i]);
         apply(rson, tag[i]);
         tag[i] = {};
     }
-
 public:
     template<class... T>
     void rangeApply(int ql, int qr, const T &... val) {
@@ -71,7 +66,6 @@ public:
         };
         dfs(dfs, 1, 0, n - 1);
     }
-
     Info rangeAsk(int ql, int qr) {
         Info res{};
         auto dfs = [&](auto &dfs, int i, int l, int r) {
@@ -87,7 +81,6 @@ public:
         dfs(dfs, 1, 0, n - 1);
         return res;
     }
-
     template<class F>
     int max_right(int ql, F pred) {
         Info res{};
@@ -107,7 +100,6 @@ public:
         };
         return dfs(dfs, 1, 0, n - 1) - 1;
     }
-
     template<class F>
     int min_left(int qr, F pred) {
         Info res{};
@@ -127,7 +119,6 @@ public:
         };
         return dfs(dfs, 1, 0, n - 1);
     }
-
 #undef rson
 #undef lson
 #undef mid
