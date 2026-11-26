@@ -21,7 +21,6 @@ bool checkSeginPoly(P a, P b, const vector<P> &poly) {
 		P q = poly[(i + 1) % sz(poly)];
 		int sgn1 = P::sgn(p.dis_to_line(a, b));
 		int sgn2 = P::sgn(q.dis_to_line(a, b));
-
 		if ((sgn2 - sgn1) * P::sgn(a.dis_to_line(p, q)) > 0) {
 			int c = sgn2 - sgn1;
 			cnt -= c;
