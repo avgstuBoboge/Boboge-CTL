@@ -6,7 +6,6 @@
  * Time: O(N \log N), where $N$ is the length of $a$.
  * Status: tested on https://www.luogu.com.cn/problem/P4717.
  */
-
 //fwt_or[i] = \sum a[j], j & i = j(j is the subset of i).
 template<class T>
 void fwt_or(vector<T> &a, int is_inv = 0) {
@@ -20,7 +19,6 @@ void fwt_or(vector<T> &a, int is_inv = 0) {
         }
     }
 }
-
 //fwt_and[i] = \sum a[j], j & i = i(j is the superset of i)
 template<class T>
 void fwt_and(vector<T> &a, int is_inv = 0) {
@@ -34,7 +32,6 @@ void fwt_and(vector<T> &a, int is_inv = 0) {
         }
     }
 }
-
 //don't know how it works
 template<class T>
 void fwt_xor(vector<T> &a, int is_inv = 0) {
