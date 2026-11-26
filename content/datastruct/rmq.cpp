@@ -8,11 +8,8 @@
  * Usage: RMQ rmq(vec); rmq.get(l, r);
  * Status: tested on https://www.luogu.com.cn/record/101544572, not really sure it is O(n) preprocessing or not
  */
-
 int firstBit(u64 x) { return __builtin_ctzll(x); }
-
 int lastBit(u64 x) { return 63 - __builtin_clzll(x); }
-
 // O(n) preprocessing, O(1) RMQ data structure.
 template<class T>
 class RMQ {
@@ -23,21 +20,17 @@ private:
     vector<u64> mins; // Min bits
     vi tbl; // sparse table
     int n, m;
-
     // Get index with minimum value in range [a, a + len) for 0 <= len <= B
     int getShort(int a, int len) const {
         return a + lastBit(mins[a] & (-1ULL >> (64 - len)));
     }
-
     int minInd(int ia, int ib) const {
         return vec[ia] < vec[ib] ? ia : ib;
     }
-
 public:
     RMQ(const vector<T> &vec_) : vec(vec_), mins(sz(vec_)) {
         n = sz(vec);
         m = (n + B - 1) >> H;
-
         // Build sparse table
         int h = lastBit(m) + 1;
         tbl.resize(h * m);
@@ -59,12 +52,10 @@ public:
             mins[i] = cur;
         }
     }
-
     int argmin(int a, int b) const {
         ++b; // to make the range inclusive
         int len = min(b - a, B);
         int ind1 = minInd(getShort(a, len), getShort(b - len, len));
-
         int ax = (a >> H) + 1;
         int bx = (b >> H);
         if (ax >= bx) return ind1;
@@ -74,6 +65,5 @@ public:
             return minInd(ind1, ind2);
         }
     }
-
     int get(int a, int b) const { return vec[argmin(a, b)]; }
 };
