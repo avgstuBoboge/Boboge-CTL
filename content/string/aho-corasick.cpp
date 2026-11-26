@@ -16,18 +16,14 @@ struct AhoCorasick {
         array<int, C> nxt;
         int fail;
         int cnt;
-
         node() {
             nxt.fill(-1);
             fail = -1;
             cnt = 0;
         }
     };
-
     vector<node> t;
-
     AhoCorasick() : t(1) {}
-
     int insert(const string &s) {
         int now = 0;
         for (auto ch: s) {
@@ -41,7 +37,6 @@ struct AhoCorasick {
         t[now].cnt++;
         return now;
     }
-
     void build() {
         vi que{0};
         rep(ind, 0, sz(que) - 1) {
@@ -55,7 +50,6 @@ struct AhoCorasick {
             if (fa != -1) t[now].cnt += t[fa].cnt;
         }
     }
-
     vi query(const string &s) {
         vi ind(sz(t));
         vector<vi> adj(sz(t));
