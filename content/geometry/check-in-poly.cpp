@@ -17,7 +17,6 @@ int checkinPoly(P a, const vector<P> &poly) {
 		P p = poly[i];
 		P q = poly[(i + 1) % sz(poly)];
 		if (a.on_seg(p, q)) return 2;
-		
 		int sgn1 = P::cmp(a.y, p.y);
 		int sgn2 = P::cmp(a.y, q.y);
 		if ((sgn2 - sgn1) * P::sgn(a.dis_to_line(p, q)) > 0) {
