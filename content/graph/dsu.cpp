@@ -5,16 +5,12 @@
  * Time: amortized O(\alpha(M, N)) where $M$ is the number of operations. Almost constant in competitive programming.
  * Status: tested.
  */
-
 struct DSU {
     vi f;
-
     DSU(int n) : f(n, -1) {};
-
     int find(int x) {
         return f[x] < 0 ? x : f[x] = find(f[x]);
     }
-
     bool merge(int x, int y) {
         x = find(x);
         y = find(y);
@@ -24,7 +20,6 @@ struct DSU {
         f[y] = x;
         return true;
     }
-
     int siz(int x) {
         return -f[find(x)];
     }
