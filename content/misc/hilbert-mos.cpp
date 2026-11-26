@@ -8,7 +8,6 @@
  * Usage: hilbertOrder(n, qs) returns $\pi$
  * Status: tested.
  */
-
 ll hilbertOrd(int y, int x, int h) {
 	if (h == -1) return 0;
 	int s = (1 << h), r = (1 << h) - 1;
@@ -21,11 +20,9 @@ ll hilbertOrd(int y, int x, int h) {
 vi hilbertOrder(int n, const vector<pii>& qs) {
 	int h = 0, q = sz(qs);
 	while((1 << h) < n) ++h;
-
 	vector<pair<ll, int>> tmp(q);
 	rep(i, 0, q - 1) tmp[i] = {hilbertOrd(qs[i].first, qs[i].second, h - 1), i};
 	sort(all(tmp));
-
 	vi res(q);
 	rep(qi, 0, q - 1) res[qi] = tmp[qi].second;
 	return res;
