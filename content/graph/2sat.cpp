@@ -10,14 +10,11 @@ struct TwoSat {
     int n;
     vector<vi> e;
     vi ans;
-
     TwoSat(int n) : n(n), e(n * 2), ans(n) {}
-
     void addClause(int x, bool f, int y, bool g) {
         e[x * 2 + !f].push_back(y * 2 + g);
         e[y * 2 + !g].push_back(x * 2 + f);
     }
-
     bool satisfiable() {
         vi id(n * 2, -1), dfn(n * 2, -1), low(n * 2, -1), sta;
         int cnt = 0, scc = 0;
@@ -49,6 +46,5 @@ struct TwoSat {
         }
         return true;
     }
-
     vi getAss() { return ans; }
 };
