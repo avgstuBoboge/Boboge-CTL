@@ -25,18 +25,15 @@ struct SegTree2D {
         int id;
         int ls, rs;
     };
-
     int oL, oR, iL, iR;
     // change to array to accelerate, since allocating takes time. (saves ~ 200ms when allocating 1e7)
     vector<iNode> it;
     vector<oNode> ot;
-
     // node 0 is left as virtual empty node.
     SegTree2D(int oL, int oR, int iL, int iR, int q) : oL(oL), oR(oR), iL(iL), iR(iR), it(1), ot(1) {
         it.reserve(q * (__lg(oR - oL + 1) + 2) * (__lg(iR - iL + 1) + 2) + 1);
         ot.reserve(q * (__lg(oR - oL + 1) + 2) + 1);
     }
-
     // return new root id.
     template<class... T>
     int pointApply(int rt, int op, int ip, const T &... val) {
@@ -69,7 +66,6 @@ struct SegTree2D {
         odfs(odfs, rt, oL, oR);
         return rt;
     }
-
     Info rangeAsk(int rt, int qol, int qor, int qil, int qir) {
         Info res{};
         auto idfs = [&](auto &dfs, int i, int l, int r) {
