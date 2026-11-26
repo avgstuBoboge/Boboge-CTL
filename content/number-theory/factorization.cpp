@@ -8,7 +8,6 @@
 namespace Factorization {
     template<class T>
     constexpr int ctz(T x) { return sizeof(T) & 8 ? __builtin_ctzll(x) : __builtin_ctz(x); }
-
     template<class T>
     constexpr T gcd(T x, T y) {
         if (!x || !y) return x ^ y;
@@ -22,17 +21,14 @@ namespace Factorization {
             if (!y) return x << min(kx, ky);
         }
     }
-
     inline i64 mul(i64 a, i64 b, i64 c) { /// start-hash
         return (i128) a * b % c;
     }
-
     i64 mPow(i64 a, i64 k, i64 mod) {
         i64 res = 1;
         for (; k; k >>= 1, a = mul(a, a, mod)) if (k & 1) res = mul(res, a, mod);
         return res;
     }
-
     bool miller(i64 n) {
         auto test = [&](i64 n, int a) {
             if (n == a) return true;
@@ -45,16 +41,13 @@ namespace Factorization {
             }
             return r == n - 1 || d & 1;
         };
-
         if (n == 2) return 1;
         for (int p: {2, 3, 5, 7, 11, 13, 17, 23, 29}) if (test(n, p) == 0) return 0;
         return 1;
     } /// end-hash
-
     mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
     i64 myrand(i64 a, i64 b) { return uniform_int_distribution<i64>(a, b)(rng); }
-
-    i64 pollard(i64 n) { // return some nontrivial factor of n.
+    i64 pollard(i64 n) { // return some nontrivial factor of n. /// start-hash
         if (miller(n)) return n;
         if (n % 2 == 0) return 2;
         i64 st = 0;
@@ -71,7 +64,6 @@ namespace Factorization {
             }
         }
     }
-
     vector<i64> factorize(i64 n) {
         vector<i64> res;
         auto dfs = [&](auto &dfs, i64 x) {
