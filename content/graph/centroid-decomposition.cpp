@@ -8,7 +8,6 @@
 struct CentroidDecomposition {
     int n;
     vector<vector<pii>> ancs;
-
     CentroidDecomposition(vector<vi> &g) : n(sz(g)), ancs(n) {
         vi siz(n), vis(n);
         auto solve = [&](auto &solve, int st, int tot) -> void {
