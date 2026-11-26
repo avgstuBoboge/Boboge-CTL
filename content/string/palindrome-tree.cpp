@@ -7,26 +7,21 @@
  * Time: O(|s|).
  * Status: tested on https://www.luogu.com.cn/problem/P3649, https://www.luogu.com.cn/problem/P4762, https://www.luogu.com.cn/problem/P5685, https://www.luogu.com.cn/problem/P5555, https://codeforces.com/gym/100548/problem/G, https://ac.nowcoder.com/acm/contest/884/I, https://ac.nowcoder.com/acm/contest/886/C.
  */
-
 struct PalindromeTree {
     struct node {
         map<int, int> nxt;
         int fail, len;
         int cnt;
-
         node(int fail, int len) : fail(fail), len(len) {
             cnt = 0;
         }
     };
-
     vector<node> t;
-
     template<class T>
     PalindromeTree(const T &s) {
         int n = sz(s);
         t.emplace_back(-1, -1); // Odd root -> state 0.
         t.emplace_back(0, 0); // Even root -> state 1.
-
         int now = 0;
         auto ins = [&](int pos) {
             auto get = [&](int i) {
