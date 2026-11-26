@@ -17,7 +17,6 @@ vi capHullLine(vector<P> hull, const vector<pair<P, P>> &ls) {
 	int n = sz(hull);
 	vector<P> vs(n);
 	rep(i, 0, n - 1) vs[i] = hull[(i + 1) % n] - hull[i];
-	
 	vi res;
 	for (auto [p, q]: ls) {
 		auto dir = q - p;
