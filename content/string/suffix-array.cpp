@@ -9,11 +9,9 @@
  * Time: O(|s| \log |s|).
  * Status: tested on https://www.luogu.com.cn/record/87444853, https://www.luogu.com.cn/problem/P4094, https://ac.nowcoder.com/acm/contest/33186/B, https://codeforces.com/gym/102994/problem/D, https://ac.nowcoder.com/acm/contest/33195/D, https://www.luogu.com.cn/problem/P8023, https://www.luogu.com.cn/problem/P7769.
  */
-
 struct SA {
     int n;
     vi str, sa, rank, h;
-
     template<class T>
     SA(const T &s): n(sz(s)), str(n + 1), sa(n + 1), rank(n + 1), h(n - 1) {
         auto vec = s;
