@@ -27,7 +27,6 @@ pii ConvexHullTangent(const vector<P> &poly, P q) {
 		}
 		return l % n;
 	};
-
 	int l = solve([&](int i, int j) { return q.dis_to_line(poly[i], poly[j]) > P::eps; });
 	int r = solve([&](int i, int j) { return q.dis_to_line(poly[i], poly[j]) < -P::eps; });
 	return {l, r};
