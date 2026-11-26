@@ -17,13 +17,11 @@ struct MCMF {
     vector<T> dual;
     int ti;
     T sum;
-
     MCMF(int n) : head(n, 0), fa(n), fe(n), dual(n), mark(n), cyc(n) {
         sum = 1, ti = 0;
         es.push_back({0, 0, 0, 0});
         es.push_back({0, 0, 0, 0});
     }
-
     int addEdge(int u, int v, T cap, T cost) {
         sum += abs(cost);
         int e = sz(es);
@@ -33,7 +31,6 @@ struct MCMF {
         head[v] = e + 1;
         return e;
     }
-
     void dfs(int x) {
         mark[x] = 1;
         for (int i = head[x]; i; i = es[i].nxt) {
@@ -44,12 +41,10 @@ struct MCMF {
             }
         }
     }
-
     T phi(int x) {
         if (mark[x] == ti) return dual[x];
         return mark[x] = ti, dual[x] = phi(fa[x]) - es[fe[x]].cost;
     }
-
     void push(int e, T &cost) {
         int pen = es[e ^ 1].to, lca = es[e].to;
         ti++;
@@ -80,7 +75,6 @@ struct MCMF {
             swap(last, cur);
         }
     }
-
     pair<T, T> compute(int s, int t) {
         T tot = sum;
         int ed = addEdge(t, s, numeric_limits<T>::max(), -tot);
