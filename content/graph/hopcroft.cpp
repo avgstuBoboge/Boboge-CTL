@@ -9,7 +9,6 @@ struct Hopcroft {
     int L, R; /// start-hash
     vi lm, rm; // record the matched vertex for each vertex on both sides.
     vi ldis, rdis; // put it here so you can get vertex cover easily.
-
     Hopcroft(int L, int R, const vector<pii> &es) : L(L), R(R), lm(L, -1), rm(R, -1) {
         vector<vi> g(L);
         for (auto [x, y]: es) g[x].push_back(y);
@@ -54,9 +53,7 @@ struct Hopcroft {
             }
         }
     } /// end-hash
-
     vi getMatch() { return lm; } // returns lm.
-
     pair<vi, vi> vertex_cover() { /// start-hash
         vi lvc, rvc;
         rep(i, 0, L - 1) {
