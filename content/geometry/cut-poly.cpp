@@ -17,7 +17,6 @@ vector<P> cutPoly(const vector<P> &poly, P a, P b) {
 		P q = poly[(i + 1) % sz(poly)];
 		int sgn1 = P::sgn(p.dis_to_line(a, b));
 		int sgn2 = P::sgn(q.dis_to_line(a, b));
-
 		if (sgn1 <= 0) res.push_back(p);
 		if (sgn1 * sgn2 == -1) {
 			auto s0 = (p - a).cross(b - a);
