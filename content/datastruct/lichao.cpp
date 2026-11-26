@@ -9,36 +9,28 @@
 using T = double;
 constexpr T eps = 1e-6;
 constexpr T inf = 1e9;
-
 int sgn(const T &a) {
     if (a < -eps) return -1;
     if (a > eps) return 1;
     return 0;
 }
-
 int cmp(const T &a, const T &b) {
     return sgn(a - b);
 }
-
 struct Line {
     T a, b;
-
     T eval(int x) const { return a * x + b; }
 };
-
 struct LiChao {
 #define ls i << 1
 #define rs i << 1 | 1
 #define mid ((l + r) >> 1)
 #define lson ls, l, mid
 #define rson rs, mid + 1, r
-
     vi t;
     vector<Line> lines;
     int n;
-
     LiChao(int n) : n(n), t(n * 4 + 10), lines{{0, -inf}} {}
-
     void apply(int u, int i, int l, int r) {
         int &v = t[i];
         if (cmp(lines[u].eval(mid), lines[v].eval(mid)) == 1) swap(u, v);
@@ -51,7 +43,6 @@ struct LiChao {
             apply(u, rson);
         }
     }
-
     void update(int ql, int qr, Line &line) {
         lines.push_back(line);
         int u = sz(lines) - 1;
@@ -66,7 +57,6 @@ struct LiChao {
         };
         dfs(dfs, 1, 0, n - 1);
     }
-
     // return {minimum y-value, line index}, in case of tie, return the line with smaller index
     pair<T, int> query(int x) {
         auto dfs = [&](auto &dfs, int i, int l, int r) {
@@ -91,7 +81,6 @@ struct LiChao {
         };
         return dfs(dfs, 1, 0, n - 1);
     }
-
 #undef rson
 #undef lson
 #undef rs
