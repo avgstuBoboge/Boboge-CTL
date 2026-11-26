@@ -11,6 +11,7 @@
 
 \section{Trees}
 
+\begin{compactmath}
 \subsection{Number of spanning trees}
 For any Graph $G$:
 $$
@@ -24,6 +25,8 @@ L(G)=A(G)-D(G)
 $$
 The number of spanning trees in $G$ rooted at $k$ is $\det L(G)_{[n] \setminus\{k\},[n] \setminus\{k\}}$.
 For directed graph you change the degree matrix to in/out degree matrix to get the number of in/out root spanning trees.
+
+\end{compactmath}
 
 % \kactlimport{binary-lifting.cpp} I can write it myself
 \kactlimport{heavy-light-decomposition.cpp}

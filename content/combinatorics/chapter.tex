@@ -1,4 +1,5 @@
 \chapter{Combinatorics}
+\begin{compactmath}
 \section{Formulas}
 \subsection{Möbius Inversion}
 $$
@@ -20,18 +21,16 @@ $$
 
 \subsection{Burnside's lemma} % from https://github.com/ecnerwala/icpc-book/blob/master/content/combinatorial/chapter.tex.
 Given a group $G$ of symmetries and a set $X$, the number of elements of $X$ \emph{up to symmetry} equals
-\small
 \[ {\frac {1}{|G|}}\sum _{{g\in G}}|X^{g}|, \]
-\normalsize
 where $X^{g}$ are the elements fixed by $g$ ($g.x = x$).
 If $f(n)$ counts ``configurations" (of some sort) of length $n$, we can ignore rotational symmetry using $G = \mathbb Z_n$ to get
-\small
 \[ g(n) = \frac 1 n \sum_{k=0}^{n-1}{f(\text{gcd}(n, k))} = \frac 1 n \sum_{k|n}{f(k)\phi(n/k)}. \]
-\normalsize
 
+\end{compactmath}
 \section{Binomials}
 \kactlimport{lucas.cpp}
 
+\begin{compactmath}
 \section{Numbers}
 \subsection{Stirling numbers of the first kind} % from https://github.com/ecnerwala/icpc-book/blob/master/content/combinatorial/chapter.tex
 Number of permutations on $n$ items with $k$ cycles.
@@ -67,3 +66,4 @@ ${C_n = 1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, \dots}$
 	\item ways a convex polygon with $n+2$ sides can be cut into triangles by connecting vertices with straight lines.
 	\item permutations of $[n]$ with no 3-term increasing subseq.
 \end{itemize}
+\end{compactmath}

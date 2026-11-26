@@ -22,6 +22,19 @@
 \usepackage[normalem]{ulem}
 \usepackage[strict]{changepage}
 
+% Compact formula sections; code and template descriptions keep their own sizes.
+\newenvironment{compactmath}{%
+    \par\footnotesize
+    \setlength{\parskip}{2pt}
+    \setlength{\abovedisplayskip}{3pt}
+    \setlength{\belowdisplayskip}{3pt}
+    \setlength{\abovedisplayshortskip}{1pt}
+    \setlength{\belowdisplayshortskip}{2pt}
+    \setlength{\jot}{1pt}
+    \renewcommand{\subsection}{%
+        \@startsection{subsection}{2}{\z@}{6pt}{2pt}{\normalfont\bfseries}}
+}{\par}
+
 % Config commands
 \newcommand{\subtitle}[1]{
 	\def\@subtitle{#1}
