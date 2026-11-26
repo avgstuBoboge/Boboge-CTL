@@ -25,7 +25,6 @@ struct HalfPlane {
 		return {true, a + (b - a) * s0 / s1};
 	}
 }; /// end-hash
-
 template<class P, class HP = HalfPlane<P>> /// start-hash
 vector<P> HPI(vector<HalfPlane<P>> hps) {
 	// please make sure hps is closed.  
@@ -37,7 +36,6 @@ vector<P> HPI(vector<HalfPlane<P>> hps) {
 		if (res == 0) return false; // if r and s are parallel then it implies the intersection is empty.
 		return w.include(p);
 	};
-	
 	deque<HP> q;
 	rep(i, 0, sz(hps) - 1) {
 		if (i && Samedir(hps[i], hps[i - 1])) continue;
