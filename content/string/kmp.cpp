@@ -13,7 +13,6 @@ struct KMP {
     const T s; /// start-hash
     int n;
     vi fail;
-
     KMP(const T &s) : s(s), n(sz(s)), fail(n) {
         int j = 0;
         rep(i, 1, n - 1) {
@@ -22,7 +21,6 @@ struct KMP {
             fail[i] = j;
         }
     } ///end-hash
-
     vi match(const T &t) { /// start-hash
         int m = sz(t), j = 0;
         vi res(m);
