@@ -6,21 +6,16 @@
  * Status: tested on https://uoj.ac/problem/763
  */
 mt19937_64 rnd(chrono::steady_clock::now().time_since_epoch().count());
-
 struct treeHash {
     using u64 = unsigned long long;
     u64 bas = rnd();
-
     u64 H(ull x) {
         return x * x * x * 114514 + 19260817;
     }
-
     u64 F(ull x) {
         return H(x & ((1ll << 32) - 1)) + H(x >> 32);
     }
-
     vector<ull> h;
-
     treeHash(vector<vi> &adj, int rt = 0) : h(sz(adj)) {
         auto dfs = [&](auto dfs, int u, int fa) -> void {
             h[u] = bas;
