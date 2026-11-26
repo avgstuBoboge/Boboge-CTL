@@ -20,21 +20,16 @@ template<class T>
 struct Matrix {
     using Mat = Matrix; /// start-hash
     using Vec = vector<T>;
-
     vector<Vec> a;
-
     Matrix(int n, int m) {
         assert(n > 0 && m > 0);
         a.assign(n, Vec(m));
     }
-
     Matrix(const vector<Vec> &a) : a(a) {
         assert(!a.empty() && !a[0].empty());
     }
-
     Vec &operator[](int i) const { return (Vec &) a[i]; }
     /// end-hash
-
     Mat operator+(const Mat &b) const {
         int n = sz(a), m = sz(a[0]);
         Mat c(n, m);
@@ -45,7 +40,6 @@ struct Matrix {
         }
         return c;
     }
-
     Mat operator-(const Mat &b) const {
         int n = sz(a), m = sz(a[0]);
         Mat c(n, m);
@@ -56,7 +50,6 @@ struct Matrix {
         }
         return c;
     }
-
     Mat operator*(const Mat &b) const {
         int n = sz(a), m = sz(a[0]), l = sz(b[0]);
         assert(m == sz(b.a));
@@ -70,7 +63,6 @@ struct Matrix {
         }
         return c;
     }
-
     Mat tran() const {
         int n = sz(a), m = sz(a[0]);
         Mat res(m, n);
@@ -79,7 +71,6 @@ struct Matrix {
                 res[j][i] = a[i][j];
         return res;
     }
-
     // Eliminate the first C columns, return the rank of matrix induced by first C columns.
     int Gaussian(int C) { /// start-hash
         int n = sz(a), m = sz(a[0]), rk = 0;
@@ -103,7 +94,6 @@ struct Matrix {
         }
         return rk;
     } /// end-hash
-
     Mat inverse() const { /// start-hash
         int n = sz(a), m = sz(a[0]);
         assert(n == m);
@@ -114,7 +104,6 @@ struct Matrix {
         for (auto &row: b.a) row.erase(row.begin(), row.begin() + n);
         return b;
     } /// end-hash
-
     //return [true, solution] if there's any solution, if the solution is not unique, rk < n
     friend pair<bool, Vec> SolveLinear(Mat A, const Vec &b) { /// start-hash
         int n = sz(A.a), m = sz(A[0]);
