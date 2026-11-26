@@ -19,7 +19,6 @@ pair<T, T> merge(T a1, T m1, T a2, T m2) {
     T A = m1 * y1 + a1;
     return {A, M};
 }
-
 template<class T>
 pair<T, T> exCRT(const vector<T> &as, const vector<T> &ms) {
     T a = 0, m = 1;
