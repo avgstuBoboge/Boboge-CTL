@@ -11,11 +11,8 @@ template<int d, class T = bitset<d>, class Z = int>
 struct LB {
     vector<T> a; /// start-hash
     vector<Z> w;
-
     T &operator[](int i) const { return (T &) a[i]; }
-
     LB() : a(d), w(d) {}
-
     // insert x. return 1 if the base is expanded.
     int insert(T x, Z val = 0) {
         revrep(i, 0, d - 1) {
@@ -33,7 +30,6 @@ struct LB {
         }
         return 0;
     } /// end-hash
-
     // View vectors as binary numbers. Then calculate the minimum number we can get if we add vectors from linear base (with weight at least $val$) to $x$.
     T ask_min(T x, Z val = 0) { /// start-hash
         revrep(i, 0, d - 1) {
@@ -41,7 +37,6 @@ struct LB {
         }
         return x;
     } /// end-hash
-
     // Compute the union of two bases.
     friend LB operator+(LB l, const LB &r) { /// start-hash
         revrep(i, 0, d - 1) {
@@ -49,7 +44,6 @@ struct LB {
         }
         return l;
     } /// end-hash
-
     // Returns the k-th smallest number spanned by vectors of weight at least $val$. k starts from 0.
     T kth(unsigned long long k, Z val = 0) { /// start-hash
         int N = 0;
