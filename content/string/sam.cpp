@@ -10,7 +10,6 @@
  * Time: O(|s|).
  * Status: tested on https://ac.nowcoder.com/acm/contest/884/I, https://ac.nowcoder.com/acm/contest/33188/H, https://codeforces.com/gym/101194/problem/F, https://nanti.jisuanke.com/t/A2018, https://darkbzoj.cc/problem/3238, https://nanti.jisuanke.com/t/A1623, https://www.spoj.com/problems/NSUBSTR/en/, https://codeforces.com/contest/235/problem/C.
  */
-
 template<class T>
 struct SAM {
     struct node { /// start-hash
@@ -21,12 +20,10 @@ struct SAM {
             occ = pos = 0;
         }
     };
-
     T s;
     int n;
     vector<node> t;
     vi at; // at[i] = the state at which the i-th prefix of s is.
-
     SAM(const T &s) : s(s), n(sz(s)), at(n) {
         t.emplace_back();
         int last = 0; // create root.
@@ -51,7 +48,6 @@ struct SAM {
                     tmp.occ = 0; // do not copy occ.
                     t.push_back(tmp);
                     int np = sz(t) - 1;
-
                     t[last].fa = t[p].fa = np;
                     while (now != -1 && t[now].nxt.count(c) && t[now].nxt[c] == p) {
                         t[now].nxt[c] = np;
@@ -64,7 +60,6 @@ struct SAM {
             ins(i, s[i]);
         }
     } /// end-hash
-
     void calOccurrence() { /// start-hash
         vi sum(n + 1), que(sz(t));
         for (auto &it: t) sum[it.len]++;
@@ -75,7 +70,6 @@ struct SAM {
         reverse(all(que));
         for (auto now: que) if (now != 0) t[t[now].fa].occ += t[now].occ;
     } /// end-hash
-
     vector<vi> ReversedPrefixTree() { /// start-hash
         vector<vi> g(sz(t));
         rep(now, 1, sz(t) - 1)
