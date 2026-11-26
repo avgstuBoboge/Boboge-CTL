@@ -10,7 +10,6 @@ struct BinaryLifting {
     int n;
     vi dep;
     vector<vi> anc;
-
     BinaryLifting(const vector<vi> &g, int rt = 0) : n(sz(g)), dep(n, -1) {
         assert(n > 0);
         anc.assign(n, vi(__lg(n) + 1));
@@ -25,12 +24,10 @@ struct BinaryLifting {
         };
         dfs(rt, -1);
     }
-
     int swim(int x, int h) {
         for (int i = 0; h && x != -1; h >>= 1, i++) if (h & 1) x = anc[x][i];
         return x;
     }
-
     int lca(int x, int y) {
         if (dep[x] < dep[y]) swap(x, y);
         x = swim(x, dep[x] - dep[y]);
