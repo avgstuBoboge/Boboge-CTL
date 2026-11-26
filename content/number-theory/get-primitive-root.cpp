@@ -22,7 +22,6 @@ i64 getPrimitiveRoot(i64 n) {
     i64 phi = n;
     for (auto p: ps) phi = phi / p * (p - 1);
     auto qs = getps(phi);
-
     auto check = [&](i64 x) {
         if (gcd(x, n) != 1) return 0;
         for (auto p: qs) {
