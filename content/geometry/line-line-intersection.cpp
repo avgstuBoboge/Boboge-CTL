@@ -12,4 +12,3 @@ pair<bool, P> capLineLine(P a, P b, P c, P d) {
 	if (P::sgn(s1) == 0) return {false, P{}};
 	return {true, a + (b - a) * s0 / s1};
 }
-
