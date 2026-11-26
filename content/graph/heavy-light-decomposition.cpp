@@ -11,7 +11,6 @@
 struct HLD {
     int n; /// start-hash
     vi fa, hson, L, R, dep, top;
-
     HLD(vector <vi> &g, int rt = 0) : n(sz(g)), fa(n, -1), hson(n, -1), L(n), R(n), dep(n), top(n) {
         vi siz(n);
         auto dfs = [&](auto &dfs, int now) -> void {
@@ -44,7 +43,6 @@ struct HLD {
         };
         getdfn(getdfn, rt, rt);
     } /// end-hash
-
     int lca(int u, int v) { /// start-hash
         while (top[u] != top[v]) {
             if (dep[top[u]] < dep[top[v]]) swap(u, v);
@@ -53,7 +51,6 @@ struct HLD {
         if (dep[u] < dep[v]) return u;
         else return v;
     } /// end-hash
-
     auto getChain(int u, int v) { /// start-hash
         vector<pii> ps;
         int f1 = top[u], f2 = top[v];
